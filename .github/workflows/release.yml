@@ -1,0 +1,37 @@
+# A tag "v<the addon's version>" makes the release: the tests, the zips, then GitHub and
+# CurseForge (once CF_API_TOKEN, a secret, and CF_PROJECT_ID, a variable, are there).
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+  release:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: The version is complete
+        run: npm run --silent new-version
+      - name: Package
+        run: |
+          version=$(npm run --silent package)
+          test "v$version" = "$GITHUB_REF_NAME" || { echo "The tag is not the addon's version ($version)"; exit 1; }
+      - name: GitHub
+        run: |
+          version=${GITHUB_REF_NAME#v}
+          awk -v v="## $version" 'index($0, v) == 1 { on = 1; next } /^## / { on = 0 } on' CHANGELOG.md > notes.md
+          gh release create "$GITHUB_REF_NAME" dist/*.zip dist/release.json --title "$GITHUB_REF_NAME" --notes-file notes.md
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: CurseForge
+        run: node tools/curseforge.mjs
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_PROJECT_ID: ${{ vars.CF_PROJECT_ID }}

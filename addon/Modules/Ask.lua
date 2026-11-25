@@ -1,0 +1,186 @@
+-- claude-in-wow: questions prepared in the game, to copy into the
+-- assistant from the Claude window (ClaudeWindow.lua). Each carries what it
+-- needs, read from the game when it is asked (no /reload needed), after a
+-- first line the assistant recognises: "[claude-in-wow <version>] <kind>".
+--   /claude              a photo of the game (Photo.lua; also the bags' button)
+--   /claude <question>   a free question, with the character and the quests (also
+--                    what is written in the Claude window)
+--   /claude bags         the question about the bags (also Shift+click on the bags' button)
+--   /claude marks        the Claude window, waiting for the assistant's answer to
+--                    paste (Marks.lua; also Ctrl+click)
+--   /claude help         how to use it
+
+local addonName, ns = ...
+
+local concat, floor, format, ipairs, pairs, sort = table.concat, math.floor, string.format, ipairs, pairs, table.sort
+local lower, match, tostring = string.lower, string.match, tostring
+local L = ns.L
+
+local function Money(copper)
+    copper = floor(copper or 0)
+    local gold, silver = floor(copper / 10000), floor(copper / 100) % 100
+    if gold > 0 then return format("%dg %ds %dc", gold, silver, copper % 100) end
+    if silver > 0 then return format("%ds %dc", silver, copper % 100) end
+    return format("%dc", copper % 100)
+end
+
+local function Quality(quality)
+    return quality and _G["ITEM_QUALITY" .. quality .. "_DESC"] or nil
+end
+
+-- "a<sep>b<sep>c" from the parts given, the empty ones left out.
+local function JoinWith(separator, ...)
+    local parts = {}
+    for index = 1, select("#", ...) do
+        local part = select(index, ...)
+        if part and part ~= "" then parts[#parts + 1] = tostring(part) end
+    end
+    return concat(parts, separator)
+end
+
+local function Join(...)
+    return JoinWith(", ", ...)
+end
+
+-- What an item's tooltip says, after its other facts: "; Agilité +5;
+-- Utiliser : ...; "description"", or "".
+local function Effects(item)
+    local text = JoinWith("; ", item.stats,
+        item.equip and format("%s %s", ITEM_SPELL_TRIGGER_ONEQUIP or "Equip:", item.equip) or nil,
+        item.use and format("%s %s", ITEM_SPELL_TRIGGER_ONUSE or "Use:", item.use) or nil,
+        item.text)
+    return text ~= "" and "; " .. text or ""
+end
+
+----------------------------------------------------------------------
+-- The parts of a question
+----------------------------------------------------------------------
+
+local function CharacterPart(data, out)
+    local c = data.character
+    if c then
+        local name = c.surname and (c.name .. " " .. c.surname) or c.name
+        local xp = c.xp and c.xpMax and c.xpMax > 0 and format("%s %d%%", L.XP, floor(c.xp / c.xpMax * 100)) or nil
+        out[#out + 1] = format("%s: %s", L.CHARACTER, Join(name, format("%s %d %s", L.LEVEL, c.level or 0, c.class or ""),
+            c.race, c.faction, Money(c.money), xp))
+    end
+
+    local where = data.location
+    if where then
+        local position = where.x and where.y and format("(%.1f, %.1f)", where.x, where.y) or nil
+        local instance = where.instance and format("%s %s", L.INSTANCE, where.instance.name) or nil
+        out[#out + 1] = format("%s: %s", L.WHERE, Join(where.zone, where.subZone ~= where.zone and where.subZone or nil,
+            position, instance, where.resting and L.RESTING or nil))
+    end
+
+    local professions = {}
+    for _, profession in ipairs(data.professions or {}) do
+        professions[#professions + 1] = format("%s %s/%s", profession.name, tostring(profession.rank), tostring(profession.max))
+    end
+    if #professions > 0 then out[#out + 1] = format("%s: %s", L.PROFESSIONS, concat(professions, ", ")) end
+end
+
+local function QuestsPart(data, out)
+    local quests = data.quests or {}
+    out[#out + 1] = format("%s (%d):", L.QUESTS, #quests)
+    for _, quest in ipairs(quests) do
+        local objectives = {}
+        for _, objective in ipairs(quest.objectives or {}) do
+            if objective.text and objective.text ~= "" then objectives[#objectives + 1] = objective.text end
+        end
+        out[#out + 1] = format("- %d [%s] %s (%s)%s%s", quest.id or 0, tostring(quest.level), quest.title or "?", quest.zone or "?",
+            (quest.ready or quest.complete) and ", " .. L.READY or "",
+            #objectives > 0 and ": " .. concat(objectives, "; ") or "")
+    end
+end
+
+local SLOT_ORDER = {
+    "head", "neck", "shoulder", "back", "chest", "shirt", "tabard", "wrist", "hands", "waist", "legs", "feet",
+    "finger1", "finger2", "trinket1", "trinket2", "mainHand", "offHand", "ranged",
+}
+
+local function EquipmentPart(data, out)
+    local equipment = data.equipment
+    if not equipment then return end
+    out[#out + 1] = L.EQUIPPED .. ":"
+    for _, slot in ipairs(SLOT_ORDER) do
+        local item = equipment[slot]
+        if item then out[#out + 1] = format("- %s: %d %s%s", slot, item.id or 0, item.name or "?", Effects(item)) end
+    end
+end
+
+-- One line per item: ID, name, count, then what helps to decide.
+local function ItemLine(id, item)
+    local level = item.itemLevel and format(L.ITEM_LEVEL, item.itemLevel) or nil
+    return format("- %d %s x%d: %s%s", id, item.name or "?", item.count or 1, Join(Quality(item.quality),
+        item.subType and (item.type .. "/" .. item.subType) or item.type, item.slot, level,
+        item.questItem and L.QUEST_ITEM or nil, item.startsQuest and format(L.STARTS_QUEST, item.startsQuest) or nil,
+        item.bound and L.BOUND or nil, item.sell and format(L.SELLS, Money(item.sell)) or nil), Effects(item))
+end
+
+local function BagsPart(data, out)
+    local bags = data.bags
+    if not bags then return end
+    out[#out + 1] = format("%s (%s):", L.BAGS, format(L.SLOTS_FREE, bags.free or 0, bags.slots or 0))
+
+    local ids = {}
+    for id in pairs(bags.items or {}) do ids[#ids + 1] = id end
+    sort(ids, function(a, b) return (bags.items[a].name or "") < (bags.items[b].name or "") end)
+    for _, id in ipairs(ids) do out[#out + 1] = ItemLine(id, bags.items[id]) end
+
+    -- the bank as last opened (it can only be read open)
+    local bank = ns.char and ns.char.bank
+    out[#out + 1] = format("%s: %s", L.BANK, bank and format(L.BANK_NOTED, date("%Y-%m-%d %H:%M", bank.savedAt or 0),
+        bank.free or 0, bank.slots or 0) or L.BANK_UNKNOWN)
+end
+
+----------------------------------------------------------------------
+-- The questions
+----------------------------------------------------------------------
+
+local KINDS = {
+    free = {
+        collect = { character = true, location = true, professions = true, quests = true },
+        parts = { CharacterPart, QuestsPart },
+    },
+    bags = {
+        question = function() return L.ASK_BAGS end,
+        collect = { character = true, location = true, professions = true, quests = true, equipment = true, bags = true },
+        parts = { CharacterPart, QuestsPart, EquipmentPart, BagsPart },
+    },
+}
+
+-- The text of a question of this kind ("free", "bags"), the game read now.
+function ns.Question(kind, question)
+    local spec = KINDS[kind]
+    local data = ns.Collect({}, spec.collect)
+    local version = C_AddOns.GetAddOnMetadata(addonName, "Version") or "?"
+    local out = {
+        format("[claude-in-wow %s] %s", version, kind),
+        format("%s: %s", L.QUESTION, question or spec.question()),
+    }
+    for _, part in ipairs(spec.parts) do part(data, out) end
+    return concat(out, "\n")
+end
+
+-- The question in the Claude window, sent in a photo or ready to copy; its
+-- bubble says the question itself. wanted: what to read for it (Topics.lua).
+function ns.Ask(kind, question, wanted)
+    ns.ShowCopy(ns.Question(kind, question), question or KINDS[kind].question(), kind, wanted)
+end
+
+SLASH_CLAUDEINWOW1, SLASH_CLAUDEINWOW2 = "/claude", "/ciw"
+SlashCmdList.CLAUDEINWOW = function(text)
+    text = match(text or "", "^%s*(.-)%s*$")
+    if text == "" then
+        ns.TakePhoto()
+    elseif L.HELP_WORDS[lower(text)] then
+        DEFAULT_CHAT_FRAME:AddMessage("|cff4ec9b0claude-in-wow|r " .. L.USAGE)
+    elseif L.BAGS_WORDS[lower(text)] then
+        ns.Ask("bags")
+    elseif L.MARKS_WORDS[lower(text)] then
+        ns.PasteMarks()
+    else
+        ns.Ask("free", text)
+    end
+end

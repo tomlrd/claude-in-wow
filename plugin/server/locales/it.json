@@ -1,0 +1,15 @@
+{
+  "failed": "Claude non ha potuto rispondere: {why}",
+  "notFound": "Claude Code non è stato trovato su questo computer.",
+  "notFoundFix": "Installalo (claude.com/claude-code), poi chiedi lì a Claude di riavviare la modalità silenziosa.",
+  "signIn": "Claude Code non ha effettuato l'accesso.",
+  "signInFix": "In un terminale, digita `claude auth login`, poi ripeti la domanda.",
+  "limit": "il limite del tuo piano è stato raggiunto.",
+  "limitFix": "Ripeti la domanda quando sarà tornato a zero (impostazioni, Consumo), o con un modello più leggero.",
+  "late": "la risposta ha richiesto troppo tempo.",
+  "lateFix": "Ripeti la domanda, magari più breve o con meno sforzo.",
+  "other": "{error}.",
+  "otherFix": "Ripeti la domanda; se continua, guarda la scheda Aiuto delle impostazioni.",
+  "slotTitle": "claude-in-wow - risposta {number}",
+  "slotNotes": "Contiene una risposta di Claude in arrivo nel gioco. Da lasciare attivo."
+}

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "wow-mcp": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/server/server.mjs"
+      ]
+    }
+  }
+}

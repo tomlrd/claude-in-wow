@@ -1,0 +1,16 @@
+{
+  "name": "claude-in-wow",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node tests/run.mjs",
+    "play": "node tools/install.mjs",
+    "package": "node tools/package.mjs",
+    "new-version": "node tools/version.mjs"
+  },
+  "needsAddon": "1.0.0"
+}

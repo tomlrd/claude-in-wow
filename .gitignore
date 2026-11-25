@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+addon/Inbox/
+fakewow/
+dist/
+*.tmp
+*.pages.json
+*.photo.json
+ciw_sv*.lua
+node_modules/
+.DS_Store
+Thumbs.db

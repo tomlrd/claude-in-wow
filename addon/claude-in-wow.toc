@@ -1,0 +1,66 @@
+## Interface: 120105, 50504, 38002, 20506, 16001, 11509
+## Title: claude-in-wow
+## Notes: Unofficial: works with Claude, by Anthropic; not affiliated with Anthropic nor Blizzard. A Claude window opened from the minimap: sends your questions to Claude with the game state (in a photo, or to copy), shows Claude's answers pasted back, and its marks on your bags. Notes your character, quests, bags and Lua errors at every reload or logout or at a photo (/claude, the button on the bags).
+## Notes-frFR: Non officiel : fonctionne avec Claude, d'Anthropic ; sans lien avec Anthropic ni Blizzard. Une fenêtre Claude ouverte depuis la mini-carte : envoie vos questions à Claude avec l'état du jeu (dans une photo, ou à copier), affiche ses réponses recollées et ses marques sur vos sacs. Note votre personnage, vos quêtes, vos sacs et les erreurs Lua à chaque rechargement ou déconnexion ou à une photo (/claude, le bouton sur les sacs).
+## Notes-deDE: Inoffiziell: funktioniert mit Claude von Anthropic; keine Verbindung zu Anthropic oder Blizzard. Ein Claude-Fenster, das über die Minikarte geöffnet wird: schickt Eure Fragen mit dem Spielstand an Claude (in einem Foto oder zum Kopieren) und zeigt die Antworten und Markierungen auf Euren Taschen.
+## Notes-esES: No oficial: funciona con Claude, de Anthropic; sin relación con Anthropic ni Blizzard. Una ventana de Claude que se abre desde el minimapa: envía tus preguntas a Claude con el estado del juego (en una foto, o para copiar) y muestra sus respuestas y sus marcas en tus bolsas.
+## Notes-esMX: No oficial: funciona con Claude, de Anthropic; sin relación con Anthropic ni Blizzard. Una ventana de Claude que se abre desde el minimapa: envía tus preguntas a Claude con el estado del juego (en una foto, o para copiar) y muestra sus respuestas y sus marcas en tus bolsas.
+## Notes-itIT: Non ufficiale: funziona con Claude, di Anthropic; senza legami con Anthropic né Blizzard. Una finestra di Claude che si apre dalla minimappa: invia le tue domande a Claude con lo stato del gioco (in una foto, o da copiare) e mostra le sue risposte e i suoi segni sulle tue sacche.
+## Author: Stylow
+## Version: 1.0.0
+## Category: Miscellaneous
+## IconTexture: Interface\AddOns\claude-in-wow\Media\Claude\LogoClay
+## SavedVariables: ClaudeInWoWDB
+Libs\LibStub\LibStub.lua
+Libs\LibDeflate\LibDeflate.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+Core\Locale.lua
+Locales\enUS.lua
+Locales\frFR.lua
+Locales\deDE.lua
+Locales\esES.lua
+Locales\itIT.lua
+Core\Core.lua
+Core\Compat.lua
+Core\Modules.lua
+Core\Errors.lua
+Data\Character.lua
+Data\World.lua
+Data\Quests.lua
+Data\Items.lua
+Data\Addons.lua
+Data\Functions.lua
+Data\Reads.lua
+Window\Theme.lua
+Window\Skins\Claude.lua
+Window\Skins\Legacy.lua
+Window\Skins\Modern.lua
+Window\Look.lua
+Window\Markdown.lua
+Window\ClaudeWindow.lua
+Modules\Claude.lua
+Modules\Plan.lua
+Modules\Usage.lua
+Modules\StatusBars.lua
+Modules\Updates.lua
+Modules\Select.lua
+Modules\BagSlots.lua
+Modules\Marks.lua
+Modules\Ask.lua
+Modules\Buttons.lua
+Modules\Route.lua
+Modules\Photo.lua
+Modules\Topics.lua
+Modules\Chat.lua
+Modules\Inbox.lua
+Modules\Places.lua
+Modules\Help.lua
+Modules\Shortcuts.lua
+Modules\Tour.lua
+Modules\Players.lua
+Modules\BagButton.lua
+Modules\MinimapButton.lua
+Window\Settings.lua
+Core\Main.lua

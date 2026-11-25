@@ -1,0 +1,15 @@
+{
+  "failed": "Claude could not answer: {why}",
+  "notFound": "Claude Code was not found on this computer.",
+  "notFoundFix": "Install it (claude.com/claude-code), then ask Claude there to start the silent mode again.",
+  "signIn": "Claude Code is not signed in.",
+  "signInFix": "In a terminal, type `claude auth login`, then ask again.",
+  "limit": "your plan's limit is reached.",
+  "limitFix": "Ask again once it is back to zero (settings, Usage), or with a lighter model.",
+  "late": "the answer took too long.",
+  "lateFix": "Ask again, maybe with a shorter question or less effort.",
+  "other": "{error}.",
+  "otherFix": "Ask again; if it goes on, see the Help tab of the settings.",
+  "slotTitle": "claude-in-wow - answer {number}",
+  "slotNotes": "Holds one of Claude's answers on its way into the game. Keep it enabled."
+}

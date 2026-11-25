@@ -1,0 +1,25 @@
+name: Bug
+description: Something does not work
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Please do **not** join a photo made by the addon nor a SavedVariables file: they hold your character's data."
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens, and what you expected
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: The addon's and the plugin's, the game's (Retail, Classic, Forever...), Windows or macOS
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Error text, if there is one
+      render: text
