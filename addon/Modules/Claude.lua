@@ -200,7 +200,7 @@ local function Answerers()
 end
 
 ns.Module({
-    key = "claude", category = "claude", order = 10, fixed = true, title = "CLAUDE_MODULE", tip = "CLAUDE_MODULE_TIP",
+    key = "claude", category = "claude", order = 10, fixed = true, title = "CLAUDE_MODULE",
     settings = {
         { key = "answerBy", label = "ANSWER_BY", tip = "ANSWER_BY_TIP", default = "silent", choices = Answerers, changed = function() ns.WatchAnswers() end },
         { key = "saidInGame", label = "SAID_IN_GAME", tip = "SAID_IN_GAME_TIP", default = true, changed = function() ns.WatchAnswers() end },
