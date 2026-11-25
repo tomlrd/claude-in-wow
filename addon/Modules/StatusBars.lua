@@ -140,7 +140,7 @@ local function SessionBar(bar)
     -- the addon's, then the player's whole plan, each in the colour it has in the settings
     local uses, shown, plan = {}, ns.db.options.barUse, ns.PlanLines()[1]
     if shown ~= "plan" then uses[1] = T.Code("accent") .. format(L.BAR_TODAY, (ns.ShortNumber((ns.UsageOf(1))))) .. "|r" end
-    if shown ~= "addon" and plan and plan.percent then uses[#uses + 1] = T.Code("clay") .. format(L.BAR_PLAN, plan.percent) .. "|r" end
+    if shown ~= "addon" and plan and plan.percent then uses[#uses + 1] = T.Code("plan") .. format(L.BAR_PLAN, plan.percent) .. "|r" end
     bar.right:SetText(table.concat(uses, DOT))
 end
 

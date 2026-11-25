@@ -15,7 +15,7 @@ local L, T = ns.L, ns.Theme
 local MAX_LIST = 500    -- answers kept one by one
 local MAX_QUESTION = 90 -- characters of a question kept
 local DAYS = 14         -- in the chart
-local SHOWN = 10        -- answers shown, the last ones
+local SHOWN = 5         -- answers shown, the last ones
 local CHART = 56        -- the chart's height
 
 ns.Category({ key = "usage", title = "TAB_USAGE", order = 55 })
@@ -161,7 +161,7 @@ end
 local function Bar(parent)
     local bar = CreateFrame("Frame", nil, parent)
     bar:EnableMouse(true)
-    bar.fill = T.Line(bar, "clay")
+    bar.fill = T.Line(bar, "accent")
     bar.fill:SetPoint("BOTTOMLEFT")
     bar.fill:SetPoint("BOTTOMRIGHT")
     bar:SetScript("OnEnter", function(self)

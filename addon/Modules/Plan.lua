@@ -15,7 +15,7 @@ local L, T = ns.L, ns.Theme
 local TRACK = 8    -- a bar's height
 local ROW = 50
 local SEEN = 3     -- the least of a bar that shows
-local OWN, REST = "accent", "clay"
+local OWN, REST = "accent", "plan"
 local NEAR = 80    -- percent from which the figure stands out
 
 -- What an answer's mark says of it: " p=5h:30:1795567200:12,7d:55:1795870800:40".

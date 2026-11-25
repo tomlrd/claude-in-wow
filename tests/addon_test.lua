@@ -2039,7 +2039,7 @@ do
     ns.RenderClaude()
     local lines = 0
     for _, f in ipairs(frames) do if f.entry and f.question and f.tokens and rawget(f, "shown") ~= false then lines = lines + 1 end end
-    ok("the last ten questions shown, all of them kept", tostring(findText("Les 10 dernières questions")) .. " " .. lines .. " " .. tostring(findText("Question 30") ~= nil) .. " " .. tostring((findText("Voir plus"))) .. " " .. #db.usage.list .. " " .. select(3, ns.UsageOf()), "Les 10 dernières questions 10 true nil 33 33")
+    ok("the last five questions shown, all of them kept", tostring(findText("Les 5 dernières questions")) .. " " .. lines .. " " .. tostring(findText("Question 30") ~= nil) .. " " .. tostring((findText("Voir plus"))) .. " " .. #db.usage.list .. " " .. select(3, ns.UsageOf()), "Les 5 dernières questions 5 true nil 33 33")
     db.usage.list = { db.usage.list[1], db.usage.list[2], db.usage.list[3] }
     local clear
     for _, f in ipairs(frames) do if f.label and f.label.text == "Effacer l'historique" then clear = f end end

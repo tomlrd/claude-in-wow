@@ -23,6 +23,7 @@ ns.Theme.AddSkin({
         hover = { 0xFF, 0xFF, 0xFF, 0.07 },
         none = { 0, 0, 0, 0 },
         clay = { 0xD9, 0x77, 0x57 },      -- Claude's colour: the spark
+        plan = { 0xD9, 0x77, 0x57 },      -- the player's whole plan, against the addon's part (accent)
         send = { 0xC6, 0x61, 0x3F },      -- and what Claude does: send
         sendHover = { 0xD9, 0x77, 0x57 },
         white = { 0xFF, 0xFF, 0xFF },
