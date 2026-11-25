@@ -8,6 +8,10 @@ Ask [Claude](https://claude.com) about your World of Warcraft game, **from the g
 
 *[En français](README.fr.md)*
 
+![How it works](docs/images/12-how.jpg)
+
+![No Claude window needed](docs/images/13-silent.jpg)
+
 ![Example: the strat for your group](docs/images/dungeon.gif)
 
 ![Example: a ForeverAuras made for you](docs/images/aura.gif)
@@ -29,13 +33,13 @@ It only proposes. It plays nothing in your place: one click is one action, and n
 
 ## Installing it
 
-1. Install [Claude Code](https://claude.com/claude-code) and sign in with your Claude account.
+1. Install [Claude Code](https://claude.com/claude-code) and sign in with your Claude account (an active plan: Pro, Max...). No plan? An API key of yours works too, paid by use: step 4 tells how.
 2. Put the addon in the game's `Interface\AddOns` folder, as `claude-in-wow`.
 3. In Claude Code, type `/plugin marketplace add tomlrd/claude-in-wow`, then `/plugin install wow-mcp@claude-in-wow`.
 4. Type `/wow-mcp:setup`: it checks everything, offers to install [Node.js](https://nodejs.org) when it is missing, and starts the answers.
 5. Quit the game and start it again, once. A click on the spark on the minimap opens the window.
 
-Each answer uses your own Claude plan. It works on Windows; on macOS it should, tell us how it goes.
+Each answer uses your own Claude plan, or your API key (kept encrypted on your computer, given to Claude Code alone). The answers come even with no Claude window open: a hidden program waits for your questions (the silent mode). Or talk to a Claude session you see: you choose, in the addon's settings. It works on Windows; on macOS it should, tell us how it goes.
 
 ## What is read, and where it goes
 

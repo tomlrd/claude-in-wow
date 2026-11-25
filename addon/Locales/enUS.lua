@@ -307,8 +307,11 @@ ns.Locale("enUS", {
     ANSWER_NOTE_TIP = "The model that answered, its effort and the tokens it took.",
 
     -- Modules\Plan.lua
-    PLAN = "Your plan",
+    PLAN = "Your Claude account",
     PLAN_TIP = "All you do with Claude.",
+    KEY = "Your API key",
+    KEY_SPENT = "%s today, %s in 7 days, %s since the start: your API key, paid by use.", -- three prices
+    KEY_DOLLARS = "$%s", -- a price in dollars
     PLAN_AT = "at %H:%M", -- a time: %H hours, %M minutes
     PLAN_AT_DAY = "on %m/%d at %H:%M", -- a date and a time
     PLAN_5H = "The last 5 hours",
@@ -383,6 +386,7 @@ ns.Locale("enUS", {
     BAR_WAITING_ONE = "1 answer on its way",
     BAR_TODAY = "Addon: %s",
     BAR_PLAN = "Plan: %d %%",
+    BAR_KEY = "Key: %s", -- a price in dollars
     BAR_USE = "Use shown",
     BAR_USE_BOTH = "The addon and the plan",
     BAR_USE_ADDON = "The addon only",
@@ -442,7 +446,7 @@ ns.Locale("enUS", {
     HELP_UNHEARD_FIRST = "Your question was not received, and nothing has ever answered here: Node.js, which the plugin runs on, may be missing. In Claude Code, type /wow-mcp:setup: it checks, and offers to install it.",
     HELP_STEPS = "To get answers",
     HELP_COPY = "Copy %s",
-    HELP_LIST = { "Install Claude Code (claude.com/claude-code) and sign in with your Claude account. The plugin also runs on Node.js (nodejs.org): step 3 offers to install it when it is missing.", "In Claude Code, add the plugin: its two commands are on the addon's page.", "In Claude Code, type /wow-mcp:setup. It checks everything and starts the answers.", "Quit the game and start it again, once: it then finds where the answers come.", "Ask a question here. A picture of the screen goes by: it carries your question to Claude." },
+    HELP_LIST = { "Install Claude Code (claude.com/claude-code) and sign in with your Claude account (an active plan), or use an API key, paid by use: step 3 tells how. The plugin also runs on Node.js (nodejs.org): step 3 offers to install it when it is missing.", "In Claude Code, add the plugin: its two commands are on the addon's page.", "In Claude Code, type /wow-mcp:setup. It checks everything and starts the answers.", "Quit the game and start it again, once: it then finds where the answers come.", "Ask a question here. A picture of the screen goes by: it carries your question to Claude." },
     HELP_WRONG = "When nothing answers",
     HELP_WRONG_LIST = { "Never an answer: Node.js may be missing on your computer. In Claude Code, type /wow-mcp:setup: it checks, and offers to install it.", "The question was not received: the plugin is stopped (the computer was restarted?). Open Claude Code, and ask Claude to start the silent mode.", "It was received, but no answer comes: Claude may be searching; after six minutes, it says why here.", "The answer does not show by itself: press Ctrl+V here, it is in the clipboard. The game's sound must be on, and a /reload frees the answers' addons once all are used.", "Claude Code is not signed in: in a terminal, type claude auth login.", "Something else: ask Claude, in Claude Code, to check claude-in-wow." },
     TAB_UPDATES = "Updates",

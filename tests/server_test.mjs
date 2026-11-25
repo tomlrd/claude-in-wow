@@ -72,7 +72,7 @@ function startServer(wowDir) {
       ...process.env, CIW_WOW_DIR: wowDir, CIW_CLIPBOARD_FILE: path.resolve('fakewow/clipboard.txt'),
       CIW_CLAUDE: path.join(path.dirname(fileURLToPath(import.meta.url)), 'fake_claude.mjs'),
       CIW_CACHE_S: '0', CIW_CATCH_UP_S: '0', CIW_STARTUP_DIR: path.resolve('fakewow/startup'), CIW_HOME_DIR: path.resolve('fakewow/home'), CLAUDE_CONFIG_DIR: path.resolve('fakewow/claude'),
-      CIW_SILENT_DIR: path.resolve('fakewow'), FAKE_CLAUDE_LOG: path.resolve('fakewow/claude.log'),
+      CIW_SILENT_DIR: path.resolve('fakewow'), CIW_KEY: path.resolve('fakewow/key.txt'), ANTHROPIC_API_KEY: 'sk-of-another-program', FAKE_CLAUDE_LOG: path.resolve('fakewow/claude.log'),
     },
     stdio: ['pipe', 'pipe', 'inherit'],
   });
@@ -710,6 +710,19 @@ const plan3 = ask({ at: askedAt + 163, text: 'Mon forfait sans la part ?', optio
 ok('silent mode: the game\'s part left out', [await waitFor(() => clipboardText().includes(`réponse ${plan3.at} `)), / p=5h:30:1795567200,7d:56:1795870800,7d-opus:10:1795870800 l=de\]/.test(clipboardText())], [true, true]);
 const plan2 = ask({ at: askedAt + 164, text: 'Mon forfait épuisé ?', options: { language: 'itIT' } });
 ok('silent mode: no answer, the plan may be why', [await waitFor(() => clipboardText().includes(`réponse ${plan2.at} p=5h:30:`)), clipboardText().includes('il limite del tuo piano è stato raggiunto')], [true, true]);
+// an API key of the player's: given to claude alone, paid by use; never another program's
+ok('silent mode: another program\'s API key is never used', last().key, undefined);
+const KEYQ = [null, 'Avec ma clé', 'Encore avec ma clé', 'Ma clé, refusée', 'Sans ma clé'];
+fs.writeFileSync(path.resolve('fakewow/key.txt'), 'sk-test-key\n');
+const key1 = ask({ at: askedAt + 164.1, text: 'Avec ma clé ?' });
+ok('silent mode: with the player\'s key, a new session, its price in the mark', [await waitFor(() => clipboardText().includes(KEYQ[1])), last().key, option(last(), '--resume'), / u=30000 l=de\]/.test(clipboardText())], [true, 'sk-test-key', null, true]);
+const key2 = ask({ at: askedAt + 164.2, text: 'Encore avec ma clé ?' });
+ok('silent mode: resumed, the price of this answer alone', [await waitFor(() => clipboardText().includes(KEYQ[2])), Boolean(option(last(), '--resume')), / u=20000 l=de\]/.test(clipboardText())], [true, true, true]);
+const key3 = ask({ at: askedAt + 164.3, text: 'Ma clé, refusée ?', options: { language: 'frFR' } });
+ok('silent mode: a key refused, said so', [await waitFor(() => clipboardText().includes('Votre clé API a été refusée.')), clipboardText().includes('Votre clé API a été refusée.')], [true, true]);
+fs.rmSync(path.resolve('fakewow/key.txt'));
+const key4 = ask({ at: askedAt + 164.4, text: 'Sans ma clé ?' });
+ok('silent mode: the key removed, the plan again, in a new session', [await waitFor(() => clipboardText().includes(KEYQ[4])), last().key, option(last(), '--resume'), clipboardText().includes(' u=')], [true, undefined, null, false]);
 // how much a new session remembers, and past how many tokens it comes
 const size1 = ask({ at: askedAt + 165, text: 'Une grande session ?', options: { renewAt: 25000, remember: 1 } });
 ok('silent mode: past the tokens the player picked, a new one that remembers so many questions',

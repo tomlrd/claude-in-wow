@@ -12,7 +12,11 @@ Set claude-in-wow up for the player, one step after the other, saying what each 
 
    **The rest of what it needs**: call `silent_mode` with `action: "check"`, and settle what is missing before going on:
    - `claudeCode` null: the `claude` command is not found; the player installs Claude Code (claude.com/claude-code) so that it works in a terminal.
-   - `signedIn` false: the player types `claude auth login` in a terminal. Never ask for a password or a key, nor type one.
+   - `signedIn` false and `apiKey` false: the answers need one of the two, as the player prefers:
+     - an active Claude plan (Pro, Max, Team...): the player types `claude auth login` in a terminal;
+     - an API key of theirs (console.anthropic.com), paid by use: the player types `apiKeyCommands.give` in a terminal of their own, and pastes the key there, hidden. It is kept encrypted on their computer.
+     Never ask for a password or a key, nor type one, nor run that command for them.
+   - `apiKey` true: say in a line that the answers are paid by use with it; `apiKeyCommands.remove` goes back to the plan.
    - no game, or none with `addon` true: the game's folder was not found (it is looked for where Battle.net installed it and in the usual places: ask the player where it is, then `silent_mode` with `action: "game"` and that folder), or the claude-in-wow addon is not installed in it (from CurseForge; the game sees it when it is next started).
 
 Then the player's claude-in-wow folder, so that every conversation opened in it is about their game: the instructions below, and the claude-in-wow tools allowed without asking.

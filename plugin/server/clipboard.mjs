@@ -39,6 +39,7 @@ export function answerMark(at, info = {}) {
   if (info.spent?.total) parts.push(`t=${info.spent.total} r=${info.spent.cached || 0}`);
   if (info.detail) parts.push(`d=${info.detail.map((n) => Math.round(n)).join(',')}`);
   if (info.plan) parts.push(`p=${info.plan.map(({ window, percent, resets, own }) => `${window}:${percent}:${resets}${own === undefined ? '' : `:${own}`}`).join(',')}`);
+  if (info.cost !== undefined) parts.push(`u=${Math.round(info.cost * 1e6)}`);
   if (info.language) parts.push(`l=${info.language}`);
   return `[claude-in-wow ${parts.join(' ')}]`;
 }

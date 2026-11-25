@@ -1124,7 +1124,7 @@ local function NoteStatus(extra, picked)
     local seconds = tonumber(match(extra, " s=(%d+)"))
     local model = match(extra, " m=([%w%.%-]+)")
     if model then ns.NoteModel(model, picked) end
-    ns.NotePlan(extra)
+    local price = ns.NotePlan(extra)
     ns.db.claudeLanguage = match(extra, " l=(%l%l)") or ns.db.claudeLanguage
     if session then
         ns.db.claudeStatus = {
@@ -1137,7 +1137,7 @@ local function NoteStatus(extra, picked)
         detail = detail or {}
         detail[#detail + 1] = tonumber(tokens)
     end
-    return seconds, model, tonumber(match(extra, " t=(%d+)")), tonumber(match(extra, " r=(%d+)")), detail
+    return seconds, model, tonumber(match(extra, " t=(%d+)")), tonumber(match(extra, " r=(%d+)")), detail, price
 end
 
 -- A pasted text: Claude's answer. An answer copied by the silent mode or
@@ -1179,10 +1179,10 @@ local function TakeMarked(parts, byItself)
             already = already + 1
         elseif question and part.text ~= "" then
             question.answered = true
-            local seconds, model, tokens, cached, detail = NoteStatus(part.extra, question.model)
+            local seconds, model, tokens, cached, detail, price = NoteStatus(part.extra, question.model)
             if seconds or question.sentAt then NoteAnswerTime(question.kind or "free", seconds or time() - question.sentAt) end
             local answer = AddMessage({
-                role = "claude", text = part.text, model = model, effort = question.effort, tokens = tokens, cached = cached, detail = detail,
+                role = "claude", text = part.text, model = model, effort = question.effort, tokens = tokens, cached = cached, detail = detail, price = price,
             }, tab)
             ns.NoteUsage(question.text, answer, seconds)
             taken, lastTab = taken + 1, tabIndex

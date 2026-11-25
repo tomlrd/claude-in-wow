@@ -2002,8 +2002,8 @@ do
     db.settingsTab = "usage"
     ns.OpenClaude("settings")
     ok("apart in the tab: the plan, then the addon", tostring(findText("Tout ce que vous faites avec Claude.") ~= nil) .. " " .. tostring(findText("L'addon seulement") ~= nil), "true true")
-    ok("in the tab on the usage", tostring(findText("Votre forfait")) .. " " .. bare(findText("|cfffaf9f530 %") or "") .. " " .. tostring(findText("Sur la semaine, Opus")) .. " " .. tostring(findText("Le reste de votre forfait")),
-        "Votre forfait 30 %, dont 0,05 % pour l'addon Sur la semaine, Opus Le reste de votre forfait")
+    ok("in the tab on the usage", tostring(findText("Votre compte Claude")) .. " " .. bare(findText("|cfffaf9f530 %") or "") .. " " .. tostring(findText("Sur la semaine, Opus")) .. " " .. tostring(findText("Le reste de votre forfait")),
+        "Votre compte Claude 30 %, dont 0,05 % pour l'addon Sur la semaine, Opus Le reste de votre forfait")
     do
         local rows = {}
         for _, f in ipairs(frames) do if f.own and f.rest and f.note then rows[#rows + 1] = f end end
@@ -2022,6 +2022,22 @@ do
         end
         ok("the bar: the game's part, always seen, then the rest", table.concat(full, " "), "50+50 3+97 false+100 3+false false+false")
     end
+    -- an API key in place of a plan
+    ok("a key's price, in dollars, in place of the plan", tostring(ns.NotePlan(" session=a u=12345 l=fr")) .. " " .. tostring(db.claudePlan) .. " " .. tostring(db.claudeKey), "0.012345 nil true")
+    ns.NoteUsage("Avec une clé ?", { at = now, model = "haiku-5.5", tokens = 1000, cached = 0, price = 0.012345 })
+    ns.NoteUsage("Avant, avec une clé ?", { at = now - 3 * 86400, model = "haiku-5.5", tokens = 1000, cached = 0, price = 1.5 })
+    ok("the prices, added up", ns.Dollars(ns.PriceOf(1)) .. " | " .. ns.Dollars(ns.PriceOf(7)) .. " | " .. ns.Dollars(ns.PriceOf()) .. " | " .. ns.Dollars(0), "0,012 $ | 1,51 $ | 1,51 $ | 0,00 $")
+    ns.RenderClaude()
+    ok("in the tab on the usage", bare(findText("0,012 $ aujourd'hui") or ""), "0,012 $ aujourd'hui, 1,51 $ en 7 jours, 1,51 $ depuis le début : votre clé API, payée à l'usage.")
+    ns.OpenClaude()
+    ok("in the bar under the box", bare(findBar("barSession").right.text):match("Clé : 0,012 %$$"), "Clé : 0,012 $")
+    ns.NotePlan((" p=5h:30:%d"):format(now + 3600))
+    ok("back to a plan", tostring(db.claudeKey) .. " " .. tostring(db.claudePlan.windows[1].percent), "nil 30")
+    db.usage.list[#db.usage.list], db.usage.list[#db.usage.list - 1] = nil, nil
+    db.usage.days[os.date("%Y-%m-%d", now)].answers = 1
+    db.usage.days[os.date("%Y-%m-%d", now - 3 * 86400)].answers = 1
+    db.settingsTab = "usage"
+    ns.OpenClaude("settings")
     db.claudePlan = nil
     for index = 1, 30 do ns.NoteUsage("Question " .. index, { at = now + index, model = "haiku-5.5", tokens = 100 + index, cached = 0 }) end
     ns.RenderClaude()

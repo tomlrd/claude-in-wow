@@ -1,7 +1,7 @@
 -- claude-in-wow module: what the answers took. Each answer that says its
 -- tokens is noted (ns.NoteUsage, from the window), account-wide:
---   ns.db.usage = { list = { { at, question, model, effort, tokens, cached, detail, seconds, who } },  the last one last
---     days = { ["2026-11-24"] = { tokens, cached, answers } },     kept for good
+--   ns.db.usage = { list = { { at, question, model, effort, tokens, cached, price, detail, seconds, who } },  the last one last
+--     days = { ["2026-11-24"] = { tokens, cached, answers, price } },     kept for good; price: in dollars, with an API key
 --     models = { haiku-5.5 = { tokens, answers } } }
 -- The settings' tab on it: after the player's plan (Plan.lua): today, the last days,
 -- everything; by day, by model; and the last answers, with where its tokens went (ns.ShowAnswerDetail).
@@ -34,6 +34,7 @@ local function Count(usage, entry)
     days[day] = days[day] or { tokens = 0, cached = 0, answers = 0 }
     days[day].tokens, days[day].cached, days[day].answers =
         days[day].tokens + entry.tokens, days[day].cached + (entry.cached or 0), days[day].answers + 1
+    if entry.price then days[day].price = (days[day].price or 0) + entry.price end
     local model = entry.model or "?"
     models[model] = models[model] or { tokens = 0, answers = 0 }
     models[model].tokens, models[model].answers = models[model].tokens + entry.tokens, models[model].answers + 1
@@ -81,7 +82,7 @@ local function Usage()
     return usage
 end
 
--- An answer that came: answer = { at, model, effort, tokens, cached, detail }.
+-- An answer that came: answer = { at, model, effort, tokens, cached, price, detail }.
 function ns.NoteUsage(question, answer, seconds)
     if not answer.tokens then return end
     local usage = Usage()
@@ -91,7 +92,7 @@ function ns.NoteUsage(question, answer, seconds)
     end
     local entry = {
         at = answer.at or time(), question = Cut(question or "", MAX_QUESTION), model = answer.model, effort = answer.effort,
-        tokens = answer.tokens, cached = answer.cached, detail = answer.detail, seconds = seconds, who = ns.key,
+        tokens = answer.tokens, cached = answer.cached, price = answer.price, detail = answer.detail, seconds = seconds, who = ns.key,
     }
     usage.list[#usage.list + 1] = entry
     Count(usage, entry)
@@ -106,6 +107,15 @@ function ns.UsageOf(days)
         if not from or day >= from then tokens, cached, answers = tokens + sum.tokens, cached + sum.cached, answers + sum.answers end
     end
     return tokens, cached, answers
+end
+
+-- The dollars of the last days (nil: all), with an API key.
+function ns.PriceOf(days)
+    local price, from = 0, days and Day(time() - (days - 1) * 86400)
+    for day, sum in pairs(Usage().days) do
+        if not from or day >= from then price = price + (sum.price or 0) end
+    end
+    return price
 end
 
 -- "950", "52 k", "1,2 M".
@@ -204,7 +214,7 @@ local function Line(parent)
         local parts = { date(L.USAGE_DATE, entry.at), entry.model and ns.ModelName(entry.model) or nil }
         if entry.effort then parts[#parts + 1] = L.EFFORTS[entry.effort] or entry.effort end
         if entry.seconds then parts[#parts + 1] = format(L.USAGE_SECONDS, entry.seconds) end
-        parts[#parts + 1] = format(L.USAGE_CACHED, Percent(entry.cached or 0, entry.tokens))
+        parts[#parts + 1] = entry.price and ns.Dollars(entry.price) or format(L.USAGE_CACHED, Percent(entry.cached or 0, entry.tokens))
         self.note:SetText(table.concat(parts, "  \194\183  "))
     end
     return line

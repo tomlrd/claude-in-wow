@@ -30,6 +30,8 @@ export function say(locale, name, parts = {}) {
 export function failureKind(error) {
   const text = String(error || '');
   if (/ENOENT/.test(text)) return 'notFound';
+  if (/external api key/i.test(text)) return 'key';
+  if (/credit balance/i.test(text)) return 'credit';
   if (/authenticat|not logged in|log ?in|oauth|api key/i.test(text)) return 'signIn';
   if (/limit|quota|out of .*usage/i.test(text)) return 'limit';
   if (/no answer in time/i.test(text)) return 'late';

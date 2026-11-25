@@ -8,6 +8,10 @@ Posez à [Claude](https://claude.com) vos questions sur votre partie de World of
 
 *[In English](README.md)*
 
+![Comment ça marche](docs/images/12-how.jpg)
+
+![Pas besoin de fenêtre Claude](docs/images/13-silent.jpg)
+
 ![Exemple : la strat pour votre groupe](docs/images/dungeon.gif)
 
 ![Exemple : une ForeverAura faite pour vous](docs/images/aura.gif)
@@ -29,13 +33,13 @@ Il ne fait que proposer. Il ne joue jamais à votre place : un clic, une action,
 
 ## L'installer
 
-1. Installez [Claude Code](https://claude.com/claude-code) et connectez-vous avec votre compte Claude.
+1. Installez [Claude Code](https://claude.com/claude-code) et connectez-vous avec votre compte Claude (un forfait actif : Pro, Max...). Pas de forfait ? Une clé API à vous marche aussi, payée à l'usage : l'étape 4 dit comment.
 2. Mettez l'addon dans le dossier `Interface\AddOns` du jeu, sous le nom `claude-in-wow`.
 3. Dans Claude Code, tapez `/plugin marketplace add tomlrd/claude-in-wow`, puis `/plugin install wow-mcp@claude-in-wow`.
 4. Tapez `/wow-mcp:setup` : tout est vérifié, [Node.js](https://nodejs.org) est proposé s'il manque, et les réponses sont lancées.
 5. Quittez le jeu et relancez-le, une fois. Un clic sur l'étincelle de la mini-carte ouvre la fenêtre.
 
-Chaque réponse utilise votre propre forfait Claude. Il marche sous Windows ; sous macOS il devrait, dites-nous.
+Chaque réponse utilise votre propre forfait Claude, ou votre clé API (gardée chiffrée sur votre ordinateur, donnée à Claude Code seulement). Les réponses arrivent même sans fenêtre Claude ouverte : un programme caché attend vos questions (le mode silencieux). Ou parlez à une session Claude que vous voyez : vous choisissez, dans les réglages de l'addon. Il marche sous Windows ; sous macOS il devrait, dites-nous.
 
 ## Ce qui est lu, et où ça va
 

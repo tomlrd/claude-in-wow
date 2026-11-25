@@ -57,6 +57,7 @@ import { linkNames, people, placesToSearch } from './names.mjs';
 import { questionsAfter } from './photo.mjs';
 import { claudeCommand } from './claude.mjs';
 import { bySession, fenced, keepRelated, readLines, turnedOff } from './questions.mjs';
+import { hasKey, readKey } from './key.mjs';
 import { eraseSession, planLedger } from './share.mjs';
 import { readState, running, silentFiles, writeState } from './silent-mode.mjs';
 import { setSlots, USUAL_SLOTS } from './slots.mjs';
@@ -109,6 +110,8 @@ const state = {
   setup: before.setup || null,
   chat: before.chat || false,     // players' chat was read in it
   game: before.game || null,      // the game it was asked from
+  account: before.account || 'plan', // what it is paid with: the account signed in, or the player's API key (key.mjs)
+  paid: before.paid || 0,         // dollars it took in all, as claude says
   context: before.context || 0,   // tokens the session holds
   base: before.base || 0,         // of them, what every session starts with
   usedAt: before.usedAt || 0,     // and when it last answered
@@ -276,10 +279,12 @@ function prompt(question, recap, web) {
 // The environment for claude: this program is started from a Claude session
 // (the silent_mode tool), whose variables point claude at that session's own
 // connection, which ends with it. Without them, claude uses its own sign-in
-// (claude auth login). CLAUDE_CONFIG_DIR, the player's own choice, stays.
-function claudeEnv() {
-  return Object.fromEntries(Object.entries(process.env)
-    .filter(([key]) => key === 'CLAUDE_CONFIG_DIR' || !/^(CLAUDE|ANTHROPIC)/i.test(key)));
+// (claude auth login), or the player's API key when they gave one (key.mjs), which then
+// goes before it. CLAUDE_CONFIG_DIR, the player's own choice, stays.
+function claudeEnv(key) {
+  const env = Object.fromEntries(Object.entries(process.env)
+    .filter(([name]) => name === 'CLAUDE_CONFIG_DIR' || !/^(CLAUDE|ANTHROPIC)/i.test(name)));
+  return key ? { ...env, ANTHROPIC_API_KEY: key } : env;
 }
 
 const tokens = (usage) => (usage?.input_tokens || 0) + (usage?.cache_creation_input_tokens || 0)
@@ -290,15 +295,17 @@ const tokens = (usage) => (usage?.input_tokens || 0) + (usage?.cache_creation_in
 // answer took (all of its calls: read, written and, in cached, read again from
 // the cache), as the result's usage says (its modelUsage counts the session's
 // earlier questions too). And, with a plan (Pro, Max), how much of it is used:
-// claude says it by itself, with each answer (rate_limit_event).
+// claude says it by itself, with each answer (rate_limit_event). byKey: paid by use, with
+// a key; cost: the dollars the session took so far, as claude reckons them.
 function readReply(out) {
-  let result = null, model = null, context = 0, first = 0, plan = null;
+  let result = null, model = null, context = 0, first = 0, plan = null, byKey = false;
   const calls = new Map(); // a message is in several lines (one a block)
   for (const line of out.split(/\r?\n/)) {
     if (!line) continue;
     let entry = null;
     try { entry = JSON.parse(line); } catch { continue; }
     if (entry.type === 'result') result = entry;
+    if (entry.type === 'system' && entry.subtype === 'init') byKey = Boolean(entry.apiKeySource) && entry.apiKeySource !== 'none';
     if (entry.type === 'rate_limit_event') plan = planOf(entry.rate_limit_info) || plan;
     const usage = entry.message?.usage;
     if (entry.type !== 'assistant' || !usage || entry.parent_tool_use_id) continue;
@@ -307,7 +314,7 @@ function readReply(out) {
     calls.set(entry.message.id, { id: entry.message.id, at: Date.now(), model: entry.message.model, usage });
     if (!first) first = context - (usage.output_tokens || 0);
   }
-  return { result, model, plan, context, first, calls: calls.size, messages: [...calls.values()].filter(({ id }) => id), spent: { total: tokens(result?.usage), cached: result?.usage?.cache_read_input_tokens || 0 } };
+  return { result, model, plan, byKey, cost: Number(result?.total_cost_usd) || 0, context, first, calls: calls.size, messages: [...calls.values()].filter(({ id }) => id), spent: { total: tokens(result?.usage), cached: result?.usage?.cache_read_input_tokens || 0 } };
 }
 
 // The plan's windows: [{ window: '5h' | '7d' | '7d-opus'..., percent, resets
@@ -324,7 +331,7 @@ function planOf(info) {
 // Claude's reply: { text, session, model, context, spent } or { error }; plan in
 // both (the plan may be why there is no answer).
 // session: to resume; aside: nothing saved.
-function askClaude(text, { session, aside, model, effort, web, addons, wowDir }) {
+function askClaude(text, { session, aside, model, effort, web, addons, wowDir, key }) {
   return new Promise((resolve) => {
     // any page, but a list of sites once players' chat is in the session: one of
     // them might write there a page to open, with what Claude knows in its address
@@ -340,7 +347,7 @@ function askClaude(text, { session, aside, model, effort, web, addons, wowDir })
     if (effort) args.push('--effort', effort);
     const fake = process.env.CIW_CLAUDE;
     const [program, ...first] = fake ? [process.execPath, fake] : claudeCommand();
-    const child = spawn(program, [...first, ...args], { cwd: dir, env: claudeEnv(), windowsHide: true });
+    const child = spawn(program, [...first, ...args], { cwd: dir, env: claudeEnv(key), windowsHide: true });
     let out = '', err = '', failed = null;
     child.stdout.setEncoding('utf8');
     child.stderr.setEncoding('utf8');
@@ -351,11 +358,11 @@ function askClaude(text, { session, aside, model, effort, web, addons, wowDir })
     child.on('close', (status) => {
       clearTimeout(timer);
       if (failed) return resolve({ error: failed.message });
-      const { result, model: used, plan, context, first, calls, messages, spent } = readReply(out);
+      const { result, model: used, plan, byKey, cost, context, first, calls, messages, spent } = readReply(out);
       if (!result || result.is_error || typeof result.result !== 'string') {
         return resolve({ error: (result && result.result) || err.trim().split('\n').pop() || `exit ${status}`, plan });
       }
-      return resolve({ text: result.result.trim(), session: result.session_id, model: used, plan, context, first, calls, messages, spent: { ...spent, output: result.usage?.output_tokens || 0 } });
+      return resolve({ text: result.result.trim(), session: result.session_id, model: used, plan, byKey, cost, context, first, calls, messages, spent: { ...spent, output: result.usage?.output_tokens || 0 } });
     });
     child.stdin.on('error', () => { /* the process could not start: told by "error" */ });
     child.stdin.end(text);
@@ -416,6 +423,7 @@ function leaveSession(why) {
   state.session = null;
   state.asked = 0;
   state.context = 0;
+  state.paid = 0;
   state.chat = false;
 }
 
@@ -481,6 +489,8 @@ async function answerIn(question, at, aside, wowDir) {
     state.exchanges = [];
     leaveSession('a new Claude session, asked by the player');
   }
+  const account = hasKey() ? 'key' : 'plan';
+  const key = account === 'key' ? readKey() : null;
   if (!aside) {
     const pause = within(options.renewPause, 0, 30 * 86400, null);
     const paused = pause === null ? now() - state.usedAt >= CACHE_S : pause > 0 && now() - state.usedAt >= pause;
@@ -488,6 +498,7 @@ async function answerIn(question, at, aside, wowDir) {
     if (options.renew !== false && state.context > (options.renewAt === 0 ? Infinity : within(options.renewAt, 20e3, 1e6, HEAVY))) leaveSession(`the session holds ${state.context} tokens: renewed, with a recap`);
     else if (options.renew !== false && cold) leaveSession(`the session (${state.context} tokens), ${paused ? 'after a pause' : 'no longer cached'}: renewed, with a recap`);
     else if (state.session && state.setup !== SETUP) leaveSession('another way of starting Claude: the session is renewed, with a recap');
+    else if (state.session && account !== state.account) leaveSession('another account: the session is renewed, with a recap');
     else if (state.session && model !== state.model) leaveSession('another model: the session is renewed, with a recap');
     else if (state.session && state.game && state.game !== wowDir) leaveSession('another version of the game: the session is renewed, with a recap');
   }
@@ -502,7 +513,11 @@ async function answerIn(question, at, aside, wowDir) {
       ? 'Meanwhile, the player also asked these, answered beside this session:'
       : 'What was asked and answered before (the start of each answer), for memory:';
     const asked = prompt(question, recapLines(news, title), web);
-    return askClaude(asked, { session, aside, model, effort, web, addons: !off.includes('addons'), wowDir }).then((reply) => {
+    // a key kept but not read again: told, never billed to the plan in its place
+    if (account === 'key' && !key) return Promise.resolve({ error: 'external API key' });
+    return askClaude(asked, { session, aside, model, effort, web, addons: !off.includes('addons'), wowDir, key }).then((reply) => {
+      // what claude says is the session's, its earlier questions too
+      if (!reply.error) reply.price = Math.max(0, reply.cost - (session ? state.paid : 0));
       if (!reply.error) reply.detail = detailOf(reply, asked, question.read, !session);
       if (!reply.error && !aside) news.forEach((e) => { e.told = true; });
       return reply;
@@ -534,6 +549,8 @@ async function answerIn(question, at, aside, wowDir) {
       state.model = model;
       state.effort = effort;
       state.setup = SETUP;
+      state.account = account;
+      state.paid = reply.cost;
       state.chat = chat;
       state.game = wowDir;
       eraseLeft();
@@ -551,7 +568,7 @@ async function answerIn(question, at, aside, wowDir) {
       });
       state.exchanges = state.exchanges.slice(-MAX_EXCHANGES);
     }
-    const mark = answerMark(at, { session: String(state.session || '').slice(0, 8), questions: state.asked, seconds, model: reply.model, context: state.context, spent: reply.spent, detail: reply.detail, plan, language: claudeLanguage() });
+    const mark = answerMark(at, { session: String(state.session || '').slice(0, 8), questions: state.asked, seconds, model: reply.model, context: state.context, spent: reply.spent, detail: reply.detail, plan, cost: reply.byKey ? reply.price : undefined, language: claudeLanguage() });
     const { text: answer, dropped } = keepRelated(fenced(reply.text), question.text, state.exchanges.map((e) => e.question));
     if (dropped.length) log(`questions left out, about something else or already asked: ${dropped.join(' / ')}`);
     text = `${mark}\n\n${await finished(answer, question, off, wowDir)}`;

@@ -4,7 +4,8 @@
 -- together, and the game's part of them, estimated by the plugin (share.mjs).
 --   ns.db.claudePlan = { at, windows = { { window ("5h", "7d", "7d-opus"), percent, resets,
 --     own (the game's part, in hundredths of a percent of the plan) } } }
--- Without a plan (a key paid by use) nothing is said, and nothing shown.
+-- With an API key, paid by use, no plan: the answer's mark says its price (Usage.lua adds
+-- them up), and ns.db.claudeKey that the last answer was so paid.
 
 local addonName, ns = ...
 
@@ -19,15 +20,26 @@ local OWN, REST = "accent", "plan"
 local NEAR = 80    -- percent from which the figure stands out
 
 -- What an answer's mark says of it: " p=5h:30:1795567200:12,7d:55:1795870800:40".
+-- The price it says (" u=1234", in millionths of a dollar), in dollars.
 function ns.NotePlan(extra)
-    local said = match(extra, " p=([%w%-:,]+)")
+    local price, said = tonumber(match(extra, " u=(%d+)")), match(extra, " p=([%w%-:,]+)")
+    if price then
+        ns.db.claudeKey, ns.db.claudePlan = true, nil
+        return price / 1000000
+    end
     if not said then return end
+    ns.db.claudeKey = nil
     local windows = {}
     for part in gmatch(said, "[^,]+") do
         local window, percent, resets, own = match(part, "^([%w%-]+):(%d+):(%d+):?(%d*)$")
         if window then windows[#windows + 1] = { window = window, percent = tonumber(percent), resets = tonumber(resets), own = tonumber(own) } end
     end
     if #windows > 0 then ns.db.claudePlan = { at = time(), windows = windows } end
+end
+
+-- "$0.42"; to the thousandth under ten cents.
+function ns.Dollars(price)
+    return format(L.KEY_DOLLARS, (gsub(format(price < 0.1 and price > 0 and "%.3f" or "%.2f", price), "%.", L.PLAN_DECIMAL)))
 end
 
 local function Name(window)
@@ -157,6 +169,7 @@ local function Section(parent)
         local y = #lines > 0 and 24 or 0
         self:SetWidth(width)
         unknown:SetShown(#lines == 0)
+        unknown:SetText(ns.db.claudeKey and format(L.KEY_SPENT, ns.Dollars(ns.PriceOf(1)), ns.Dollars(ns.PriceOf(7)), ns.Dollars(ns.PriceOf())) or L.PLAN_UNKNOWN)
         local parted = false
         for _, line in ipairs(lines) do parted = parted or line.own ~= nil end
         legend:SetShown(parted)

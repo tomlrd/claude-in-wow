@@ -141,6 +141,7 @@ local function SessionBar(bar)
     local uses, shown, plan = {}, ns.db.options.barUse, ns.PlanLines()[1]
     if shown ~= "plan" then uses[1] = T.Code("accent") .. format(L.BAR_TODAY, (ns.ShortNumber((ns.UsageOf(1))))) .. "|r" end
     if shown ~= "addon" and plan and plan.percent then uses[#uses + 1] = T.Code("plan") .. format(L.BAR_PLAN, plan.percent) .. "|r" end
+    if shown ~= "addon" and ns.db.claudeKey then uses[#uses + 1] = T.Code("plan") .. format(L.BAR_KEY, ns.Dollars(ns.PriceOf(1))) .. "|r" end
     bar.right:SetText(table.concat(uses, DOT))
 end
 
@@ -166,6 +167,11 @@ local function SessionTip()
             local percent, own = ns.PlanPercent(line)
             Line(line.name, percent .. (own and ", " .. own or ""))
         end
+        GameTooltip:AddLine(" ")
+    end
+    if ns.db.claudeKey then
+        GameTooltip:AddLine(L.KEY, 1, 1, 1)
+        for _, span in ipairs({ { L.BAR_DAY, 1 }, { L.BAR_WEEK, 7 }, { L.BAR_ALL } }) do Line(span[1], ns.Dollars(ns.PriceOf(span[2]))) end
         GameTooltip:AddLine(" ")
     end
     GameTooltip:AddLine(L.USAGE_MODULE, 1, 1, 1)

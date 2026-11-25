@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { claudeCommand } from './claude.mjs';
 import { findGames, hasAddon } from './game.mjs';
 import { homeDir as home } from './home.mjs';
+import { hasKey, keyCommand } from './key.mjs';
 import { status } from './silent-mode.mjs';
 import { slotsThere } from './slots.mjs';
 
@@ -76,6 +77,8 @@ export function check() {
     node: process.version,
     claudeCode: version === null ? null : version.trim(),
     signedIn,
+    apiKey: hasKey(), // then the answers use it, signed in or not
+    apiKeyCommands: { give: keyCommand('set'), remove: keyCommand('remove') }, // the player types them, in a terminal of their own
     games: findGames().map((dir) => ({ folder: dir, addon: hasAddon(dir), answerAddons: slotsThere(dir) })),
     silentMode: status().running,
     autostart: process.platform === 'win32' ? autostartOn() : null,
