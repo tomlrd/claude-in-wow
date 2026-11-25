@@ -2,13 +2,14 @@
 -- new, empty conversation and in the "+" menu; the player changes them, adds some, takes
 -- some away, puts them in order, and gets the first ones back (the settings' tab on the
 -- questions).
---   ns.db.shortcuts = { { kind, label, text, menu (false: not in the menu) } }, nil while they are the first ones.
+--   ns.db.shortcuts = { { kind, label, text, icon, menu (false: not in the menu) } }, nil while they are the first ones.
 --   kind: "bags", "quests", "level", "gear" (the first ones: their own name and question in the player's
 --   language, until they are written over), "question" (the player's)
 
 local addonName, ns = ...
 
-local gsub, ipairs, max, strtrim, tremove = string.gsub, ipairs, math.max, strtrim, table.remove
+local ceil, floor, gsub, ipairs, max, select, strtrim, tonumber, tremove =
+    math.ceil, math.floor, string.gsub, ipairs, math.max, select, strtrim, tonumber, table.remove
 local L, T = ns.L, ns.Theme
 
 local MOST = 12
@@ -39,6 +40,27 @@ local function Label(item)
     return item.label or kind.label and L[kind.label] or ""
 end
 
+-- Its icon: the player's, one of ours by its name or one of the game's by its number, else
+-- its first one; nil when they want none.
+local function IconOf(item)
+    if item.icon == "none" then return nil end
+    return item.icon or Kind(item).icon
+end
+
+-- What is on the cursor, as an icon's number: an item, a spell, a macro...
+local function CursorIcon()
+    local what, first, _, spell = GetCursorInfo()
+    local icon
+    if what == "item" then
+        icon = C_Item and C_Item.GetItemIconByID and C_Item.GetItemIconByID(first) or GetItemIcon and GetItemIcon(first)
+    elseif what == "spell" then
+        icon = C_Spell and C_Spell.GetSpellTexture and C_Spell.GetSpellTexture(spell or first) or GetSpellTexture and GetSpellTexture(spell or first)
+    elseif what == "macro" then
+        icon = select(2, GetMacroInfo(first))
+    end
+    return ns.Clean(tonumber(icon))
+end
+
 local function Text(item)
     local kind = Kind(item)
     return item.text or kind.text and L[kind.text] or ""
@@ -67,7 +89,7 @@ function ns.Shortcuts(inMenu)
         local label = Label(item) ~= "" and Label(item) or text
         if text ~= "" and not (inMenu and item.menu == false) then
             shown[#shown + 1] = {
-                icon = kind.icon, label = Cut(label, LABEL), tip = text,
+                icon = IconOf(item), label = Cut(label, LABEL), tip = text,
                 run = function()
                     if kind.run then return kind.run(item) end
                     ns.Ask("free", text)
@@ -87,7 +109,43 @@ end
 -- The settings
 ----------------------------------------------------------------------
 
--- A shortcut: its name, its question, up, down, away.
+-- The icons to choose from, under the button of the one to change: ours, none; and what is
+-- dropped on that button, the game's.
+local function Icons(editor)
+    local box = CreateFrame("Frame", nil, editor)
+    box:SetFrameStrata("DIALOG")
+    box:EnableMouse(true)
+    T.Box(box, 10, "chrome", "borderStrong")
+    local function Pick(icon)
+        box:Hide()
+        editor:SetIcon(box.index, icon)
+    end
+    local across = 6
+    local names = { "none" }
+    for index, name in ipairs(T.ICONS) do names[index + 1] = name end
+    box.buttons = {}
+    for index, name in ipairs(names) do
+        local button = T.IconButton(box, name == "none" and "Close" or name, 14, name == "none" and L.SHORTCUT_NO_ICON or nil, function() Pick(name) end)
+        button:SetPoint("TOPLEFT", 8 + (index - 1) % across * 30, -8 - floor((index - 1) / across) * 30)
+        box.buttons[name] = button
+    end
+    box.hint = T.Text(box, "sans", 11, "muted")
+    box.hint:SetWidth(across * 30)
+    box.hint:SetText(L.SHORTCUT_ICON_HINT)
+    box.hint:SetPoint("TOPLEFT", 10, -8 - ceil(#names / across) * 30 - 4)
+    function box:Toggle(button, index)
+        if self:IsShown() and self.index == index then return self:Hide() end
+        self.index = index
+        self:SetSize(across * 30 + 16, 8 + ceil(#names / across) * 30 + 4 + (self.hint:GetStringHeight() or 12) + 10)
+        self:ClearAllPoints()
+        self:SetPoint("TOPLEFT", button, "BOTTOMLEFT", 0, -4)
+        self:Show()
+    end
+    box:Hide()
+    return box
+end
+
+-- A shortcut: its icon, its name, its question, up, down, away.
 local function Row(parent, editor)
     local row = CreateFrame("Frame", nil, parent)
     T.Box(row, 10, "none", "border")
@@ -98,8 +156,29 @@ local function Row(parent, editor)
     row.down:SetPoint("RIGHT", row.away, "LEFT", -2, 0)
     row.up = T.IconButton(row, "ArrowUp", 12, L.SHORTCUT_UP, function() editor:Move(row.index, -1) end)
     row.up:SetPoint("RIGHT", row.down, "LEFT", -2, 0)
+    row.icon = T.IconButton(row, "ArrowUp", 16, L.SHORTCUT_ICON, function(_, which)
+        local dropped = CursorIcon()
+        if dropped then
+            ClearCursor()
+            editor:SetIcon(row.index, dropped)
+        elseif which == "RightButton" then
+            editor:SetIcon(row.index, "none")
+        else
+            editor:ChooseIcon(row.icon, row.index)
+        end
+    end, true)
+    row.icon:SetPoint("TOPLEFT", 8, -8)
+    row.icon:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    row.icon:SetScript("OnReceiveDrag", function()
+        local dropped = CursorIcon()
+        if not dropped then return end
+        ClearCursor()
+        editor:SetIcon(row.index, dropped)
+    end)
+    row.icon:HookScript("OnEnter", function(self) if self.icon.own then self.icon:SetVertexColor(1, 1, 1) end end)
+    row.icon:HookScript("OnLeave", function(self) if self.icon.own then self.icon:SetVertexColor(1, 1, 1) end end)
     row.label = T.Edit(row, false, L.SHORTCUT_LABEL, function(text) editor:Write(row.index, "label", text) end)
-    row.label:SetPoint("TOPLEFT", 8, -8)
+    row.label:SetPoint("TOPLEFT", 8 + LINE + 6, -8)
     row.text = T.Edit(row, true, L.SHORTCUT_TEXT, function(text) editor:Write(row.index, "text", text) end)
     row.text:SetPoint("TOPLEFT", 8, -8 - LINE - 6)
     row.menu = T.Switch(row, function(on) editor:SetMenu(row.index, on) end)
@@ -111,7 +190,10 @@ local function Row(parent, editor)
     function row:Fill(index, item, count, width)
         self.index = index
         self:SetWidth(width)
-        self.label:SetSize(max(60, width - 16 - 3 * 26 - 8), LINE)
+        local icon = IconOf(item)
+        self.icon.icon:SetShown(icon ~= nil)
+        if icon then T.SetIcon(self.icon.icon, icon, "muted") end
+        self.label:SetSize(max(60, width - 16 - 3 * 26 - 8 - LINE - 6), LINE)
         self.label:SetValue(Label(item))
         self.up:SetAlpha(index > 1 and 1 or 0.3)
         self.down:SetAlpha(index < count and 1 or 0.3)
@@ -131,6 +213,7 @@ local function Editor(parent)
     function frame:Change(fn)
         fn(Own())
         sure = false
+        if self.icons then self.icons:Hide() end
         ns.RenderClaude()
     end
 
@@ -148,6 +231,18 @@ local function Editor(parent)
         local kind = Kind(item)
         local first = kind[part] and L[kind[part]]
         item[part] = text ~= "" and text ~= first and text or nil
+    end
+
+    function frame:SetIcon(index, icon)
+        local item = Own()[index]
+        if not item then return end
+        item.icon = icon ~= Kind(item).icon and icon or nil
+        ns.RenderClaude()
+    end
+
+    function frame:ChooseIcon(button, index)
+        self.icons = self.icons or Icons(self)
+        self.icons:Toggle(button, index)
     end
 
     function frame:SetMenu(index, on)
@@ -170,7 +265,10 @@ local function Editor(parent)
         sure = not sure
         ns.RenderClaude()
     end)
-    frame:SetScript("OnHide", function() sure = false end)
+    frame:SetScript("OnHide", function(self)
+        sure = false
+        if self.icons then self.icons:Hide() end
+    end)
 
     function frame:Refresh(width)
         local list, y = List(), 0

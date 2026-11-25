@@ -250,8 +250,26 @@ function T.Icon(parent, name, size, color, layer)
     return icon
 end
 
--- Claude's spark, from the texture closest to twice its size; with the game's own icon in
--- front of it when it is large.
+-- An icon shown in a texture: one of ours by its name, tinted, or one of the game's by its
+-- number, as it is.
+function T.SetIcon(texture, icon, color)
+    texture.own = type(icon) == "number" or nil
+    if texture.own then
+        texture:SetTexture(icon)
+        texture:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+        texture:SetVertexColor(1, 1, 1)
+    else
+        texture:SetTexture(ART .. icon)
+        texture:SetTexCoord(0, 1, 0, 1)
+        if color then texture:SetVertexColor(T.Color(color)) end
+    end
+end
+
+-- Our icons one can choose from.
+T.ICONS = { "ArrowUp", "Bag", "MapPin", "Clipboard", "Check", "Copy", "Gear", "NewChat", "Camera", "Plus", "Trash" }
+
+-- Claude's spark, from the texture closest to twice its size; with World of Warcraft's
+-- (the game's own file) in front of it when it is large.
 function T.Logo(parent, size, color, layer)
     local icon = parent:CreateTexture(nil, layer or "ARTWORK")
     icon:SetTexture(ART .. (size <= 16 and "Logo32" or size <= 32 and "Logo64" or "Logo128"))
@@ -261,7 +279,7 @@ function T.Logo(parent, size, color, layer)
         icon.game = parent:CreateTexture(nil, "OVERLAY")
         icon.game:SetSize(size * 0.6, size * 0.6)
         icon.game:SetPoint("CENTER", icon, "CENTER")
-        ns.Game.ShowIcon(icon.game)
+        icon.game:SetTexture("Interface\\FriendsFrame\\Battlenet-WoWicon")
     end
     return icon
 end
@@ -474,7 +492,7 @@ function T.Chip(parent, iconName, label, onClick, primary)
     function chip:SetLabel(text)
         self.label:SetText(text)
         local badge = self.badge and self.badge:GetText() or ""
-        self:SetSize(9 + 14 + 6 + T.TextWidth(self.label) + (badge ~= "" and 9 + T.TextWidth(self.badge) or 0) + 11, 28)
+        self:SetSize((self.bare and 11 or 9 + 14 + 6) + T.TextWidth(self.label) + (badge ~= "" and 9 + T.TextWidth(self.badge) or 0) + 11, 28)
     end
     -- A word on the right, in a colour: what kind of button it is. Before SetLabel.
     function chip:SetBadge(text, color)
@@ -486,20 +504,28 @@ function T.Chip(parent, iconName, label, onClick, primary)
         self.badge:SetText(text or "")
         self.badge:SetTextColor(T.Color(color or "muted"))
     end
-    function chip:SetIcon(name)
-        self.icon:SetTexture(ART .. name)
+    -- One of ours, one of the game's (a number), or none. Before SetLabel.
+    function chip:SetIcon(icon)
+        local bare = icon == nil or nil
+        if bare ~= self.bare then
+            self.bare = bare
+            self.icon:SetShown(not bare)
+            self.label:ClearAllPoints()
+            if bare then self.label:SetPoint("LEFT", 11, 0) else self.label:SetPoint("LEFT", self.icon, "RIGHT", 6, 0) end
+        end
+        if icon then T.SetIcon(self.icon, icon, primary and "clay" or "label") end
     end
     chip:SetLabel(label)
     if primary then chip.label:SetTextColor(T.Color("text")) end
     chip:SetScript("OnEnter", function(self)
         T.PaintBox(self, "field", primary and "clay" or "borderHover")
         self.label:SetTextColor(T.Color("text"))
-        self.icon:SetVertexColor(T.Color(primary and "clay" or "text"))
+        if not self.icon.own then self.icon:SetVertexColor(T.Color(primary and "clay" or "text")) end
     end)
     chip:SetScript("OnLeave", function(self)
         T.PaintBox(self, "chip", border)
         self.label:SetTextColor(T.Color(primary and "text" or "label"))
-        self.icon:SetVertexColor(T.Color(primary and "clay" or "label"))
+        if not self.icon.own then self.icon:SetVertexColor(T.Color(primary and "clay" or "label")) end
     end)
     chip:SetScript("OnClick", onClick)
     return chip
@@ -578,7 +604,7 @@ function T.Menu(parent)
             local height = entry.detail and 46 or 32
             item.run = entry.run
             item.icon:SetShown(entry.icon ~= nil)
-            if entry.icon then item.icon:SetTexture(ART .. entry.icon) end
+            if entry.icon then T.SetIcon(item.icon, entry.icon, "secondary") end
             item.label:SetText(entry.label)
             item.label:ClearAllPoints()
             if entry.detail then

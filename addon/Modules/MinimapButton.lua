@@ -1,4 +1,4 @@
--- claude-in-wow: the button on the minimap: Claude's spark behind the game's icon.
+-- claude-in-wow: the button on the minimap: Claude's spark.
 --   Click: opens or closes the window (ClaudeWindow.lua).
 --   Right-click: a photo of the game (Photo.lua).
 --   Shift+click: the addon's settings (Settings.lua).
@@ -60,12 +60,8 @@ local function Build()
     back:SetPoint("CENTER")
     button.icon = button:CreateTexture(nil, "ARTWORK")
     button.icon:SetTexture(T.ADDON_ICON)
-    button.icon:SetSize(24, 24)
+    button.icon:SetSize(18, 18)
     button.icon:SetPoint("CENTER")
-    button.game = button:CreateTexture(nil, "ARTWORK", nil, 1)
-    button.game:SetSize(14, 14)
-    button.game:SetPoint("CENTER")
-    ns.Game.ShowIcon(button.game)
     local ring = button:CreateTexture(nil, "OVERLAY")
     ring:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
     ring:SetSize(50, 50)

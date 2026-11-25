@@ -487,8 +487,11 @@ ns.Locale("itIT", {
 
     -- Modules\Shortcuts.lua
     SHORTCUTS = "Le tue domande",
-    SHORTCUTS_TIP = "Domande già pronte, mostrate in una conversazione vuota e, a scelta per ognuna, nel menu «+». Cambia il loro nome e la loro domanda, aggiungine o togline.",
+    SHORTCUTS_TIP = "Domande già pronte, mostrate in una conversazione vuota e, a scelta per ognuna, nel menu «+». Cambia la loro icona, il loro nome e la loro domanda, aggiungine o togline.",
     SHORTCUTS_EDIT = "Modifica queste domande",
+    SHORTCUT_ICON = "Icona: clicca per scegliere, o trascina qui un oggetto, un incantesimo o una macro; clic destro: nessuna",
+    SHORTCUT_NO_ICON = "Nessuna icona",
+    SHORTCUT_ICON_HINT = "O trascinaci sopra un oggetto, un incantesimo o una macro: l'icona del gioco.",
     SHORTCUT_LABEL = "Nome mostrato",
     SHORTCUT_TEXT = "La domanda che pone",
     SHORTCUT_MENU = "Anche nel menu «+»",

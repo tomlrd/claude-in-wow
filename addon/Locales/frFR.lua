@@ -488,8 +488,11 @@ ns.Locale("frFR", {
 
     -- Modules\Shortcuts.lua
     SHORTCUTS = "Vos questions",
-    SHORTCUTS_TIP = "Des questions toutes prêtes, affichées sur une conversation vide et, au choix pour chacune, dans le menu « + ». Changez leur nom et leur question, ajoutez-en, retirez-en.",
+    SHORTCUTS_TIP = "Des questions toutes prêtes, affichées sur une conversation vide et, au choix pour chacune, dans le menu « + ». Changez leur icône, leur nom et leur question, ajoutez-en, retirez-en.",
     SHORTCUTS_EDIT = "Modifier ces questions",
+    SHORTCUT_ICON = "Icône : cliquez pour choisir, ou glissez ici un objet, un sort ou une macro ; clic droit : aucune",
+    SHORTCUT_NO_ICON = "Aucune icône",
+    SHORTCUT_ICON_HINT = "Ou glissez dessus un objet, un sort ou une macro : l'icône du jeu.",
     SHORTCUT_LABEL = "Nom affiché",
     SHORTCUT_TEXT = "La question qu'il pose",
     SHORTCUT_MENU = "Aussi dans le menu « + »",

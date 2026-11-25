@@ -511,8 +511,11 @@ ns.Locale("enUS", {
 
     -- Modules\Shortcuts.lua
     SHORTCUTS = "Your questions",
-    SHORTCUTS_TIP = "Questions written beforehand, shown on an empty conversation and, as you choose for each, in the \"+\" menu. Change their name and their question, add some, remove some.",
+    SHORTCUTS_TIP = "Questions written beforehand, shown on an empty conversation and, as you choose for each, in the \"+\" menu. Change their icon, their name and their question, add some, remove some.",
     SHORTCUTS_EDIT = "Change these questions",
+    SHORTCUT_ICON = "Icon: click to choose, or drop an item, a spell or a macro here; right-click: none",
+    SHORTCUT_NO_ICON = "No icon",
+    SHORTCUT_ICON_HINT = "Or drop on it an item, a spell or a macro: the game's icon.",
     SHORTCUT_LABEL = "Name shown",
     SHORTCUT_TEXT = "The question it asks",
     SHORTCUT_MENU = "In the \"+\" menu too",

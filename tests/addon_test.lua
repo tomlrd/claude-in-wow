@@ -637,18 +637,6 @@ ok("a link with no number: its text", ns.MarkdownInline("[ici](map:abc)"), "ici"
 local minimapButton
 for _, f in ipairs(frames) do if f.name == "ClaudeInWoWMinimapButton" then minimapButton = f end end
 ok("a minimap button", tostring(minimapButton.shown) .. " " .. tostring(db.options.minimapButton) .. " " .. tostring(db.minimap.hide), "true true nil")
-do -- the game's icon in front of the spark
-    local kept, keptEnum, shown = C_Texture, Enum.TitleIconVersion, nil
-    local texture = { SetTexture = function(_, file) shown = file end }
-    C_Texture = { GetTitleIconTexture = function(client, size, done) done(true, client .. size) end }
-    Enum.TitleIconVersion = { Medium = 2 }
-    ns.Game.ShowIcon(texture)
-    ok("the game's icon, as its friends list gives it", shown, (BNET_CLIENT_WOW or "WoW") .. "2")
-    C_Texture = nil
-    ns.Game.ShowIcon(texture)
-    ok("or its file, where it does not", shown, "Interface\\FriendsFrame\\Battlenet-WoWicon")
-    C_Texture, Enum.TitleIconVersion = kept, keptEnum
-end
 ns.SetOption("minimapButton", false)
 ok("the setting hides it", tostring(db.minimap.hide) .. " " .. tostring(minimapButton.shown), "true false")
 ns.SetOption("minimapButton", true)
@@ -730,6 +718,41 @@ do -- the buttons of an empty conversation
     ok("written over: its name and its question", labels() .. " > " .. asked, "Vendre | Mes quêtes | Que faire à mon niveau | Améliorer mon équipement > bags: Que vendre ?")
     ns.Shortcuts()[3].run()
     ok("what to do at one's level", asked, "free: Que faire de mieux à mon niveau en ce moment : zones, quêtes, donjons, métiers ? Donne-moi un ordre.")
+    do -- its icon, the player's
+        local function icons()
+            local list = {}
+            for index, one in ipairs(ns.Shortcuts()) do list[index] = tostring(one.icon) end
+            return table.concat(list, " ")
+        end
+        local keptCursor, keptClear, keptItem = GetCursorInfo, ClearCursor, C_Item.GetItemIconByID
+        local held = nil
+        GetCursorInfo = function() if held then return held[1], held[2] end end
+        ClearCursor = function() held = nil end
+        C_Item.GetItemIconByID = function(id) return id + 100000 end
+        ok("the first icons", icons(), "Bag MapPin Clipboard Check")
+        rows[1].icon.scripts.OnClick(rows[1].icon, "LeftButton")
+        local box
+        for _, f in ipairs(frames) do if f.buttons and f.buttons.none then box = f end end
+        ok("a click: those to choose from, none too", tostring(box.shown) .. " " .. tostring(box.buttons.Gear ~= nil), "true true")
+        box.buttons.Gear.scripts.OnClick(box.buttons.Gear)
+        ok("one chosen", icons() .. " " .. tostring(box.shown), "Gear MapPin Clipboard Check false")
+        held = { "item", 4306 }
+        rows[2].icon.scripts.OnReceiveDrag(rows[2].icon)
+        ok("an item dropped on it: its icon", icons() .. " " .. tostring(held), "Gear 104306 Clipboard Check nil")
+        ok("the game's icons are numbers, kept", db.shortcuts[2].icon, 104306)
+        rows[3].icon.scripts.OnClick(rows[3].icon, "RightButton")
+        ok("a right-click: none", icons() .. " " .. tostring(rows[3].icon.icon.shown), "Gear 104306 nil Check false")
+        ns.OpenClaude()
+        local chips = {}
+        for _, f in ipairs(frames) do if f.shortcut then chips[#chips + 1] = f end end
+        ok("on the buttons of an empty conversation too", tostring(chips[3].icon.shown) .. " " .. tostring(chips[2].icon.own), "false true")
+        ns.EditShortcuts()
+        rows[1].icon.scripts.OnClick(rows[1].icon, "LeftButton")
+        box.buttons.Bag.scripts.OnClick(box.buttons.Bag)
+        ok("the first one again: nothing to keep", tostring(db.shortcuts[1].icon), "nil")
+        db.shortcuts[2].icon, db.shortcuts[3].icon = nil, nil
+        GetCursorInfo, ClearCursor, C_Item.GetItemIconByID = keptCursor, keptClear, keptItem
+    end
     rows[1].label.edit.text = ""
     rows[1].label.edit.scripts.OnTextChanged(rows[1].label.edit, true)
     ok("emptied: the first name", (labels():match("^[^|]*")), "Trier mes sacs ")

@@ -194,15 +194,6 @@ function Game.QuestWatched(questID)
     return index and IsQuestWatched and IsQuestWatched(index) and true or false
 end
 
--- The game's own icon, as its friends list shows it.
-function Game.ShowIcon(texture)
-    local asked = C_Texture and C_Texture.GetTitleIconTexture and Enum.TitleIconVersion and pcall(C_Texture.GetTitleIconTexture, BNET_CLIENT_WOW or "WoW",
-        Enum.TitleIconVersion.Medium, function(success, file)
-            if success then texture:SetTexture(file) end
-        end)
-    if not asked then texture:SetTexture("Interface\\FriendsFrame\\Battlenet-WoWicon") end
-end
-
 -- A pin there, followed on screen, where the game has them: true when it is set.
 function Game.Pin(map, x, y)
     if not (C_Map.SetUserWaypoint and UiMapPoint) then return false end

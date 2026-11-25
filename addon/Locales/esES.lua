@@ -491,8 +491,11 @@ ns.Locale("esES", {
 
     -- Modules\Shortcuts.lua
     SHORTCUTS = "Tus preguntas",
-    SHORTCUTS_TIP = "Preguntas ya escritas, que se ven en una conversación vacía y, según elijas para cada una, en el menú «+». Cambia su nombre y su pregunta, añade o quita.",
+    SHORTCUTS_TIP = "Preguntas ya escritas, que se ven en una conversación vacía y, según elijas para cada una, en el menú «+». Cambia su icono, su nombre y su pregunta, añade o quita.",
     SHORTCUTS_EDIT = "Cambiar estas preguntas",
+    SHORTCUT_ICON = "Icono: haz clic para elegir, o arrastra aquí un objeto, un hechizo o una macro; clic derecho: ninguno",
+    SHORTCUT_NO_ICON = "Sin icono",
+    SHORTCUT_ICON_HINT = "O arrastra encima un objeto, un hechizo o una macro: el icono del juego.",
     SHORTCUT_LABEL = "Nombre mostrado",
     SHORTCUT_TEXT = "La pregunta que hace",
     SHORTCUT_MENU = "También en el menú «+»",

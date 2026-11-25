@@ -482,8 +482,11 @@ ns.Locale("deDE", {
 
     -- Modules\Shortcuts.lua
     SHORTCUTS = "Eure Fragen",
-    SHORTCUTS_TIP = "Vorbereitete Fragen, in einer leeren Unterhaltung zu sehen und, für jede wählbar, im „+“-Menü. Ändert ihren Namen und ihre Frage, fügt welche hinzu oder entfernt sie.",
+    SHORTCUTS_TIP = "Vorbereitete Fragen, in einer leeren Unterhaltung zu sehen und, für jede wählbar, im „+“-Menü. Ändert ihr Symbol, ihren Namen und ihre Frage, fügt welche hinzu oder entfernt sie.",
     SHORTCUTS_EDIT = "Diese Fragen ändern",
+    SHORTCUT_ICON = "Symbol: klicken zum Wählen, oder einen Gegenstand, Zauber oder ein Makro hierher ziehen; Rechtsklick: keines",
+    SHORTCUT_NO_ICON = "Kein Symbol",
+    SHORTCUT_ICON_HINT = "Oder zieht einen Gegenstand, Zauber oder ein Makro darauf: das Symbol des Spiels.",
     SHORTCUT_LABEL = "Angezeigter Name",
     SHORTCUT_TEXT = "Die Frage, die sie stellt",
     SHORTCUT_MENU = "Auch im „+“-Menü",
