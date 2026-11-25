@@ -24,13 +24,13 @@ What goes on [authors.curseforge.com](https://authors.curseforge.com) when the p
 
 ## The description
 
-Paste below, in the Markdown editor. Each `IMAGE:` line is a picture of the project's own gallery: upload them first, then put their address in its place.
+Paste below, in the Markdown editor. The pictures are shown from this repository (docs/images); to show the gallery's copies instead, put the address of each one (right-click on it, copy the image's address) in place of the one in parentheses.
 
 ---
 
 **Ask Claude about your game, from the game itself.** Your character, your quests, your bags, where to go and why: the answer shows in a window in the game, with links you can click, buttons, routes to follow and marks on your bags.
 
-IMAGE: claude-in-wow.gif
+![What it does](https://raw.githubusercontent.com/tomlrd/claude-in-wow/main/docs/images/claude-in-wow.gif)
 
 > **Unofficial.** Works with Claude, by Anthropic. Not affiliated with Anthropic nor Blizzard. It needs a program on your computer besides this addon: read *How it works* below before installing.
 
@@ -56,7 +56,7 @@ IMAGE: claude-in-wow.gif
 
 ### How it works
 
-IMAGE: 12-how.png
+![How it works](https://raw.githubusercontent.com/tomlrd/claude-in-wow/main/docs/images/12-how.jpg)
 
 Two parts that go together:
 
@@ -65,7 +65,7 @@ Two parts that go together:
 
 Each answer uses **your own Claude plan** (Pro, Max...), or **your own API key**, paid by use. Nothing is included.
 
-IMAGE: 13-silent.png
+![No Claude window needed](https://raw.githubusercontent.com/tomlrd/claude-in-wow/main/docs/images/13-silent.jpg)
 
 No Claude window needs to be open: a hidden program waits for your questions (the silent mode). Or talk to a Claude session you see: you choose, in the addon's settings.
 
