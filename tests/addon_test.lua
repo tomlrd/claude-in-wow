@@ -2213,7 +2213,7 @@ do -- the updates
         for index = was + 1, #timers do timers[index]() end
     end
     ok("told when there is one, the addon by CurseForge, at first", db.options.updates .. " " .. db.options.updateFrom, "notify curseforge")
-    ok("nothing known: no line", tostring(ns.UpdateDue()) .. " " .. tostring(findBar("update").spec.wanted()), "nil false")
+    ok("nothing known: no line", tostring(ns.UpdateDue()) .. " " .. tostring(ns.UpdateBadge()), "nil nil")
     ok("another text is none", tostring(ns.TakeUpdate("Bonjour")), "nil")
     db.settingsTab = "updates"
     ns.OpenClaude("settings")
@@ -2223,16 +2223,20 @@ do -- the updates
     fire("PLAYER_LOGIN")
     ok("told at the login", ns.UpdateDue() .. " " .. #db.update.notes.frFR .. " " .. db.update.notes.frFR[1], "1.1.0 2 Du neuf = oui")
     ns.OpenClaude()
-    ok("a line under the box, with its button", tostring(findBar("update").shown) .. " " .. bare(findBar("update").left.text) .. " / " .. bare(findBar("update").right.text), "true Mise à jour disponible : 1.1.0 / Mettre à jour")
-    findBar("update").scripts.OnClick(findBar("update"))
+    local badge
+    for _, f in ipairs(frames) do if f.label and f.label.text == "Mise à jour" then badge = f end end
+    ok("a badge on the title's line", tostring(badge.shown) .. " " .. select(2, ns.UpdateBadge()):gsub("\n", " / "), "true Addon : 1.0.0, la 1.1.0 est sortie / Clic : les nouveautés")
+    badge.scripts.OnClick(badge)
     local page = findText("Addon : ")
     ok("a click on it opens what is new", db.settingsTab .. " " .. page, "updates Addon : 1.0.0, la 1.1.0 est sortie")
     ns.SetOption("updates", "never")
-    ok("never: nothing is said", tostring(ns.UpdateDue()), "nil")
+    ok("never: nothing is said", tostring(ns.UpdateDue()) .. " " .. tostring(badge.shown), "nil false")
     ns.SetOption("updates", "notify")
     -- asked
-    ns.OpenClaude()
-    findBar("update").action.scripts.OnClick(findBar("update").action)
+    ok("on the settings' page too", tostring(badge.shown), "true")
+    local button
+    for _, f in ipairs(frames) do if f.label and f.label.text == "Mettre à jour" then button = f end end
+    button.scripts.OnClick(button)
     ok("asked of the plugin in a photo, not of Claude", sent.kind .. " " .. sent.update.from .. " " .. tostring(sent.update.check) .. " " .. tostring(sent.signal ~= nil and sent.slot ~= nil) .. " " .. #ns.WaitingQuestions(), "update curseforge nil true " .. #ns.WaitingQuestions())
     local first = sent
     sent.done(true)
@@ -2267,6 +2271,11 @@ do -- the updates
     sent.done(true)
     sent.sentAt = sent.sentAt - 60
     tick()
+    ns.TakeUpdate("[claude-in-wow update]\npluginNow=1.0.0\naddon=1.0.0\nplugin=1.1.0")
+    ns.OpenClaude()
+    ok("for the plugin alone too", tostring(badge.shown) .. " " .. select(2, ns.UpdateBadge()):match("^[^\n]*"), "true Plugin : 1.0.0, la 1.1.0 est sortie")
+    ns.TakeUpdate("[claude-in-wow update]\npluginNow=1.0.0\nchecked=none")
+    ns.OpenClaude("settings")
     ok("nobody received it: said", findText("Le plugin ne répond pas"):match("^[^\n]*"), "Le plugin ne répond pas : le mode silencieux est-il arrêté ? (Aide)")
     ns.AskUpdate(true)
     ok("asked again, to look only", tostring(sent.update.check), "true")

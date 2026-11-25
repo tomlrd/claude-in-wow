@@ -1,7 +1,7 @@
 -- claude-in-wow module: updates, and what is new. The plugin looks for them (updates.mjs)
 -- and tells the game: at each login or reload in an addon it makes (claude-in-wow_News),
--- and as the answer to a request. A line under the box then says it, with "Update"; the
--- rest of it opens the settings' tab, where what is new is. The request goes in a photo,
+-- and as the answer to a request. A badge on the title's line then says it; a click on it opens the
+-- settings' tab, where what is new is, with "Update". The request goes in a photo,
 -- as a question does, but Claude is not asked. The addon itself is updated by CurseForge,
 -- or by the plugin from GitHub, as the player chose: then once the game is closed.
 
@@ -73,7 +73,6 @@ end
 
 local function Refresh()
     ns.RenderClaude()
-    ns.RefreshBar("update")
 end
 
 -- Asks the plugin to look, or to update.
@@ -207,30 +206,26 @@ ns.Module({
 })
 
 ----------------------------------------------------------------------
--- The line under the box
+-- The badge on the title's line
 ----------------------------------------------------------------------
 
-ns.AddBar({
-    key = "update", first = true,
-    wanted = function() return ns.UpdateDue() ~= nil or asked == "sending" or asked == "asked" end,
-    fill = function(bar)
-        local addon, plugin = Out()
-        bar.left:SetText(asked and asked ~= "lost" and L.UPDATE_SENDING or T.Code("clay") .. format(L.UPDATE_BAR, addon or plugin or "") .. "|r")
-        bar.right:SetText(asked and asked ~= "lost" and "" or T.Code("accent") .. L.UPDATE .. "|r")
-    end,
-    tip = function()
-        GameTooltip:SetText(L.UPDATE_BAR_TIP, 1, 1, 1, 1, true)
-    end,
-    click = function() ns.OpenUpdates() end,
-    action = function()
-        ns.AskUpdate()
-        ns.OpenUpdates()
-    end,
-})
+-- What it says and its tooltip, whichever of the two is to be updated; nil when none is.
+function ns.UpdateBadge()
+    if asked == "sending" or asked == "asked" then return L.UPDATE_BADGE, L.UPDATE_SENDING end
+    if not ns.UpdateDue() then return nil end
+    local addon, plugin = Out()
+    local lines = {}
+    if addon then lines[1] = format(L.UPDATE_ADDON, Version(), addon) end
+    if plugin then lines[#lines + 1] = format(L.UPDATE_PLUGIN, ns.db.update.pluginNow or "?", plugin) end
+    return L.UPDATE_BADGE, concat(lines, "\n") .. "\n" .. L.UPDATE_BADGE_TIP
+end
 
 local events = CreateFrame("Frame")
 events:RegisterEvent("PLAYER_LOGIN")
 events:SetScript("OnEvent", function()
     local told = ns.ReadAddon(NEWS)
-    if told then ns.TakeUpdate(told) end
+    if told then
+        ns.TakeUpdate(told)
+        ns.RenderClaude()
+    end
 end)

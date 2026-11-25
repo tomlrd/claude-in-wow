@@ -198,12 +198,6 @@ local BARS = {
 }
 local bars -- the frames, once the window is built
 
--- Another bar, over the others or under them, from another file; action: what a click on
--- its right part does.
-function ns.AddBar(spec)
-    if spec.first then table.insert(BARS, 1, spec) else BARS[#BARS + 1] = spec end
-end
-
 local function NewBar(parent, spec)
     local bar = CreateFrame("Button", nil, parent)
     bar:SetHeight(HEIGHT)
@@ -231,12 +225,6 @@ local function NewBar(parent, spec)
         GameTooltip:Hide()
     end)
     if spec.click then bar:SetScript("OnClick", spec.click) end
-    if spec.action then
-        bar.action = CreateFrame("Button", nil, bar)
-        bar.action:SetPoint("TOPLEFT", bar.right, "TOPLEFT", -8, 2)
-        bar.action:SetPoint("BOTTOMRIGHT", bar.right, "BOTTOMRIGHT", 2, -2)
-        bar.action:SetScript("OnClick", spec.action)
-    end
     return bar
 end
 
@@ -249,7 +237,7 @@ function ns.LayoutBars(parent, pad, bottom, shown)
     local y = bottom
     for index = #bars, 1, -1 do -- from the last one up
         local bar = bars[index]
-        local on = (bar.spec.action or ns.On(bar.spec.key)) and (not bar.spec.wanted or bar.spec.wanted())
+        local on = ns.On(bar.spec.key) and (not bar.spec.wanted or bar.spec.wanted())
         bar:SetShown(on and shown)
         if on then
             bar:SetPoint("BOTTOMLEFT", pad, y)
@@ -270,7 +258,7 @@ end
 -- What they say, read again; hidden with the box you write in.
 function ns.UpdateBars(shown)
     for _, bar in ipairs(bars or {}) do
-        local on = shown and (bar.spec.action or ns.On(bar.spec.key)) and (not bar.spec.wanted or bar.spec.wanted())
+        local on = shown and ns.On(bar.spec.key) and (not bar.spec.wanted or bar.spec.wanted())
         bar:SetShown(on)
         if on then bar.spec.fill(bar) end
     end

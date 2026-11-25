@@ -45,6 +45,7 @@ local PASTE_SIZE = 40     -- characters arriving at once: a paste
 local UI_SIZE = 13
 local FOLD_OVER, FOLD_TO = 5, 3 -- a code block longer than so many lines shows so few until it is clicked
 
+local updateBadge
 local frame, title, scroll, content, empty, composer, input, placeholder, sendButton, plus, modelPicker, effortPicker, menu, strip, stripBox
 local gear, settingsArea, settingsPage, nextButton, tabStrip, plusTab, thinking
 local tabButtons = {}
@@ -959,6 +960,17 @@ local function ShowSettings(on)
     if settingsShown then input:ClearFocus() end
 end
 
+-- The badge after the title, while there is an update (Updates.lua).
+local function RefreshBadge()
+    local label = ns.UpdateBadge()
+    updateBadge:SetShown(label ~= nil)
+    if not label then return end
+    updateBadge.label:SetText(label)
+    updateBadge:SetSize(T.TextWidth(updateBadge.label) + 16, 18)
+    updateBadge:ClearAllPoints()
+    updateBadge:SetPoint("LEFT", title, "LEFT", T.TextWidth(title) + 10, 0)
+end
+
 -- Lays the conversation out again; to its end when asked.
 function ns.RenderClaude(toEnd)
     if not frame or not frame:IsShown() then return end
@@ -968,6 +980,7 @@ function ns.RenderClaude(toEnd)
     UpdateContext()
     if settingsShown then
         title:SetText(L.SETTINGS)
+        RefreshBadge()
         nextButton:Hide()
         thinking:Hide()
         StopThinking()
@@ -978,6 +991,7 @@ function ns.RenderClaude(toEnd)
     local width, view = scroll:GetWidth() or WIDTH, scroll:GetHeight() or 0
     content:SetWidth(width)
     title:SetText("Claude in WoW")
+    RefreshBadge()
     local nextRoom = UpdateNextStep()
 
     empty:SetShown(#messages == 0)
@@ -1359,6 +1373,26 @@ local function BuildHeader()
     title:SetJustifyV("MIDDLE")
     title:SetPoint("LEFT", logo, "RIGHT", 9, 0)
     title:SetPoint("RIGHT", gear, "LEFT", -8, 0)
+
+    updateBadge = CreateFrame("Button", nil, header)
+    T.Box(updateBadge, 8, "none", "clay")
+    updateBadge.label = T.Text(updateBadge, "sansMedium", 11, "clay")
+    updateBadge.label:SetWordWrap(false)
+    updateBadge.label:SetPoint("CENTER")
+    updateBadge:SetScript("OnClick", function() ns.OpenUpdates() end)
+    updateBadge:SetScript("OnEnter", function(self)
+        local label, tip = ns.UpdateBadge()
+        if not label then return end
+        T.PaintBox(self, "hover", "clay")
+        GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+        GameTooltip:SetText(tip, 1, 1, 1, 1, true)
+        GameTooltip:Show()
+    end)
+    updateBadge:SetScript("OnLeave", function(self)
+        T.PaintBox(self, "none", "clay")
+        GameTooltip:Hide()
+    end)
+    updateBadge:Hide()
 
     local divider = T.Line(header)
     divider:SetShown(not T.Skin().noDivider)
