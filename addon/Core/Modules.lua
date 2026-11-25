@@ -143,6 +143,5 @@ ns.Category({ key = "conversation", title = "TAB_CONVERSATION", order = 40 })
 -- What the player may take from Claude: a module with limit = true is on at
 -- first, and shows there as "Do not ...", unticked.
 ns.Category({ key = "limits", title = "TAB_LIMITS", order = 45 })
-ns.Category({ key = "bags", title = "TAB_BAGS", order = 50 })
 ns.Category({ key = "window", title = "TAB_WINDOW", order = 60 })
 ns.Category({ key = "about", title = "TAB_ABOUT", order = 70 })

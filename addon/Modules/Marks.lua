@@ -1,7 +1,7 @@
 -- claude-in-wow: the assistant's marks on the bags. After its answer
 -- about the bags, the assistant gives a block that comes back with the answer
--- pasted in the Claude window (also opened by /claude marks or a Ctrl+click on
--- the bags' button), where a button applies it:
+-- pasted in the Claude window (also opened by /claude marks),
+-- where a button applies it:
 --   [claude-in-wow] marks
 --   sell 11988 Agility and Stamina, of no use to a mage
 --   destroy 17781 quest already handed in
@@ -94,7 +94,7 @@ end
 
 -- The item's mark, if it has one of a known action.
 local function MarkOf(itemID)
-    local marks = ns.On("marks") and ns.char and ns.char.marks
+    local marks = ns.char and ns.char.marks
     local mark = itemID and marks and marks[itemID]
     return type(mark) == "table" and ACTIONS[mark.action] and mark or nil
 end
@@ -126,7 +126,7 @@ local function Redraw()
 end
 
 local function Any()
-    local marks = ns.On("marks") and ns.char and ns.char.marks
+    local marks = ns.char and ns.char.marks
     return marks and next(marks) ~= nil
 end
 
@@ -261,26 +261,3 @@ frame:SetScript("OnEvent", function(_, event)
     end
     if not Prune() and Any() then ns.EachBagSlot(Paint) end -- items moved
 end)
-
-----------------------------------------------------------------------
--- The module
-----------------------------------------------------------------------
-
--- Clearing the marks, when there are some.
-local function Clear(parent)
-    local holder = CreateFrame("Frame", nil, parent)
-    holder.chip = ns.Theme.Chip(holder, "Trash", L.CLEAR_MARKS, function()
-        ns.ClearMarks()
-        ns.RenderClaude()
-    end)
-    holder.chip:SetPoint("TOPLEFT")
-    function holder:Refresh(width)
-        local some = ns.char and ns.char.marks and next(ns.char.marks) ~= nil
-        self.chip:SetShown(some and true or false)
-        self:SetSize(width, some and 28 or 1)
-        return some and 28 or 0
-    end
-    return holder
-end
-
-ns.Module({ key = "marks", category = "bags", order = 10, title = "MARKS_MODULE", tip = "MARKS_MODULE_TIP", changed = function() Redraw() end, custom = Clear })

@@ -1939,10 +1939,10 @@ findButton("Réglages").scripts.OnClick(findButton("Réglages"))
 local tabNames, tabsByKey = {}, {}
 for _, f in ipairs(frames) do if f.category and f.label then tabNames[#tabNames + 1] = f.label.text tabsByKey[f.category] = f end end
 ok("the gear shows the settings page, its tabs on the left", tostring(findText("Réglages")) .. " | " .. table.concat(tabNames, " "),
-    "Réglages | Claude Questions Réponses Conversation Limitations Sacs Consommation Fenêtre Aide Nouveautés À propos")
+    "Réglages | Claude Questions Réponses Conversation Limitations Consommation Fenêtre Aide Nouveautés À propos")
 local settingRows = {}
 local function openTabs() -- each in turn, as the player would
-    for _, key in ipairs({ "claude", "questions", "answers", "conversation", "limits", "bags", "usage", "window", "help", "updates", "about" }) do
+    for _, key in ipairs({ "claude", "questions", "answers", "conversation", "limits", "usage", "window", "help", "updates", "about" }) do
         tabsByKey[key].scripts.OnClick(tabsByKey[key])
     end
     for _, f in ipairs(frames) do if f.option and f.option.key then settingRows[f.option.key] = f end end
@@ -1955,7 +1955,7 @@ ok("a switch shows the setting", minimapSwitch.checked, true)
 local settingsOn = {}
 for key, row in pairs(settingRows) do if row.switch and row.switch.checked then settingsOn[#settingsOn + 1] = key end end
 table.sort(settingsOn)
-ok("every module and setting on by default, but the sound at the start", table.concat(settingsOn, " "), "answerNote arrive bagButton barCharacter barSession chips compactPhoto gameLinks linkClick marks minimapButton parallel places placesIcon placesPin players playersClass playersLevel renew saidInGame select sendByPhoto shortcutsEdit soundReady why")
+ok("every module and setting on by default, but the sound at the start", table.concat(settingsOn, " "), "answerNote arrive barCharacter barSession chips compactPhoto gameLinks linkClick minimapButton parallel places placesIcon placesPin players playersClass playersLevel renew saidInGame select sendByPhoto shortcutsEdit soundReady why")
 -- the usage
 ok("short figures", table.concat({ ns.ShortNumber(950), ns.ShortNumber(1000), ns.ShortNumber(52499), ns.ShortNumber(999400), ns.ShortNumber(999600), ns.ShortNumber(1240000) }, " | "), "950 | 1 k | 52 k | 999 k | 1 M | 1,2 M")
 do

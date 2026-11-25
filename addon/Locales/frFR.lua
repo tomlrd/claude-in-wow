@@ -112,7 +112,6 @@ ns.Locale("frFR", {
     BUTTON_OPEN_NOT = "Cette fenêtre ne peut pas être ouverte d'ici.",
     WINDOWS = { bags = "Ouvrir mes sacs", character = "Ouvrir mon personnage", friends = "Ouvrir la liste d'amis", map = "Ouvrir la carte", quests = "Ouvrir le journal des quêtes", reputations = "Ouvrir les réputations" },
     MAP_COMBAT = "La carte s'ouvre hors combat ; l'épingle est posée.",
-    BAGS_BUTTON_TIP = "Clic : une photo du jeu pour Claude (sans /reload). Maj+clic : la question sur vos sacs, dans la fenêtre Claude. Ctrl+clic : la fenêtre Claude, pour coller sa réponse et ses marques.",
     USAGE = "Le bouton de la mini-carte ouvre la fenêtre Claude. /claude : une photo du jeu pour Claude (sans /reload). /claude sacs : la question sur vos sacs. /claude marques : coller la réponse et les marques de Claude. /claude <question> : votre question, à copier.",
     BAGS_WORDS = { bags = true, sacs = true },
     MARKS_WORDS = { marks = true, marques = true },
@@ -232,7 +231,6 @@ ns.Locale("frFR", {
     -- Core\Modules.lua
     TAB_ANSWERS = "Réponses",
     TAB_LIMITS = "Limitations",
-    TAB_BAGS = "Sacs",
     TAB_WINDOW = "Fenêtre",
     TAB_ABOUT = "À propos",
 
@@ -387,8 +385,6 @@ ns.Locale("frFR", {
     SELECT_COPIED = "Texte copié",
 
     -- Modules\Marks.lua
-    MARKS_MODULE = "Marques sur les sacs",
-    MARKS_MODULE_TIP = "Après « Trier mes sacs », une icône sur chaque objet à vendre, garder, mettre en banque… et une ligne dans son infobulle.",
 
     -- Modules\Buttons.lua
     CHIPS = "Questions à poser ensuite",
@@ -481,9 +477,6 @@ ns.Locale("frFR", {
     PLAYERS_ZONE = "Ouvrir la carte : %s",
     PLAYERS_OFFLINE = "Hors ligne",
 
-    -- Modules\BagButton.lua
-    BAG_BUTTON_MODULE = "Bouton sur les sacs",
-    BAG_BUTTON_MODULE_TIP = "Un petit livre sur les sacs : une photo du jeu, ou la question sur vos sacs (Maj+clic).",
 
     -- Window\Settings.lua
     UNOFFICIAL = "Non officiel",

@@ -113,8 +113,6 @@ ns.Locale("enUS", {
     BUTTON_OPEN_NOT = "This window cannot be opened from here.",
     WINDOWS = { bags = "Open my bags", character = "Open my character", friends = "Open the friends list", map = "Open the map", quests = "Open the quest log", reputations = "Open the reputations" },
     MAP_COMBAT = "The map opens out of combat; the pin is set.",
-    BAGS_BUTTON = "claude-in-wow",
-    BAGS_BUTTON_TIP = "Click: a photo of the game for Claude (no /reload needed). Shift+click: the question about your bags, in the Claude window. Ctrl+click: the Claude window, to paste its answer and marks.",
     USAGE = "The minimap button opens the Claude window. /claude: a photo of the game for Claude (no /reload needed). /claude bags: the question about your bags. /claude marks: paste Claude's answer and marks. /claude <question>: your question, to copy.",
     BAGS_WORDS = { bags = true },
     MARKS_WORDS = { marks = true },
@@ -245,7 +243,6 @@ ns.Locale("enUS", {
     TAB_CONVERSATION = "Conversation",
     TAB_QUESTIONS = "Questions",
     TAB_LIMITS = "Limits",
-    TAB_BAGS = "Bags",
     TAB_WINDOW = "Window",
     TAB_ABOUT = "About",
 
@@ -408,8 +405,6 @@ ns.Locale("enUS", {
     SELECT_COPIED = "Text copied",
 
     -- Modules\Marks.lua
-    MARKS_MODULE = "Marks on the bags",
-    MARKS_MODULE_TIP = "After \"Sort my bags\", an icon on each item to sell, keep, bank... and a line in its tooltip.",
 
     -- Modules\Buttons.lua
     CHIPS = "Questions to ask next",
@@ -503,9 +498,6 @@ ns.Locale("enUS", {
     PLAYERS_ZONE = "Open the map: %s",
     PLAYERS_OFFLINE = "Offline",
 
-    -- Modules\BagButton.lua
-    BAG_BUTTON_MODULE = "Button on the bags",
-    BAG_BUTTON_MODULE_TIP = "A small book on the bags: a photo of the game, or the question about your bags (Shift+click).",
 
     -- Window\Settings.lua
     ABOUT = "claude-in-wow %s",

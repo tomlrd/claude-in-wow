@@ -112,7 +112,6 @@ ns.Locale("esES", {
     BUTTON_OPEN_NOT = "Esta ventana no se puede abrir desde aquí.",
     WINDOWS = { bags = "Abrir mis bolsas", character = "Abrir mi personaje", friends = "Abrir la lista de amigos", map = "Abrir el mapa", quests = "Abrir el registro de misiones", reputations = "Abrir las reputaciones" },
     MAP_COMBAT = "El mapa se abre fuera de combate; la chincheta está puesta.",
-    BAGS_BUTTON_TIP = "Clic: una foto del juego para Claude (sin /reload). Mayús+clic: la pregunta sobre tus bolsas, en la ventana de Claude. Ctrl+clic: la ventana de Claude, para pegar su respuesta y sus marcas.",
     USAGE = "El botón del minimapa abre la ventana de Claude. /claude: una foto del juego para Claude (sin /reload). /claude bolsas: la pregunta sobre tus bolsas. /claude marcas: pegar la respuesta y las marcas de Claude. /claude <pregunta>: tu pregunta, para copiarla.",
     BAGS_WORDS = { bags = true, bolsas = true },
     MARKS_WORDS = { marcas = true, marks = true },
@@ -237,7 +236,6 @@ ns.Locale("esES", {
     TAB_CONVERSATION = "Conversación",
     TAB_QUESTIONS = "Preguntas",
     TAB_LIMITS = "Límites",
-    TAB_BAGS = "Bolsas",
     TAB_WINDOW = "Ventana",
     TAB_ABOUT = "Acerca de",
 
@@ -390,8 +388,6 @@ ns.Locale("esES", {
     SELECT_COPIED = "Texto copiado",
 
     -- Modules\Marks.lua
-    MARKS_MODULE = "Marcas en las bolsas",
-    MARKS_MODULE_TIP = "Tras «Ordenar mis bolsas», un icono en cada objeto que vender, conservar, guardar en el banco... y una línea en su descripción.",
 
     -- Modules\Buttons.lua
     CHIPS = "Preguntas para seguir",
@@ -484,9 +480,6 @@ ns.Locale("esES", {
     PLAYERS_ZONE = "Abrir el mapa: %s",
     PLAYERS_OFFLINE = "Desconectado",
 
-    -- Modules\BagButton.lua
-    BAG_BUTTON_MODULE = "Botón en las bolsas",
-    BAG_BUTTON_MODULE_TIP = "Un pequeño libro en las bolsas: una foto del juego, o la pregunta sobre tus bolsas (Mayús+clic).",
 
     -- Window\Settings.lua
     UNOFFICIAL = "No oficial",

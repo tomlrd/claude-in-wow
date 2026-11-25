@@ -111,7 +111,6 @@ ns.Locale("deDE", {
     BUTTON_OPEN_NOT = "Dieses Fenster kann von hier aus nicht geöffnet werden.",
     WINDOWS = { bags = "Meine Taschen öffnen", character = "Charakterfenster öffnen", friends = "Freundesliste öffnen", map = "Karte öffnen", quests = "Questlog öffnen", reputations = "Ruffenster öffnen" },
     MAP_COMBAT = "Die Karte öffnet sich nur außerhalb des Kampfes; die Kartenmarkierung ist gesetzt.",
-    BAGS_BUTTON_TIP = "Klick: ein Foto des Spiels für Claude (ohne /reload). Shift+Klick: die Frage zu Euren Taschen, im Claude-Fenster. Strg+Klick: das Claude-Fenster, um Antwort und Markierungen einzufügen.",
     USAGE = "Die Minikartenschaltfläche öffnet das Claude-Fenster. /claude: ein Foto des Spiels für Claude (ohne /reload). /claude taschen: die Frage zu Euren Taschen. /claude markierungen: Claudes Antwort und Markierungen einfügen. /claude <Frage>: Eure Frage, zum Kopieren.",
     BAGS_WORDS = { bags = true, taschen = true },
     MARKS_WORDS = { marks = true, markierungen = true },
@@ -235,7 +234,6 @@ ns.Locale("deDE", {
     TAB_CONVERSATION = "Unterhaltung",
     TAB_QUESTIONS = "Fragen",
     TAB_LIMITS = "Grenzen",
-    TAB_BAGS = "Taschen",
     TAB_WINDOW = "Fenster",
     TAB_ABOUT = "Über",
 
@@ -382,8 +380,6 @@ ns.Locale("deDE", {
     SELECT_COPIED = "Text kopiert",
 
     -- Modules\Marks.lua
-    MARKS_MODULE = "Markierungen auf den Taschen",
-    MARKS_MODULE_TIP = "Nach „Taschen sortieren“ ein Symbol auf jedem Gegenstand zum Verkaufen, Behalten, für die Bank... und eine Zeile in seinem Tooltip.",
 
     -- Modules\Buttons.lua
     CHIPS = "Weitere Fragen",
@@ -475,9 +471,6 @@ ns.Locale("deDE", {
     PLAYERS_WHO = "Suchen (/who)",
     PLAYERS_ZONE = "Karte öffnen: %s",
 
-    -- Modules\BagButton.lua
-    BAG_BUTTON_MODULE = "Schaltfläche an den Taschen",
-    BAG_BUTTON_MODULE_TIP = "Ein kleines Buch an den Taschen: ein Foto des Spiels, oder die Frage zu Euren Taschen (Shift+Klick).",
 
     -- Window\Settings.lua
     UNOFFICIAL = "Inoffiziell",

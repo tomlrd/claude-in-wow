@@ -2,12 +2,12 @@
 -- assistant from the Claude window (ClaudeWindow.lua). Each carries what it
 -- needs, read from the game when it is asked (no /reload needed), after a
 -- first line the assistant recognises: "[claude-in-wow <version>] <kind>".
---   /claude              a photo of the game (Photo.lua; also the bags' button)
+--   /claude              a photo of the game (Photo.lua)
 --   /claude <question>   a free question, with the character and the quests (also
 --                    what is written in the Claude window)
---   /claude bags         the question about the bags (also Shift+click on the bags' button)
+--   /claude bags         the question about the bags
 --   /claude marks        the Claude window, waiting for the assistant's answer to
---                    paste (Marks.lua; also Ctrl+click)
+--                    paste (Marks.lua)
 --   /claude help         how to use it
 
 local addonName, ns = ...

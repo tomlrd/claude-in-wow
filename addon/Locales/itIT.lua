@@ -112,7 +112,6 @@ ns.Locale("itIT", {
     BUTTON_OPEN_NOT = "Questa finestra non può essere aperta da qui.",
     WINDOWS = { bags = "Apri le mie sacche", character = "Apri il mio personaggio", friends = "Apri la lista amici", map = "Apri la mappa", quests = "Apri il registro missioni", reputations = "Apri le reputazioni" },
     MAP_COMBAT = "La mappa si apre fuori dal combattimento; l'indicatore è stato messo.",
-    BAGS_BUTTON_TIP = "Clic: una foto del gioco per Claude (senza /reload). Maiusc+clic: la domanda sulle tue sacche, nella finestra di Claude. Ctrl+clic: la finestra di Claude, per incollare la sua risposta e i suoi segni.",
     USAGE = "Il pulsante sulla minimappa apre la finestra di Claude. /claude: una foto del gioco per Claude (senza /reload). /claude sacche: la domanda sulle tue sacche. /claude segni: incolla la risposta e i segni di Claude. /claude <domanda>: la tua domanda, da copiare.",
     BAGS_WORDS = { bags = true, borse = true, sacche = true },
     MARKS_WORDS = { contrassegni = true, marks = true, segni = true },
@@ -238,7 +237,6 @@ ns.Locale("itIT", {
     TAB_CONVERSATION = "Conversazione",
     TAB_QUESTIONS = "Domande",
     TAB_LIMITS = "Limiti",
-    TAB_BAGS = "Sacche",
     TAB_WINDOW = "Finestra",
     TAB_ABOUT = "Informazioni",
 
@@ -387,8 +385,6 @@ ns.Locale("itIT", {
     SELECT_COPIED = "Testo copiato",
 
     -- Modules\Marks.lua
-    MARKS_MODULE = "Segni sulle sacche",
-    MARKS_MODULE_TIP = "Dopo \"Riordina le mie sacche\", un'icona su ogni oggetto da vendere, tenere, mettere in banca... e una riga nel suo tooltip.",
 
     -- Modules\Buttons.lua
     CHIPS = "Domande da fare dopo",
@@ -480,9 +476,6 @@ ns.Locale("itIT", {
     PLAYERS_WHO = "Cerca (/who)",
     PLAYERS_ZONE = "Apri la mappa: %s",
 
-    -- Modules\BagButton.lua
-    BAG_BUTTON_MODULE = "Pulsante sulle sacche",
-    BAG_BUTTON_MODULE_TIP = "Un piccolo libro sulle sacche: una foto del gioco, o la domanda sulle tue sacche (Maiusc+clic).",
 
     -- Window\Settings.lua
     UNOFFICIAL = "Non ufficiale",
