@@ -2324,6 +2324,39 @@ do -- a Shift+click puts a link in the question
         watched = true -- what the game's click does when no chat takes it
         timers[#timers]()
         ok("a quest too, its tracking as it was", tostring(input.text:find("Le boucher", 1, true) ~= nil) .. " " .. tostring(watched), "true false")
+        do -- a quest whose click gives no link to the chat
+            local keptFoci, keptLink, keptTitle = GetMouseFoci, GetQuestLink, ns.Game.QuestTitle
+            local over
+            GetMouseFoci = function() return { over } end
+            GetQuestLink = function() return nil end
+            ns.Game.QuestTitle = function(id) return id < 100000 and "Quête " .. id or nil end
+            local function click(frame)
+                input.text, over = "", frame
+                fire("GLOBAL_MOUSE_DOWN", "LeftButton")
+                fire("GLOBAL_MOUSE_UP", "LeftButton")
+                timers[#timers - 1]()
+                timers[#timers]()
+                return ns.PlainLinks(input.text)
+            end
+            QuestObjectiveTracker = {}
+            ok("a line of the quest log", click({ questID = 5382 }), "[Quête 5382] (quest:5382) ")
+            ok("a tracker's, whatever it keeps it in", click({ GetParent = function() return { Quest = { Id = 7029 } } end }) .. click({ GetParent = function() return { id = 20, parentModule = QuestObjectiveTracker } end }), "[Quête 7029] (quest:7029) [Quête 20] (quest:20) ")
+            ok("what is no quest", click({ id = 20 }) .. click({ questID = 999999 }) .. click(nil), "")
+            GetQuestLink = function(id) return "|cffffff00|Hquest:" .. id .. ":50|h[Du jeu]|h|r" end
+            input.text, over = "", { questID = 5382 }
+            fire("GLOBAL_MOUSE_DOWN", "LeftButton")
+            hooked("|cffffff00|Hquest:5382:50|h[Du jeu]|h|r")
+            ok("once, when its click gives the link too", ns.PlainLinks(input.text), "[Du jeu] (quest:5382) ")
+            watched = true
+            fire("GLOBAL_MOUSE_UP", "LeftButton")
+            timers[#timers - 1]()
+            timers[#timers]()
+            ok("its tracking as it was", tostring(watched), "false")
+            modified = false
+            ok("a plain click does nothing", click({ questID = 5382 }), "")
+            modified = true
+            GetMouseFoci, GetQuestLink, ns.Game.QuestTitle, QuestObjectiveTracker = keptFoci, keptLink, keptTitle, nil
+        end
         local before = input.text
         chat = {}
         hooked(link)

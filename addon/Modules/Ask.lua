@@ -218,12 +218,15 @@ local function ChatTakes()
     return active and active() ~= nil
 end
 
-local function Linked(link)
-    link = ns.Clean(link)
-    if type(link) ~= "string" or not ns.On("linkClick") or not IsModifiedClick("CHATLINK") or ChatTakes() then return end
-    if not ns.InsertInQuestion(link) then return end
-    local quest = tonumber(match(link, "|Hquest:(%d+)"))
-    local followed = quest and ns.Game.QuestWatched(quest)
+-- Whether a click means a link for the question.
+local function Wanted()
+    return ns.On("linkClick") and IsModifiedClick("CHATLINK") and not ChatTakes()
+end
+
+local clicked -- the quest of the click under way: not put in twice
+
+-- Puts back, once the click is over, what the game did with it.
+local function PutBack(quest, followed)
     C_Timer.After(0, function()
         if StackSplitFrame and StackSplitFrame:IsShown() then StackSplitFrame:Hide() end
         if quest and ns.Game.QuestWatched(quest) ~= followed then
@@ -231,6 +234,53 @@ local function Linked(link)
         end
     end)
 end
+
+local function Linked(link)
+    link = ns.Clean(link)
+    if type(link) ~= "string" or not Wanted() then return end
+    local quest = tonumber(match(link, "|Hquest:(%d+)"))
+    if quest and quest == clicked then return end
+    if ns.InsertInQuestion(link) then PutBack(quest, quest and ns.Game.QuestWatched(quest)) end
+end
+
+-- The quest a frame under the mouse stands for (a line of the quest log or of a tracker,
+-- an icon of the map): they say it in one of a few ways. Not all of them give its link to
+-- the game's chat when none is being written in.
+local function QuestOf(frame)
+    for _ = 1, 4 do
+        if not frame or frame.IsForbidden and frame:IsForbidden() then return nil end
+        local quest, module = frame.Quest, frame.parentModule
+        local id = frame.questID or frame.questId or type(quest) == "table" and (quest.Id or quest.questID)
+            or module and (module == QuestObjectiveTracker or module == CampaignQuestObjectiveTracker) and frame.id
+        id = ns.Clean(id)
+        if type(id) == "number" and id > 0 then return id end
+        frame = frame.GetParent and frame:GetParent()
+    end
+end
+
+local function UnderMouse()
+    if GetMouseFoci then return GetMouseFoci()[1] end
+    return GetMouseFocus and GetMouseFocus()
+end
+
+local mouse, followed = CreateFrame("Frame"), nil
+for _, event in ipairs({ "GLOBAL_MOUSE_DOWN", "GLOBAL_MOUSE_UP" }) do pcall(mouse.RegisterEvent, mouse, event) end
+mouse:SetScript("OnEvent", function(_, event, button)
+    if event == "GLOBAL_MOUSE_UP" then
+        if not clicked then return end
+        PutBack(clicked, followed)
+        C_Timer.After(0, function() clicked = nil end)
+        return
+    end
+    clicked = nil
+    if button ~= "LeftButton" or not Wanted() then return end
+    local quest = QuestOf(UnderMouse())
+    local title = quest and ns.Game.QuestTitle(quest)
+    if not title then return end
+    local link = GetQuestLink and ns.Clean(GetQuestLink(quest)) or "|cffffff00|Hquest:" .. quest .. ":-1|h[" .. title .. "]|h|r"
+    if not ns.InsertInQuestion(link) then return end
+    clicked, followed = quest, ns.Game.QuestWatched(quest)
+end)
 
 if ChatFrameUtil and ChatFrameUtil.InsertLink then
     hooksecurefunc(ChatFrameUtil, "InsertLink", Linked)
