@@ -1,12 +1,12 @@
 # Claude in WoW
 
+[![tests](https://github.com/tomlrd/claude-in-wow/actions/workflows/test.yml/badge.svg)](https://github.com/tomlrd/claude-in-wow/actions/workflows/test.yml)
 [![license](https://img.shields.io/badge/license-all%20rights%20reserved-555)](LICENSE)
 [![WoW](https://img.shields.io/badge/WoW-Retail%20%C2%B7%20Classic%20%C2%B7%20Forever-148EFF)](#)
 [![langues](https://img.shields.io/badge/langues-EN%20FR%20DE%20ES%20IT-brightgreen)](TRANSLATING.md)
 [![Claude Code](https://img.shields.io/badge/works%20with-Claude%20Code-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
 [![Read in English](https://img.shields.io/badge/-Read%20in%20English-555)](README.md)
-<!-- once the repository is public, with a first release:
-[![tests](https://github.com/tomlrd/claude-in-wow/actions/workflows/test.yml/badge.svg)](https://github.com/tomlrd/claude-in-wow/actions/workflows/test.yml)
+<!-- with the first release:
 [![release](https://img.shields.io/github/v/release/tomlrd/claude-in-wow)](https://github.com/tomlrd/claude-in-wow/releases)
 -->
 <!-- once the CurseForge project exists: [![CurseForge](https://img.shields.io/curseforge/dt/PROJECT_ID?logo=curseforge&label=CurseForge)](https://www.curseforge.com/wow/addons/claude-in-wow) -->
