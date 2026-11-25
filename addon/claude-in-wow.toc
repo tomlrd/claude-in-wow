@@ -43,7 +43,6 @@ Modules\Usage.lua
 Modules\StatusBars.lua
 Modules\Updates.lua
 Modules\Select.lua
-Modules\LinkClick.lua
 Modules\BagSlots.lua
 Modules\Marks.lua
 Modules\Ask.lua
