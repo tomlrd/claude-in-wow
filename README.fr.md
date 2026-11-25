@@ -10,20 +10,6 @@ Posez à [Claude](https://claude.com) vos questions sur votre partie de World of
 
 ![Comment ça marche](docs/images/12-how.jpg)
 
-![Pas besoin de fenêtre Claude](docs/images/13-silent.jpg)
-
-![Exemple : la strat pour votre groupe](docs/images/dungeon.gif)
-
-![Exemple : une ForeverAura faite pour vous](docs/images/aura.gif)
-
-![Les trois skins](docs/images/11-skins.jpg)
-
-| | |
-|---|---|
-| ![Des réponses cliquables](docs/images/02-answers.jpg) | ![Suivre l'itinéraire](docs/images/03-route.jpg) |
-| ![Un clic, une action](docs/images/04-actions.jpg) | ![Maj+clic, et demandez](docs/images/05-link.jpg) |
-| ![Comment il le sait](docs/images/06-why.jpg) | ![Ce que ça consomme](docs/images/07-usage.jpg) |
-
 Il y a deux parties, qui vont ensemble :
 
 - **l'addon** (`addon/`), dans le jeu : la fenêtre, ce qui est lu du jeu, ce qui est affiché. Retail, les versions Classic et WoW Forever, en anglais, français, allemand, espagnol et italien ;

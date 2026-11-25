@@ -10,20 +10,6 @@ Ask [Claude](https://claude.com) about your World of Warcraft game, **from the g
 
 ![How it works](docs/images/12-how.jpg)
 
-![No Claude window needed](docs/images/13-silent.jpg)
-
-![Example: the strat for your group](docs/images/dungeon.gif)
-
-![Example: a ForeverAuras made for you](docs/images/aura.gif)
-
-![The three skins](docs/images/11-skins.jpg)
-
-| | |
-|---|---|
-| ![Answers you can click](docs/images/02-answers.jpg) | ![Follow the way](docs/images/03-route.jpg) |
-| ![One click, one action](docs/images/04-actions.jpg) | ![Shift+click, ask about it](docs/images/05-link.jpg) |
-| ![It tells you how it knows](docs/images/06-why.jpg) | ![You see what it uses](docs/images/07-usage.jpg) |
-
 It is two things that go together:
 
 - **the addon** (`addon/`), in the game: the window, what is read from the game, what is drawn. Retail, the Classic versions and WoW Forever, in English, French, German, Spanish and Italian;
