@@ -314,7 +314,7 @@ ns.Locale("esES", {
     PLAN_LEGEND_REST = "El resto de tu plan",
     PLAN_DECIMAL = ",",
     PLAN_OWN_TIP = "Una estimación, según los tokens de las sesiones de Claude Code de este ordenador. Lo usado de Claude en otros sitios (claude.ai, otro ordenador) no se conoce.",
-    PLAN_SHARE = "No estimar la parte del juego en el plan",
+    PLAN_SHARE = "No estimar la parte del addon en el plan",
     PLAN_SHARE_TIP = "El plugin deja de leer las cantidades de tokens de tus sesiones de Claude Code en este ordenador (nunca lee sus textos): las barras del plan son de un solo color.",
     PLAN_DATE = "%d/%m a las %H:%M",
 

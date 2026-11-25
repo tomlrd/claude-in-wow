@@ -311,7 +311,7 @@ ns.Locale("deDE", {
     PLAN_DECIMAL = ",",
     PLAN_PERCENT_TEXT = "%s %%",
     PLAN_OWN_TIP = "Eine Schätzung, anhand der Token der Claude-Code-Sitzungen dieses Computers. Anderswo genutztes Claude (claude.ai, ein anderer Computer) ist nicht bekannt.",
-    PLAN_SHARE = "Anteil des Spiels am Abo nicht schätzen",
+    PLAN_SHARE = "Anteil des Addons am Abo nicht schätzen",
     PLAN_SHARE_TIP = "Das Plugin liest die Tokenzahlen Eurer Claude-Code-Sitzungen auf diesem Computer nicht mehr (ihre Texte liest es nie): Die Balken des Abos sind einfarbig.",
     PLAN_DATE = "%d.%m. um %H:%M",
 

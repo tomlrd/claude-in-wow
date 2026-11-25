@@ -316,7 +316,7 @@ ns.Locale("itIT", {
     PLAN_LEGEND_REST = "Il resto del tuo piano",
     PLAN_DECIMAL = ",",
     PLAN_OWN_TIP = "Una stima, basata sui token delle sessioni di Claude Code di questo computer. L'uso di Claude altrove (claude.ai, un altro computer) non è noto.",
-    PLAN_SHARE = "Non stimare la parte del gioco nel piano",
+    PLAN_SHARE = "Non stimare la parte dell'add-on nel piano",
     PLAN_SHARE_TIP = "Il plugin non legge più i conteggi dei token delle tue sessioni di Claude Code su questo computer (non ne legge mai i testi): le barre del piano sono di un solo colore.",
     PLAN_DATE = "%d/%m alle %H:%M",
 
