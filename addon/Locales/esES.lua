@@ -42,7 +42,7 @@ ns.Locale("esES", {
     CLOSE = "Cerrar",
     CANCEL = "Cancelar",
     MORE = "Preguntar por...",
-    MINIMAP_TIP = "Clic: abrir o cerrar. Clic derecho: una foto del juego. Mayús+clic: opciones.",
+    MINIMAP_TIP = "Clic: abrir o cerrar. Clic derecho: opciones.",
     SETTINGS = "Opciones",
     CLOSE_TAB = "Cerrar esta conversación",
     THINKING = "Claude está pensando: %d s (normalmente unos %d s)",

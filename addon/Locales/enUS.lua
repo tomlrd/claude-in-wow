@@ -43,7 +43,7 @@ ns.Locale("enUS", {
     CLOSE = "Close",
     CANCEL = "Cancel",
     MORE = "Ask about...",
-    MINIMAP_TIP = "Click: open or close. Right-click: a photo of the game. Shift+click: settings.",
+    MINIMAP_TIP = "Click: open or close. Right-click: settings.",
     SETTINGS = "Settings",
     CLOSE_TAB = "Close this conversation",
     THINKING = "Claude is thinking: %d s (usually about %d s)",

@@ -33,7 +33,7 @@ The `wow-mcp` tools read the game folder. They never act in the game. Everything
 | What the photo lacks, for a question from the game: guild, friends, talents, spells, reputations, recipes, auctions, trainer, merchant, anything the game's functions tell | propose it as a question the player clicks, with `game_functions` to find what to read (`modules/50-questions.md`) |
 | "Silent mode": answers with no conversation open | `silent_mode` (see "The silent mode") |
 
-When the present matters (position, quest progress, bags) and the snapshot is old, ask the player for a **photo**: a click on the book button at the top-left corner of the bags, a right-click on Claude's spark on the minimap, or `/claude` in the chat. The addon draws the game state over the screen for an instant and saves it as a screenshot; the tools read it back at once, no `/reload` needed (not in combat). A `/reload` works too. The tools never send the picture itself, only the data in it.
+When the present matters (position, quest progress, bags) and the snapshot is old, ask the player for a **photo**: a click on the book button at the top-left corner of the bags, or `/claude` in the chat. The addon draws the game state over the screen for an instant and saves it as a screenshot; the tools read it back at once, no `/reload` needed (not in combat). A `/reload` works too. The tools never send the picture itself, only the data in it.
 
 ## Questions pasted from the game
 

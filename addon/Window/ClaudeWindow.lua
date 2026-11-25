@@ -977,7 +977,7 @@ function ns.RenderClaude(toEnd)
     local messages = Messages()
     local width, view = scroll:GetWidth() or WIDTH, scroll:GetHeight() or 0
     content:SetWidth(width)
-    title:SetText("Claude")
+    title:SetText("Claude in WoW")
     local nextRoom = UpdateNextStep()
 
     empty:SetShown(#messages == 0)

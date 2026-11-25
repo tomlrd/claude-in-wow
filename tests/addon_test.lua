@@ -2466,10 +2466,8 @@ ok("turned off: the setting and the minimap button", tostring(db.options.minimap
 minimapSwitch.scripts.OnClick(minimapSwitch)
 ok("on again", tostring(db.options.minimapButton) .. " " .. tostring(db.minimap.hide), "true nil")
 findButton("Réglages").scripts.OnClick(findButton("Réglages"))
-IsShiftKeyDown = function() return true end
-minimapButton.scripts.OnClick(minimapButton, "LeftButton")
-IsShiftKeyDown = function() return false end
-ok("Shift+click on the minimap button: the settings", tostring(findText("Réglages")), "Réglages")
+minimapButton.scripts.OnClick(minimapButton, "RightButton")
+ok("a right-click on the minimap button: the settings", tostring(findText("Réglages")), "Réglages")
 ok("the settings open on the tab left", db.settingsTab, "claude")
 ok("the session, and its last answer", (findText("Session abcd1234") or ""):match("^Session abcd1234 : 7 questions, environ 30 000 jetons%. Dernière réponse à %d%d:%d%d, en 5 s, par Haiku 5%.5%.$") ~= nil, true)
 local newSession

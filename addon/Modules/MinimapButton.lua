@@ -1,7 +1,6 @@
 -- claude-in-wow: the button on the minimap: Claude's spark.
 --   Click: opens or closes the window (ClaudeWindow.lua).
---   Right-click: a photo of the game (Photo.lua).
---   Shift+click: the addon's settings (Settings.lua).
+--   Right-click, Shift+click: the addon's settings (Settings.lua).
 --   Dragged: it goes round the minimap.
 -- Its place: ns.db.minimap.minimapPos, an angle in degrees (0 on the right, 90 at the top).
 
@@ -36,9 +35,7 @@ local function Follow()
 end
 
 local function Click(_, which)
-    if which == "RightButton" then
-        ns.TakePhoto()
-    elseif IsShiftKeyDown() then
+    if which == "RightButton" or IsShiftKeyDown() then
         ns.OpenOptions()
     else
         ns.ToggleClaude()
@@ -75,7 +72,7 @@ local function Build()
     button:SetScript("OnDragStop", function(self) self:SetScript("OnUpdate", nil) end)
     button:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-        GameTooltip:SetText("Claude", 1, 1, 1)
+        GameTooltip:SetText("Claude in WoW", 1, 1, 1)
         GameTooltip:AddLine(L.MINIMAP_TIP, nil, nil, nil, true)
         GameTooltip:Show()
     end)
