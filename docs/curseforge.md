@@ -80,3 +80,11 @@ Read in the game: your character, quests, bags, the places and people around, yo
 ### Bugs, ideas, translations
 
 On [GitHub](https://github.com/tomlrd/claude-in-wow/issues). The source is there too: all rights reserved, forks on GitHub welcome.
+
+---
+
+## A word for the moderators
+
+When the project is sent for review, in the box for them:
+
+> claude-in-wow is the in-game part of a tool that answers questions about the player's game with Claude (Anthropic's AI), through the player's own Claude Code on their computer (the wow-mcp plugin, same repository). The addon itself does nothing outside the game: like every addon, it cannot reach the network. A question leaves the game in a screenshot the player triggers, read by the plugin on the computer; answers come back in files the addon reads. The `Inbox` folder holds empty sound files on purpose: the plugin fills one to tell the game an answer is there. Nothing is automated: every action is a button the player clicks. Source: https://github.com/tomlrd/claude-in-wow
