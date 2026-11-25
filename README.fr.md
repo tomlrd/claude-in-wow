@@ -8,6 +8,8 @@ Posez à [Claude](https://claude.com) vos questions sur votre partie de World of
 
 *[In English](README.md)*
 
+![La strat pour votre groupe](docs/images/dungeon.gif)
+
 | | |
 |---|---|
 | ![Des réponses cliquables](docs/images/02-answers.jpg) | ![Suivre l'itinéraire](docs/images/03-route.jpg) |

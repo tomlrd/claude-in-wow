@@ -8,6 +8,8 @@ Ask [Claude](https://claude.com) about your World of Warcraft game, **from the g
 
 *[En français](README.fr.md)*
 
+![The strat for your group](docs/images/dungeon.gif)
+
 | | |
 |---|---|
 | ![Answers you can click](docs/images/02-answers.jpg) | ![Follow the way](docs/images/03-route.jpg) |
