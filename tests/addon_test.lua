@@ -806,7 +806,7 @@ do -- the buttons of an empty conversation
     db.settingsTab = nil
     ns.OpenClaude()
 end
-ok("an empty conversation greets", (findText("Bon") or ""):match(", Arden$") ~= nil, true)
+ok("an empty conversation greets, by the whole name in the class' colour", (findText("Bon") or ""):match(", (.*)$"), ns.ClassCode(select(2, UnitClass("player"))) .. "Arden Valcourt|r")
 local function findBar(key)
     for _, f in ipairs(frames) do if f.spec and f.spec.key == key then return f end end
 end

@@ -29,10 +29,13 @@ local function Gold(copper)
     return ns.GroupNumber(floor((copper or 0) / 10000)) .. GOLD
 end
 
+-- A class' colour, as a text's code.
 local function ClassCode(file)
     local color = file and C_ClassColor and Try(C_ClassColor.GetClassColor, file)
     return color and color.r and format("|cff%02x%02x%02x", color.r * 255, color.g * 255, color.b * 255) or T.Code("text")
 end
+
+ns.ClassCode = ClassCode
 
 -- Every character noted, this one as it is now: { name, level, class, file, money, at }.
 local function Characters()

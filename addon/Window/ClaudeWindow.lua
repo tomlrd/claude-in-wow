@@ -659,7 +659,10 @@ local function Greeting()
     local hour = tonumber(date("%H")) or 12
     local text = (hour >= 5 and hour < 12) and L.GREETING_MORNING or (hour >= 12 and hour < 18) and L.GREETING_AFTERNOON
         or L.GREETING_EVENING
-    return format(text, UnitName("player") or "")
+    local name, surname = ns.Surname()
+    name = surname and name .. " " .. surname or UnitName("player") or ""
+    local _, class = UnitClass("player")
+    return format(text, ns.ClassCode(class) .. name .. "|r")
 end
 
 -- A button of the empty conversation: its question is in its tooltip.
