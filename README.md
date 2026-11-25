@@ -1,6 +1,6 @@
 # Claude in WoW
 
-[![license](https://img.shields.io/badge/license-GPL%20v3-blue)](LICENSE)
+[![license](https://img.shields.io/badge/license-all%20rights%20reserved-555)](LICENSE)
 [![WoW](https://img.shields.io/badge/WoW-Retail%20%C2%B7%20Classic%20%C2%B7%20Forever-148EFF)](#)
 [![languages](https://img.shields.io/badge/languages-EN%20FR%20DE%20ES%20IT-brightgreen)](TRANSLATING.md)
 [![Claude Code](https://img.shields.io/badge/works%20with-Claude%20Code-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
@@ -48,4 +48,4 @@ Bugs, ideas, translations and code are welcome: [CONTRIBUTING.md](CONTRIBUTING.m
 
 ## License
 
-[GPL v3](LICENSE): use it, change it, share it, and what you share stays open. The embedded libraries (`addon/Libs`) and fonts (`addon/Media/Fonts`) have their own licenses.
+[All rights reserved](LICENSE). Read it, fork it on GitHub, change it to propose your changes, use it for yourself: yes. Publish it elsewhere (CurseForge, Wago or any other site) or sell it: not without permission. The embedded libraries (`addon/Libs`) and fonts (`addon/Media/Fonts`) have their own licenses.

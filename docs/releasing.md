@@ -34,7 +34,7 @@ The players' plugins see the release within a day. Those who took the plugin fro
 
 ## Setting CurseForge up, once
 
-1. Create the project on [authors.curseforge.com](https://authors.curseforge.com) (its moderators look at it first). Name: `claude-in-wow`; license: GPL v3; source: this repository.
+1. Create the project on [authors.curseforge.com](https://authors.curseforge.com) (its moderators look at it first). Name: `claude-in-wow`; license: All Rights Reserved; source: this repository.
 2. Its number is in "About project". In the repository's settings, *Secrets and variables*, *Actions*, *Variables*: `CF_PROJECT_ID`.
 3. A key from CurseForge's *API tokens* page. Same place, *Secrets*: `CF_API_TOKEN`. Never anywhere else, nor in a file.
 4. The next tag sends the zip there. Without these two, the step says so and does nothing.

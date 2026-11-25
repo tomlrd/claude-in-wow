@@ -3,7 +3,7 @@
 ## Working together
 
 1. Open an issue first for anything larger than a fix, so that nobody works for nothing.
-2. Fork, make a branch, and open a pull request to `main`: nothing goes there otherwise. The tests run by themselves.
+2. Fork, make a branch, and open a pull request to `main`: nothing goes there otherwise. The tests run by themselves. By sending it, you agree that it becomes part of claude-in-wow under its [license](LICENSE).
 3. One subject a pull request. Small ones are read sooner.
 
 To try it in your game: `npm run play`. Everything on developing and releasing: [docs/releasing.md](docs/releasing.md).
