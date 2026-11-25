@@ -100,7 +100,7 @@ local function Show()
         ns.Game.ClearPin()
     end
     local text = format(L.ROUTE_STEP, route.at, #route.steps, step.text)
-    if ns.On("routeAlerts") then ns.Game.Alert(step.tip and text .. "\n" .. step.tip or text) end
+    ns.Game.Alert(step.tip and text .. "\n" .. step.tip or text)
     Say(step.tip and text .. " (" .. step.tip .. ")" or text)
     Refresh()
 end
@@ -135,7 +135,7 @@ function ns.RouteMove(by)
         local name = route.name
         End()
         local text = name ~= "" and format(L.ROUTE_DONE, name) or L.ROUTE_DONE_HERE
-        if ns.On("routeAlerts") then ns.Game.Alert(text) end
+        ns.Game.Alert(text)
         return Say(text)
     end
     route.at = max(1, at)
@@ -180,7 +180,7 @@ events:SetScript("OnEvent", function(_, event, isWaypoint)
         end
         return
     end
-    if not route or not ns.On("routeAuto") then return end
+    if not route then return end
     local step = route.steps[route.at]
     if event == "NAVIGATION_DESTINATION_REACHED" then
         if step.x and not isWaypoint then ns.RouteMove(1) end -- a waypoint is a stage of the game's own way there
@@ -189,12 +189,3 @@ events:SetScript("OnEvent", function(_, event, isWaypoint)
         if reached then ns.RouteMove(reached - route.at + 1) end
     end
 end)
-
-ns.Module({
-    key = "route", category = "conversation", order = 45, title = "ROUTE_MODULE", tip = "ROUTE_MODULE_TIP",
-    changed = function(on) if not on then ns.StopRoute() end end,
-    settings = {
-        { key = "routeAuto", label = "ROUTE_AUTO", tip = "ROUTE_AUTO_TIP", default = true },
-        { key = "routeAlerts", label = "ROUTE_ALERTS", default = true },
-    },
-})

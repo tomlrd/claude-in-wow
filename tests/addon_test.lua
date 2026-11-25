@@ -1630,10 +1630,6 @@ do -- what is done is undone by the same button, each says what it is
     ok("its menu", entries[1].label .. " | " .. entries[2].label .. " | " .. entries[3].label, "Étape précédente | Étape suivante | Arrêter l'itinéraire")
     entries[1].run()
     ok("the step before", (ns.RouteLine()), "Étape 2/4 : Va aux Maleterres")
-    ns.SetOption("routeAuto", false)
-    fire("ZONE_CHANGED")
-    ok("by hand, as the player chose", (ns.RouteLine()), "Étape 2/4 : Va aux Maleterres")
-    ns.SetOption("routeAuto", true)
     ns.RouteMove(1)
     ns.RouteMove(1)
     far = { 0.69, 0.735 }
@@ -1680,14 +1676,6 @@ do -- what is done is undone by the same button, each says what it is
         C_Map.GetBestMapForUnit = function() return 1422 end
         C_Map.GetPlayerMapPosition = function() return { x = far[1], y = far[2], GetXY = function() return far[1], far[2] end } end
     end
-    ns.SetOption("routeAlerts", false)
-    local before = #alerts
-    ns.ClickButton(there, 1, buttons[1])
-    ok("no line over the screen, as the player chose", #alerts - before, 0)
-    ns.SetOption("route", false)
-    ok("turned off: stopped, and no button", tostring(ns.RouteActive()) .. " " .. tostring((ns.ButtonsBlock(answer))), "false nil")
-    ns.SetOption("route", true)
-    ns.SetOption("routeAlerts", true)
     ns.SetOption("why", false)
     ok("how it was found: turned off, still out of the text", tostring(select(3, ns.ButtonsBlock(answer))) .. " " .. select(2, ns.ButtonsBlock(answer)):sub(1, 8), "nil Par là.")
     ns.SetOption("why", true)
@@ -1967,7 +1955,7 @@ ok("a switch shows the setting", minimapSwitch.checked, true)
 local settingsOn = {}
 for key, row in pairs(settingRows) do if row.switch and row.switch.checked then settingsOn[#settingsOn + 1] = key end end
 table.sort(settingsOn)
-ok("every module and setting on by default, but the sound at the start", table.concat(settingsOn, " "), "answerNote arrive bagButton barCharacter barSession chips compactPhoto gameLinks linkClick marks minimapButton parallel places placesIcon placesPin players playersClass playersLevel renew route routeAlerts routeAuto saidInGame select sendByPhoto shortcutsEdit soundReady why")
+ok("every module and setting on by default, but the sound at the start", table.concat(settingsOn, " "), "answerNote arrive bagButton barCharacter barSession chips compactPhoto gameLinks linkClick marks minimapButton parallel places placesIcon placesPin players playersClass playersLevel renew saidInGame select sendByPhoto shortcutsEdit soundReady why")
 -- the usage
 ok("short figures", table.concat({ ns.ShortNumber(950), ns.ShortNumber(1000), ns.ShortNumber(52499), ns.ShortNumber(999400), ns.ShortNumber(999600), ns.ShortNumber(1240000) }, " | "), "950 | 1 k | 52 k | 999 k | 1 M | 1,2 M")
 do
@@ -2295,6 +2283,11 @@ do -- the updates
     PlaySoundFile, C_Sound, ns.TakePhoto = keptPlay, keptSound, keptPhoto
     C_AddOns.IsAddOnLoaded, C_AddOns.IsAddOnLoadable, C_AddOns.DoesAddOnExist, C_AddOns.LoadAddOn = loading, loadable, exists, load
 end
+do -- the tab on the conversation, in groups
+    db.settingsTab = "conversation"
+    ns.OpenClaude("settings")
+    ok("the conversation's settings in groups, without any on routes", tostring(findText("Dans les réponses") ~= nil) .. " " .. tostring(findText("Dans votre question") ~= nil) .. " " .. tostring(findText("Apparence") ~= nil) .. " " .. tostring((findText("Itinéraires"))), "true true true nil")
+end
 do -- a Shift+click puts a link in the question
     local link = "|cnIQ1:|Hitem:2589::::::::50:::::|h[Étoffe de lin |A:Quality:0:0|a]|h|r"
     ok("a link as words, for Claude", ns.PlainLinks("Vendre " .. link .. " ?"), "Vendre [Étoffe de lin ] (item:2589) ?")
@@ -2484,7 +2477,7 @@ do -- the skins
 end
 do -- how the conversation reads
     local sizes = {}
-    tabsByKey.window.scripts.OnClick(tabsByKey.window)
+    tabsByKey.conversation.scripts.OnClick(tabsByKey.conversation)
     ns.SetOption("marginSides", 40)
     ok("a margin in pixels, in its slider", settingRows.marginSides.slider.label.text .. " " .. settingRows.answerSize.slider.label.text, "40 px 14 pt")
     ok("the fonts to choose from", #ns.ChoiceEntries("answerFont") .. " " .. ns.ChoiceLabel("answerFont"), "9 Celle du skin")

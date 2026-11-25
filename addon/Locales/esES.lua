@@ -250,8 +250,7 @@ ns.Locale("esES", {
     SKIN_MODERN = "Moderno",
 
     -- Window\Look.lua
-    LOOK = "La conversación",
-    LOOK_TIP = "Sus márgenes, y cómo se escriben las respuestas de Claude y tus preguntas.",
+    LOOK = "Aspecto",
     LOOK_SIDES = "Márgenes laterales",
     LOOK_ENDS = "Márgenes superior e inferior",
     LOOK_ANSWER_FONT = "Respuestas: fuente",
@@ -266,7 +265,7 @@ ns.Locale("esES", {
 
     -- Window\Markdown.lua
     GAME_LINKS = "Misiones y objetos",
-    GAME_LINKS_TIP = "Las misiones, los objetos y las coordenadas que Claude enlaza llevan los colores y los iconos del juego, con sus descripciones.",
+    GAME_LINKS_TIP = "Con los colores del juego y sus descripciones.",
 
     -- Window\ClaudeWindow.lua
     WINDOW_MODULE = "Apariencia",
@@ -320,6 +319,9 @@ ns.Locale("esES", {
 
     -- Modules\Usage.lua
     TAB_USAGE = "Consumo",
+    GROUP_TEXT = "Texto",
+    GROUP_QUESTION = "En tu pregunta",
+    GROUP_ANSWERS = "En las respuestas",
     USAGE_MODULE = "Solo el addon",
     USAGE_MODULE_TIP = "Los tokens de las respuestas recibidas aquí, de todos tus personajes.",
     USAGE_TODAY = "Hoy",
@@ -384,7 +386,7 @@ ns.Locale("esES", {
 
     -- Modules\Select.lua
     SELECT_MODULE = "Seleccionar el texto",
-    SELECT_MODULE_TIP = "Arrastra sobre la conversación para seleccionar su texto (doble clic para todo el párrafo) y pulsa Ctrl+C.",
+    SELECT_MODULE_TIP = "Arrastra el ratón y luego Ctrl+C.",
     SELECT_COPIED = "Texto copiado",
 
     -- Modules\Marks.lua
@@ -393,7 +395,7 @@ ns.Locale("esES", {
 
     -- Modules\Buttons.lua
     CHIPS = "Preguntas para seguir",
-    CHIPS_TIP = "Claude puede proponer, bajo su respuesta, preguntas que se hacen con un clic.",
+    CHIPS_TIP = "Propuestas bajo la respuesta.",
     ACTIONS = "No proponer botones de acción",
     ACTIONS_TIP = "Sin botones bajo una respuesta (susurrar, invitar, equipar, una macro...). Nunca hacen nada sin tu clic.",
 
@@ -411,11 +413,10 @@ ns.Locale("esES", {
 
     -- Modules\Places.lua
     PLACES = "Lugares",
-    PLACES_TIP = "Los lugares nombrados en una respuesta aparecen en dorado: un clic abre el mapa en ellos.",
+    PLACES_TIP = "Un clic abre el mapa allí.",
     PLACES_ICON = "Chincheta ante el nombre",
-    PLACES_ICON_TIP = "Una pequeña chincheta de mapa delante de cada lugar.",
     PLACES_PIN = "Chincheta en el mapa",
-    PLACES_PIN_TIP = "Para una ciudad o la entrada de una mazmorra, el clic también pone ahí una chincheta, seguida en pantalla.",
+    PLACES_PIN_TIP = "En una ciudad o mazmorra, el clic pone también un marcador.",
     PLACES_CLICK = "Clic: abrir el mapa aquí.",
 
     -- Modules\Help.lua
@@ -472,11 +473,9 @@ ns.Locale("esES", {
 
     -- Modules\Players.lua
     PLAYERS = "Jugadores",
-    PLAYERS_TIP = "Los jugadores nombrados en una respuesta (hermandad, amigos, grupo): pasa el ratón para ver quiénes son, haz clic para ver qué hacer.",
+    PLAYERS_TIP = "Pasa el ratón para ver quién es, haz clic para actuar.",
     PLAYERS_CLASS = "Color de clase",
-    PLAYERS_CLASS_TIP = "Su nombre en el color de su clase.",
     PLAYERS_LEVEL = "Nivel",
-    PLAYERS_LEVEL_TIP = "Su nivel después del nombre, salvo que la respuesta ya lo diga.",
     PLAYERS_CLICK = "Clic: susurrar, invitar, ver dónde está.",
     PLAYERS_LEVEL_CLASS = "Nivel %s %s",
     PLAYERS_WHISPER = "Susurrar",
@@ -574,11 +573,6 @@ ns.Locale("esES", {
     ROUTE_BAR_TIP = "Clic: paso siguiente, paso anterior, detener.",
     LINK_CLICK = "Mayús+clic en la pregunta",
     LINK_CLICK_TIP = "Un objeto, una misión, un hechizo: pegado en la pregunta, como en el chat.",
-    ROUTE_MODULE = "Rutas",
-    ROUTE_MODULE_TIP = "Bajo una respuesta que dice adónde ir, una ruta para seguir paso a paso: una chincheta del juego y una línea arriba de la pantalla en cada uno. Solo muestra, se detiene con un clic y un /reload la termina.",
-    ROUTE_AUTO = "Paso siguiente al llegar",
-    ROUTE_AUTO_TIP = "Un atajo también cuenta: llegar a un paso posterior salta los anteriores. Desactivado: pasas de uno a otro tú, en la barra bajo el cuadro.",
-    ROUTE_ALERTS = "Cada paso arriba de la pantalla, como los avisos de banda",
     WHY = "Cómo lo ha encontrado Claude",
     WHY_MODULE = "Cómo lo ha encontrado Claude",
     WHY_MODULE_TIP = "Bajo una respuesta, plegado: en qué se basa (el juego, tus addons, la web, lo que sabe), cómo ha llegado ahí y de qué no está seguro.",

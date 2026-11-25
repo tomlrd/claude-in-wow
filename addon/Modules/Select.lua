@@ -15,7 +15,7 @@ local MOVED = 3        -- a click that moves less is no selection
 local DOUBLE = 0.35    -- seconds between the two clicks of a double one
 local SCROLL = 10      -- each time, over or under the conversation
 
-ns.Module({ key = "select", category = "conversation", order = 60, title = "SELECT_MODULE", tip = "SELECT_MODULE_TIP", changed = function() ns.ClearSelection() end })
+ns.Module({ key = "select", category = "conversation", group = "GROUP_TEXT", order = 70, title = "SELECT_MODULE", tip = "SELECT_MODULE_TIP", changed = function() ns.ClearSelection() end })
 
 -- A text as written without the game's codes: what one reads.
 local function Plain(raw)

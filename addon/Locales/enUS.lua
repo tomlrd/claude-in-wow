@@ -238,6 +238,9 @@ ns.Locale("enUS", {
 
     -- Core\Modules.lua
     TAB_CLAUDE = "Claude",
+    GROUP_TEXT = "Text",
+    GROUP_QUESTION = "In your question",
+    GROUP_ANSWERS = "In the answers",
     TAB_ANSWERS = "Answers",
     TAB_CONVERSATION = "Conversation",
     TAB_QUESTIONS = "Questions",
@@ -257,8 +260,7 @@ ns.Locale("enUS", {
     SKIN_MODERN = "Modern",
 
     -- Window\Look.lua
-    LOOK = "The conversation",
-    LOOK_TIP = "Its margins, and how Claude's answers and your questions are written.",
+    LOOK = "Look",
     LOOK_SIDES = "Margins on the sides",
     LOOK_ENDS = "Margins at the top and the bottom",
     LOOK_ANSWER_FONT = "Answers: font",
@@ -273,7 +275,7 @@ ns.Locale("enUS", {
 
     -- Window\Markdown.lua
     GAME_LINKS = "Quests and items",
-    GAME_LINKS_TIP = "The quests, items and coordinates Claude links are drawn with the game's colours and icons, with their tooltips.",
+    GAME_LINKS_TIP = "In the game's colours, with its tooltips.",
 
     -- Window\ClaudeWindow.lua
     WINDOW_MODULE = "Appearance",
@@ -402,7 +404,7 @@ ns.Locale("enUS", {
 
     -- Modules\Select.lua
     SELECT_MODULE = "Select the text",
-    SELECT_MODULE_TIP = "Drag over the conversation to select its text (a double click takes the paragraph), then Ctrl+C.",
+    SELECT_MODULE_TIP = "Drag the mouse, then Ctrl+C.",
     SELECT_COPIED = "Text copied",
 
     -- Modules\Marks.lua
@@ -411,7 +413,7 @@ ns.Locale("enUS", {
 
     -- Modules\Buttons.lua
     CHIPS = "Questions to ask next",
-    CHIPS_TIP = "Claude may propose, under its answer, questions to ask with a click.",
+    CHIPS_TIP = "Proposed under the answer.",
     ACTIONS = "Do not propose action buttons",
     ACTIONS_TIP = "No more buttons under an answer (whisper, invite, equip, a macro...). They never do anything without your click.",
 
@@ -429,11 +431,10 @@ ns.Locale("enUS", {
 
     -- Modules\Places.lua
     PLACES = "Places",
-    PLACES_TIP = "Places named in an answer are drawn in gold: a click opens the map on them.",
+    PLACES_TIP = "A click opens the map there.",
     PLACES_ICON = "Pin before the name",
-    PLACES_ICON_TIP = "A small map pin before each place.",
     PLACES_PIN = "Pin on the map",
-    PLACES_PIN_TIP = "For a town or a dungeon's entrance, the click also sets a pin there, followed on screen.",
+    PLACES_PIN_TIP = "For a town or a dungeon, the click sets a pin too.",
     PLACES_CLICK = "Click: open the map here.",
 
     -- Modules\Help.lua
@@ -491,11 +492,9 @@ ns.Locale("enUS", {
 
     -- Modules\Players.lua
     PLAYERS = "Players",
-    PLAYERS_TIP = "Players named in an answer (guild, friends, group): hover to see who they are, click for what to do.",
+    PLAYERS_TIP = "Hover to see who it is, click to act.",
     PLAYERS_CLASS = "Class colour",
-    PLAYERS_CLASS_TIP = "Their name in their class's colour.",
     PLAYERS_LEVEL = "Level",
-    PLAYERS_LEVEL_TIP = "Their level after their name, unless the answer already gives it.",
     PLAYERS_CLICK = "Click: whisper, invite, where they are.",
     PLAYERS_LEVEL_CLASS = "Level %s %s",
     PLAYERS_WHISPER = "Whisper",
@@ -594,11 +593,6 @@ ns.Locale("enUS", {
     ROUTE_BAR_TIP = "Click: next step, step before, stop.",
     LINK_CLICK = "Shift+click in the question",
     LINK_CLICK_TIP = "An item, a quest, a spell: put in the question, as in the chat.",
-    ROUTE_MODULE = "Routes",
-    ROUTE_MODULE_TIP = "Under an answer about where to go, a route to follow step by step: a pin of the game and a line over the screen at each. It only shows, stops at a click, and a /reload ends it.",
-    ROUTE_AUTO = "Next step when you arrive",
-    ROUTE_AUTO_TIP = "A short cut counts too: coming to a later step skips the ones before it. Off: you go from one to the next yourself, in the bar under the box.",
-    ROUTE_ALERTS = "Each step over the screen, as the raid alerts",
     WHY = "How Claude found it",
     WHY_MODULE = "How Claude found it",
     WHY_MODULE_TIP = "Under an answer, folded: what it rests on (the game, your addons, the web, what it knows), how it got there, and what it is not sure of.",

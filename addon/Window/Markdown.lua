@@ -215,4 +215,4 @@ function ns.Markdown(text)
     return blocks
 end
 
-ns.Module({ key = "gameLinks", category = "conversation", order = 30, title = "GAME_LINKS", tip = "GAME_LINKS_TIP" })
+ns.Module({ key = "gameLinks", category = "conversation", group = "GROUP_ANSWERS", order = 10, title = "GAME_LINKS", tip = "GAME_LINKS_TIP" })

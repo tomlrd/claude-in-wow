@@ -235,4 +235,4 @@ elseif ChatEdit_InsertLink then
     hooksecurefunc("ChatEdit_InsertLink", Linked)
 end
 
-ns.Module({ key = "linkClick", category = "conversation", order = 70, title = "LINK_CLICK", tip = "LINK_CLICK_TIP" })
+ns.Module({ key = "linkClick", category = "conversation", group = "GROUP_QUESTION", order = 50, title = "LINK_CLICK", tip = "LINK_CLICK_TIP" })

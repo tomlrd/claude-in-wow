@@ -5,6 +5,7 @@
 --       key = "hello",              -- its switch, ns.db.options.hello
 --       category = "conversation",  -- its tab in the settings (ns.Category)
 --       order = 10,                 -- its place there
+--       group = "GROUP_TEXT",       -- a heading over it and those of the same group next to it, when the tab has some
 --       title = "HELLO", tip = "HELLO_TIP",
 --       default = true,             -- on at first (true when not said)
 --       fixed = false,              -- true: always on, no switch

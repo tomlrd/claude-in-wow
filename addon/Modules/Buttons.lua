@@ -299,7 +299,7 @@ local function TakeRoute(text, list)
     local start, finish, name, body = find(text, "```[^\n]*\n%s*%[claude%-in%-wow%] *[rR]oute *([^\n]*)\n(.-)\n?%s*```")
     if not start then return text end
     local steps = ns.ParseRoute(body)
-    if ns.On("route") and #steps > 0 then
+    if #steps > 0 then
         name = Bare(name)
         local key = name .. "\n" .. body
         list[#list + 1] = {
@@ -375,6 +375,6 @@ function ns.ButtonsBlock(text)
     return #list > 0 and list or nil, text, why
 end
 
-ns.Module({ key = "chips", category = "conversation", order = 40, title = "CHIPS", tip = "CHIPS_TIP" })
+ns.Module({ key = "chips", category = "conversation", group = "GROUP_ANSWERS", order = 40, title = "CHIPS", tip = "CHIPS_TIP" })
 ns.Module({ key = "actions", category = "limits", limit = true, order = 60, title = "ACTIONS", tip = "ACTIONS_TIP" })
 ns.Module({ key = "why", category = "answers", order = 35, title = "WHY_MODULE", tip = "WHY_MODULE_TIP" })

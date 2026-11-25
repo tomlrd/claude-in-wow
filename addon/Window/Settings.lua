@@ -95,6 +95,13 @@ local function View(parent, category)
     for index, module in ipairs(ns.ModulesOf(category.key)) do
         local built = { module = module, rows = {}, head = Row(view, module, true), line = T.Line(view) }
         built.line:SetHeight(1)
+        local before = view.modules[index - 1]
+        built.first = not module.group or not before or before.module.group ~= module.group
+        if module.group and built.first then
+            built.group = T.Text(view, "sansMedium", 15, "title")
+            built.group:SetWordWrap(false)
+            built.group:SetText(L[module.group])
+        end
         for at, setting in ipairs(module.settings or {}) do built.rows[at] = Row(view, setting) end
         built.custom = module.custom and module.custom(view)
         view.modules[index] = built
@@ -112,13 +119,15 @@ local function View(parent, category)
             y = y - height - gap
         end
         for index, built in ipairs(self.modules) do
-            built.line:SetShown(index > 1)
-            if index > 1 then
+            local parted = index > 1 and built.first
+            built.line:SetShown(parted)
+            if parted then
                 built.line:ClearAllPoints()
                 built.line:SetPoint("TOPLEFT", PAD, y)
                 built.line:SetWidth(width)
                 y = y - 15
             end
+            if built.group then Place(built.group, 0, built.group:GetStringHeight() or 16, 14) end
             local on = built.module.fixed or built.module.limit or ns.On(built.module.key)
             Place(built.head, 0, built.head:Refresh(width), #built.rows > 0 and 12 or 14)
             for _, row in ipairs(built.rows) do

@@ -116,7 +116,7 @@ local function Fonts()
 end
 
 ns.Module({
-    key = "look", category = "window", order = 11, fixed = true, title = "LOOK", tip = "LOOK_TIP", custom = Example,
+    key = "look", category = "conversation", group = "GROUP_TEXT", order = 60, fixed = true, title = "LOOK", custom = Example,
     settings = {
         { key = "marginSides", label = "LOOK_SIDES", default = 18, slider = { 0, 80, 2, " px" } },
         { key = "marginEnds", label = "LOOK_ENDS", default = 8, slider = { 0, 60, 2, " px" } },

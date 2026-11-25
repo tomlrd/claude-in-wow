@@ -181,7 +181,7 @@ end
 ----------------------------------------------------------------------
 
 local BARS = {
-    { key = "route", wanted = function() return ns.RouteActive() end, fill = function(bar)
+    { key = "route", always = true, wanted = function() return ns.RouteActive() end, fill = function(bar)
         local line = ns.RouteLine()
         bar.left:SetText(line and T.Code("accent") .. ns.PlainText(line) .. "|r" or "")
         bar.right:SetText(L.ROUTE_BAR)
@@ -238,7 +238,7 @@ function ns.LayoutBars(parent, pad, bottom, shown)
     local y = bottom
     for index = #bars, 1, -1 do -- from the last one up
         local bar = bars[index]
-        local on = ns.On(bar.spec.key) and (not bar.spec.wanted or bar.spec.wanted())
+        local on = (bar.spec.always or ns.On(bar.spec.key)) and (not bar.spec.wanted or bar.spec.wanted())
         bar:SetShown(on and shown)
         if on then
             bar:SetPoint("BOTTOMLEFT", pad, y)
@@ -259,7 +259,7 @@ end
 -- What they say, read again; hidden with the box you write in.
 function ns.UpdateBars(shown)
     for _, bar in ipairs(bars or {}) do
-        local on = shown and ns.On(bar.spec.key) and (not bar.spec.wanted or bar.spec.wanted())
+        local on = shown and (bar.spec.always or ns.On(bar.spec.key)) and (not bar.spec.wanted or bar.spec.wanted())
         bar:SetShown(on)
         if on then bar.spec.fill(bar) end
     end

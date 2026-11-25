@@ -12,10 +12,10 @@ local find = string.find
 local L, T = ns.L, ns.Theme
 
 ns.Module({
-    key = "players", category = "conversation", order = 20, title = "PLAYERS", tip = "PLAYERS_TIP",
+    key = "players", category = "conversation", group = "GROUP_ANSWERS", order = 30, title = "PLAYERS", tip = "PLAYERS_TIP",
     settings = {
-        { key = "playersClass", label = "PLAYERS_CLASS", tip = "PLAYERS_CLASS_TIP", default = true },
-        { key = "playersLevel", label = "PLAYERS_LEVEL", tip = "PLAYERS_LEVEL_TIP", default = true },
+        { key = "playersClass", label = "PLAYERS_CLASS", default = true },
+        { key = "playersLevel", label = "PLAYERS_LEVEL", default = true },
     },
 })
 

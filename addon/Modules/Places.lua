@@ -15,9 +15,9 @@ local byte = string.byte
 local L, T = ns.L, ns.Theme
 
 ns.Module({
-    key = "places", category = "conversation", order = 10, title = "PLACES", tip = "PLACES_TIP",
+    key = "places", category = "conversation", group = "GROUP_ANSWERS", order = 20, title = "PLACES", tip = "PLACES_TIP",
     settings = {
-        { key = "placesIcon", label = "PLACES_ICON", tip = "PLACES_ICON_TIP", default = true },
+        { key = "placesIcon", label = "PLACES_ICON", default = true },
         { key = "placesPin", label = "PLACES_PIN", tip = "PLACES_PIN_TIP", default = true },
     },
 })
