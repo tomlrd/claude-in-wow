@@ -293,7 +293,10 @@ C_TooltipInfo = {
     GetInventoryItem = function(unit, slot) if unit == "player" and slot == 1 then return { lines = HAT_LINES } end end,
 }
 -- Hooks and tooltips, for the marks
+local linkHook
+ChatEdit_InsertLink = function() end
 hooksecurefunc = function(target, name, hook)
+    if target == "ChatEdit_InsertLink" then linkHook = linkHook or name return end
     local original = target[name]
     target[name] = function(...)
         original(...)
@@ -1964,7 +1967,7 @@ ok("a switch shows the setting", minimapSwitch.checked, true)
 local settingsOn = {}
 for key, row in pairs(settingRows) do if row.switch and row.switch.checked then settingsOn[#settingsOn + 1] = key end end
 table.sort(settingsOn)
-ok("every module and setting on by default, but the sound at the start", table.concat(settingsOn, " "), "answerNote arrive bagButton barCharacter barSession chips compactPhoto gameLinks marks minimapButton parallel places placesIcon placesPin players playersClass playersLevel renew route routeAlerts routeAuto saidInGame select sendByPhoto shortcutsEdit soundReady why")
+ok("every module and setting on by default, but the sound at the start", table.concat(settingsOn, " "), "answerNote arrive bagButton barCharacter barSession chips compactPhoto gameLinks linkClick marks minimapButton parallel places placesIcon placesPin players playersClass playersLevel renew route routeAlerts routeAuto saidInGame select sendByPhoto shortcutsEdit soundReady why")
 -- the usage
 ok("short figures", table.concat({ ns.ShortNumber(950), ns.ShortNumber(1000), ns.ShortNumber(52499), ns.ShortNumber(999400), ns.ShortNumber(999600), ns.ShortNumber(1240000) }, " | "), "950 | 1 k | 52 k | 999 k | 1 M | 1,2 M")
 do
@@ -2291,6 +2294,54 @@ do -- the updates
     db.update, db.options.arrive = keptUpdate, keptArrive
     PlaySoundFile, C_Sound, ns.TakePhoto = keptPlay, keptSound, keptPhoto
     C_AddOns.IsAddOnLoaded, C_AddOns.IsAddOnLoadable, C_AddOns.DoesAddOnExist, C_AddOns.LoadAddOn = loading, loadable, exists, load
+end
+do -- a Shift+click puts a link in the question
+    local link = "|cnIQ1:|Hitem:2589::::::::50:::::|h[Étoffe de lin |A:Quality:0:0|a]|h|r"
+    ok("a link as words, for Claude", ns.PlainLinks("Vendre " .. link .. " ?"), "Vendre [Étoffe de lin ] (item:2589) ?")
+    ok("a quest's, in another colour", ns.PlainLinks("|cffffff00|Hquest:5382:50|h[Le boucher]|h|r"), "[Le boucher] (quest:5382)")
+    ok("a player's is their name", ns.PlainLinks("|cffffffff|Hplayer:Merrin-Forever|h[Merrin]|h|r"), "[Merrin]")
+    ok("a text without any", ns.PlainLinks("Où est |Ti'ik ?"), "Où est |Ti'ik ?")
+    local hooked = linkHook
+    ok("the game tells of each link", type(hooked), "function")
+    if hooked then
+        local keptModified, keptActive, keptSplit, keptShown = IsModifiedClick, ChatEdit_GetActiveWindow, StackSplitFrame, nil
+        local chat, modified = nil, true
+        IsModifiedClick = function(what) return modified and what == "CHATLINK" end
+        ChatEdit_GetActiveWindow = function() return chat end
+        local split = { shown = true, IsShown = function(self) return self.shown end, Hide = function(self) self.shown = false end }
+        StackSplitFrame = split
+        local watched = false
+        local keptGame = { ns.Game.QuestWatched, ns.Game.WatchQuest, ns.Game.UnwatchQuest }
+        ns.Game.QuestWatched = function() return watched end
+        ns.Game.UnwatchQuest = function() watched = false end
+        ns.Game.WatchQuest = function() watched = true end
+        ns.OpenClaude()
+        input.text = "Vendre"
+        hooked(link)
+        timers[#timers]()
+        ok("put in the question, the stack's box away", input.text .. "/" .. tostring(split.shown), "Vendre " .. link .. " /false")
+        hooked("|cffffff00|Hquest:5382:50|h[Le boucher]|h|r")
+        watched = true -- what the game's click does when no chat takes it
+        timers[#timers]()
+        ok("a quest too, its tracking as it was", tostring(input.text:find("Le boucher", 1, true) ~= nil) .. " " .. tostring(watched), "true false")
+        local before = input.text
+        chat = {}
+        hooked(link)
+        chat = nil
+        modified = false
+        hooked(link)
+        modified = true
+        ns.SetOption("linkClick", false)
+        hooked(link)
+        ns.SetOption("linkClick", true)
+        ns.OpenClaude("settings")
+        hooked(link)
+        ns.OpenClaude()
+        ok("not while the chat is written in, without Shift, turned off, nor on the settings", input.text, before)
+        input.text = ""
+        IsModifiedClick, ChatEdit_GetActiveWindow, StackSplitFrame = keptModified, keptActive, keptSplit
+        ns.Game.QuestWatched, ns.Game.WatchQuest, ns.Game.UnwatchQuest = keptGame[1], keptGame[2], keptGame[3]
+    end
 end
 do -- how to speak instead of writing
     db.settingsTab = "questions"

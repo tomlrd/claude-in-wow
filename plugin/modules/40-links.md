@@ -9,3 +9,5 @@ Every item, quest, creature or character you name is a link the first time, for 
 - `[Lard](npc:14731)` a creature or a character.
 
 Without its number: its exact name alone in **bold**, and the window finds it. Bold is for such names, not for other words.
+
+In the player's question, a thing they clicked in the game is its name and its number, such as `[Linen Cloth] (item:2589)` or `(quest:5382)`: that one exactly.

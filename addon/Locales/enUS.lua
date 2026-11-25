@@ -592,6 +592,8 @@ ns.Locale("enUS", {
     ROUTE_END = "Finish",
     ROUTE_BAR = "Route",
     ROUTE_BAR_TIP = "Click: next step, step before, stop.",
+    LINK_CLICK = "Shift+click in the question",
+    LINK_CLICK_TIP = "An item, a quest, a spell: put in the question, as in the chat.",
     ROUTE_MODULE = "Routes",
     ROUTE_MODULE_TIP = "Under an answer about where to go, a route to follow step by step: a pin of the game and a line over the screen at each. It only shows, stops at a click, and a /reload ends it.",
     ROUTE_AUTO = "Next step when you arrive",

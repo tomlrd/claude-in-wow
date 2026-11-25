@@ -1278,7 +1278,17 @@ local function Send()
         return
     end
     input:SetText("")
-    ns.Ask("free", text)
+    ns.Ask("free", ns.PlainLinks(text))
+end
+
+-- A link put where the question is being written, while the conversation shows; false
+-- when it does not.
+function ns.InsertInQuestion(link)
+    if not frame or not frame:IsShown() or settingsShown or strip and strip:IsShown() then return false end
+    local before = input:GetText() or ""
+    input:Insert((before ~= "" and not before:find("%s$") and " " or "") .. link .. " ")
+    UpdatePlaceholder()
+    return true
 end
 
 ----------------------------------------------------------------------

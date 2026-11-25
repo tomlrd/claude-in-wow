@@ -572,6 +572,8 @@ ns.Locale("esES", {
     ROUTE_END = "Terminar",
     ROUTE_BAR = "Ruta",
     ROUTE_BAR_TIP = "Clic: paso siguiente, paso anterior, detener.",
+    LINK_CLICK = "Mayús+clic en la pregunta",
+    LINK_CLICK_TIP = "Un objeto, una misión, un hechizo: pegado en la pregunta, como en el chat.",
     ROUTE_MODULE = "Rutas",
     ROUTE_MODULE_TIP = "Bajo una respuesta que dice adónde ir, una ruta para seguir paso a paso: una chincheta del juego y una línea arriba de la pantalla en cada uno. Solo muestra, se detiene con un clic y un /reload la termina.",
     ROUTE_AUTO = "Paso siguiente al llegar",

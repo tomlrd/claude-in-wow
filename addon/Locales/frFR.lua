@@ -569,6 +569,8 @@ ns.Locale("frFR", {
     ROUTE_END = "Terminer",
     ROUTE_BAR = "Itinéraire",
     ROUTE_BAR_TIP = "Clic : étape suivante, précédente, arrêter.",
+    LINK_CLICK = "Maj+clic dans la question",
+    LINK_CLICK_TIP = "Un objet, une quête, un sort : collé dans la question, comme dans le chat.",
     ROUTE_MODULE = "Itinéraires",
     ROUTE_MODULE_TIP = "Sous une réponse qui dit où aller, un itinéraire à suivre étape par étape : une épingle du jeu et une ligne en haut de l'écran à chacune. Ça montre seulement, s'arrête d'un clic, et un /reload y met fin.",
     ROUTE_AUTO = "Étape suivante à l'arrivée",

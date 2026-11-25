@@ -568,6 +568,8 @@ ns.Locale("itIT", {
     ROUTE_END = "Termina",
     ROUTE_BAR = "Percorso",
     ROUTE_BAR_TIP = "Clic: tappa successiva, precedente, ferma.",
+    LINK_CLICK = "Maiusc+clic nella domanda",
+    LINK_CLICK_TIP = "Un oggetto, una missione, un incantesimo: incollato nella domanda, come in chat.",
     ROUTE_MODULE = "Percorsi",
     ROUTE_MODULE_TIP = "Sotto una risposta che dice dove andare, un percorso da seguire tappa per tappa: un indicatore del gioco e una riga in alto sullo schermo a ognuna. Mostra soltanto, si ferma con un clic, e un /reload lo termina.",
     ROUTE_AUTO = "Tappa successiva all'arrivo",

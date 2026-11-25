@@ -563,6 +563,8 @@ ns.Locale("deDE", {
     ROUTE_END = "Beenden",
     ROUTE_BAR = "Route",
     ROUTE_BAR_TIP = "Klick: nächster Schritt, vorheriger Schritt, beenden.",
+    LINK_CLICK = "Shift+Klick in die Frage",
+    LINK_CLICK_TIP = "Gegenstand, Quest, Zauber: in die Frage eingefügt, wie im Chat.",
     ROUTE_MODULE = "Routen",
     ROUTE_MODULE_TIP = "Unter einer Antwort, die sagt, wohin: eine Route Schritt für Schritt, jeweils mit einer Kartenmarkierung und einer Zeile oben auf dem Bildschirm. Sie zeigt nur, endet mit einem Klick und mit einem /reload.",
     ROUTE_AUTO = "Nächster Schritt bei Ankunft",
