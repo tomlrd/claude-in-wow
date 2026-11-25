@@ -268,23 +268,26 @@ end
 -- Our icons one can choose from.
 T.ICONS = { "ArrowUp", "Bag", "MapPin", "Clipboard", "Check", "Copy", "Gear", "NewChat", "Camera", "Plus", "Trash" }
 
--- Claude's spark, from the texture closest to twice its size; with World of Warcraft's
--- (the game's own file) in front of it when it is large.
+-- The addon's logo: Claude's spark, from the texture closest to twice its size, with World
+-- of Warcraft's icon (the game's own file) in front of it, shown and hidden with it.
 function T.Logo(parent, size, color, layer)
     local icon = parent:CreateTexture(nil, layer or "ARTWORK")
     icon:SetTexture(ART .. (size <= 16 and "Logo32" or size <= 32 and "Logo64" or "Logo128"))
     icon:SetSize(size, size)
     icon:SetVertexColor(T.Color(color or "clay"))
-    if size >= 32 then
-        icon.game = parent:CreateTexture(nil, "OVERLAY")
-        icon.game:SetSize(size * 0.6, size * 0.6)
-        icon.game:SetPoint("CENTER", icon, "CENTER")
-        icon.game:SetTexture("Interface\\FriendsFrame\\Battlenet-WoWicon")
-    end
+    local game = parent:CreateTexture(nil, "OVERLAY")
+    game:SetSize(size * 0.6, size * 0.6)
+    game:SetPoint("CENTER", icon, "CENTER")
+    game:SetTexture("Interface\\FriendsFrame\\Battlenet-WoWicon")
+    icon.game = game
+    hooksecurefunc(icon, "Show", function() game:Show() end)
+    hooksecurefunc(icon, "Hide", function() game:Hide() end)
+    hooksecurefunc(icon, "SetShown", function(_, shown) game:SetShown(shown) end)
     return icon
 end
 
-T.ADDON_ICON = ART .. "LogoClay"
+-- The same in one picture, for where the game takes one file (the AddOns list).
+T.ADDON_ICON = ART .. "LogoWoW"
 
 local function Tooltip(self)
     if not self.tooltip then return end

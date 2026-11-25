@@ -9,7 +9,7 @@
 ## Author: Stylow
 ## Version: 1.0.0
 ## Category: Miscellaneous
-## IconTexture: Interface\AddOns\claude-in-wow\Media\Claude\LogoClay
+## IconTexture: Interface\AddOns\claude-in-wow\Media\Claude\LogoWoW
 ## SavedVariables: ClaudeInWoWDB
 Libs\LibStub\LibStub.lua
 Libs\LibDeflate\LibDeflate.lua
