@@ -205,7 +205,7 @@ ns.Locale("frFR", {
     OPTION_OPACITY = "Opacité de la fenêtre",
     OPTION_OPACITY_TIP = "Ce que le fond de la fenêtre laisse voir du jeu. Le texte reste tel quel.",
     OPTION_MINIMAP = "Bouton de la mini-carte",
-    OPTION_MINIMAP_TIP = "L'étincelle de Claude sur la mini-carte : elle ouvre la fenêtre Claude.",
+    OPTION_MINIMAP_TIP = "Un bouton sur la mini-carte : il ouvre la fenêtre.",
     OPTION_COMPACT = "Photo compacte",
     OPTION_COMPACT_TIP = "Les données de la photo sont compressées et dessinées sur une bande en haut de l'écran, le jeu reste visible dessous. Désactivée : tout l'écran devient noir pendant la photo.",
     ASK_BAGS = "Que faire de tous ces objets ? Lesquels garder sur moi, mettre en banque, vendre ou détruire ?",

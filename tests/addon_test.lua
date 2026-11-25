@@ -61,7 +61,7 @@ local function FontString()
     function fs:GetStringHeight() return 8 end
     return fs
 end
-CreateFrame = function(kind)
+CreateFrame = function(kind, name)
     local f = setmetatable({ events = {}, scripts = {}, shown = true, strings = {}, kind = kind }, stub)
     function f:RegisterEvent(e) self.events[e] = true end
     function f:GetEffectiveScale() return 1 end
@@ -117,6 +117,7 @@ CreateFrame = function(kind)
         function t:SetWidth(width) self.width = width end
         return t
     end
+    f.name = name
     frames[#frames + 1] = f
     return f
 end
@@ -633,16 +634,40 @@ ok("a zone and a creature", ns.MarkdownInline("[Les Hinterlands](zone:1425) et [
 ok("a link with no number: its text", ns.MarkdownInline("[ici](map:abc)"), "ici")
 
 -- The Claude window, from the minimap button
-local icon = LibStub("LibDBIcon-1.0")
-ok("a minimap button", tostring(icon:IsRegistered("ClaudeInWoW")) .. " " .. tostring(db.options.minimapButton) .. " " .. tostring(db.minimap.hide), "true true nil")
+local minimapButton
+for _, f in ipairs(frames) do if f.name == "ClaudeInWoWMinimapButton" then minimapButton = f end end
+ok("a minimap button", tostring(minimapButton.shown) .. " " .. tostring(db.options.minimapButton) .. " " .. tostring(db.minimap.hide), "true true nil")
+do -- the game's icon in front of the spark
+    local kept, keptEnum, shown = C_Texture, Enum.TitleIconVersion, nil
+    local texture = { SetTexture = function(_, file) shown = file end }
+    C_Texture = { GetTitleIconTexture = function(client, size, done) done(true, client .. size) end }
+    Enum.TitleIconVersion = { Medium = 2 }
+    ns.Game.ShowIcon(texture)
+    ok("the game's icon, as its friends list gives it", shown, (BNET_CLIENT_WOW or "WoW") .. "2")
+    C_Texture = nil
+    ns.Game.ShowIcon(texture)
+    ok("or its file, where it does not", shown, "Interface\\FriendsFrame\\Battlenet-WoWicon")
+    C_Texture, Enum.TitleIconVersion = kept, keptEnum
+end
 ns.SetOption("minimapButton", false)
-ok("the setting hides it", db.minimap.hide, true)
+ok("the setting hides it", tostring(db.minimap.hide) .. " " .. tostring(minimapButton.shown), "true false")
 ns.SetOption("minimapButton", true)
-ok("and shows it again", db.minimap.hide, nil)
+ok("and shows it again", tostring(db.minimap.hide) .. " " .. tostring(minimapButton.shown), "nil true")
+do -- dragged round the minimap
+    local keptCursor = GetCursorPosition
+    Minimap.GetCenter = function() return 100, 100 end
+    Minimap.GetEffectiveScale = function() return 2 end
+    GetCursorPosition = function() return 200, 260 end -- above its middle
+    minimapButton.scripts.OnDragStart(minimapButton)
+    minimapButton.scripts.OnUpdate(minimapButton)
+    minimapButton.scripts.OnDragStop(minimapButton)
+    ok("dragged: its place kept", db.minimap.minimapPos .. " " .. tostring(minimapButton.scripts.OnUpdate), "90 nil")
+    GetCursorPosition = keptCursor
+end
 ns.ShowCopy = realShowCopy
 char.chat = nil
 local windowStart = #frames + 1 -- the window's frames, left out of the photo's tests below
-LibStub("LibDataBroker-1.1"):GetDataObjectByName("ClaudeInWoW").OnClick(nil, "LeftButton")
+minimapButton.scripts.OnClick(minimapButton, "LeftButton")
 local window, input, stripBox
 for _, f in ipairs(frames) do
     if f.events.ZONE_CHANGED_NEW_AREA then window = f end
@@ -2415,7 +2440,7 @@ minimapSwitch.scripts.OnClick(minimapSwitch)
 ok("on again", tostring(db.options.minimapButton) .. " " .. tostring(db.minimap.hide), "true nil")
 findButton("Réglages").scripts.OnClick(findButton("Réglages"))
 IsShiftKeyDown = function() return true end
-LibStub("LibDataBroker-1.1"):GetDataObjectByName("ClaudeInWoW").OnClick(nil, "LeftButton")
+minimapButton.scripts.OnClick(minimapButton, "LeftButton")
 IsShiftKeyDown = function() return false end
 ok("Shift+click on the minimap button: the settings", tostring(findText("Réglages")), "Réglages")
 ok("the settings open on the tab left", db.settingsTab, "claude")
@@ -2437,7 +2462,7 @@ end
 ok("the last 40 messages kept", #messages() .. " " .. messages()[40].text:sub(1, 11), "40 réponse 45")
 findButton("Nouvelle conversation").scripts.OnClick(findButton("Nouvelle conversation"))
 ok("a new conversation starts empty", #messages(), 0)
-LibStub("LibDataBroker-1.1"):GetDataObjectByName("ClaudeInWoW").OnClick(nil, "LeftButton")
+minimapButton.scripts.OnClick(minimapButton, "LeftButton")
 ok("a second click closes it", window.shown, false)
 for index = #frames, windowStart, -1 do frames[index] = nil end
 char.marks = earlierMarks

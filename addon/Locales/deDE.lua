@@ -205,7 +205,7 @@ ns.Locale("deDE", {
     OPTION_OPACITY = "Deckkraft des Fensters",
     OPTION_OPACITY_TIP = "Wie viel vom Spiel durch den Hintergrund des Fensters scheint. Der Text bleibt, wie er ist.",
     OPTION_MINIMAP = "Minikartenschaltfläche",
-    OPTION_MINIMAP_TIP = "Claudes Funke an der Minikarte: Er öffnet das Claude-Fenster.",
+    OPTION_MINIMAP_TIP = "Eine Schaltfläche an der Minikarte: Sie öffnet das Fenster.",
     OPTION_COMPACT = "Kompaktes Foto",
     OPTION_COMPACT_TIP = "Die Daten des Fotos werden komprimiert und auf einen Streifen am oberen Bildschirmrand gezeichnet, darunter bleibt das Spiel sichtbar. Aus: Der ganze Bildschirm wird für das Foto schwarz.",
     ASK_BAGS = "Was soll ich mit all diesen Gegenständen machen? Welche soll ich bei mir behalten, in die Bank legen, verkaufen oder zerstören?",

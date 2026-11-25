@@ -250,16 +250,23 @@ function T.Icon(parent, name, size, color, layer)
     return icon
 end
 
--- Claude's spark, from the texture closest to twice its size.
+-- Claude's spark, from the texture closest to twice its size; with the game's own icon in
+-- front of it when it is large.
 function T.Logo(parent, size, color, layer)
     local icon = parent:CreateTexture(nil, layer or "ARTWORK")
     icon:SetTexture(ART .. (size <= 16 and "Logo32" or size <= 32 and "Logo64" or "Logo128"))
     icon:SetSize(size, size)
     icon:SetVertexColor(T.Color(color or "clay"))
+    if size >= 32 then
+        icon.game = parent:CreateTexture(nil, "OVERLAY")
+        icon.game:SetSize(size * 0.6, size * 0.6)
+        icon.game:SetPoint("CENTER", icon, "CENTER")
+        ns.Game.ShowIcon(icon.game)
+    end
     return icon
 end
 
-T.LOGO_CLAY = ART .. "LogoClay"
+T.ADDON_ICON = ART .. "LogoClay"
 
 local function Tooltip(self)
     if not self.tooltip then return end

@@ -19,7 +19,7 @@ Il ne fait que proposer. Il ne joue jamais à votre place : un clic, une action,
 2. Mettez l'addon dans le dossier `Interface\AddOns` du jeu, sous le nom `claude-in-wow`.
 3. Dans Claude Code, tapez `/plugin marketplace add tomlrd/claude-in-wow`, puis `/plugin install wow-mcp@claude-in-wow`.
 4. Tapez `/wow-mcp:setup` : tout est vérifié, [Node.js](https://nodejs.org) est proposé s'il manque, et les réponses sont lancées.
-5. Quittez le jeu et relancez-le, une fois. Un clic sur l'étoile de la mini-carte ouvre la fenêtre.
+5. Quittez le jeu et relancez-le, une fois. Un clic sur l'étincelle de la mini-carte ouvre la fenêtre.
 
 Chaque réponse utilise votre propre forfait Claude. Il marche sous Windows ; sous macOS il devrait, dites-nous.
 

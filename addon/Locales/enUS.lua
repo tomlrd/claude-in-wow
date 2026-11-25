@@ -209,7 +209,7 @@ ns.Locale("enUS", {
     OPTION_OPACITY = "Window opacity",
     OPTION_OPACITY_TIP = "How much of the game shows through the window's background. The text stays as it is.",
     OPTION_MINIMAP = "Minimap button",
-    OPTION_MINIMAP_TIP = "Claude's spark on the minimap: it opens the Claude window.",
+    OPTION_MINIMAP_TIP = "A button on the minimap: it opens the window.",
     OPTION_COMPACT = "Compact photo",
     OPTION_COMPACT_TIP = "The photo's data is compressed and drawn on a band at the top of the screen, the game visible under it. Off: the whole screen goes black for the photo.",
     ASK_BAGS = "What should I do with all these items? Which ones should I keep on me, put in the bank, sell or destroy?",

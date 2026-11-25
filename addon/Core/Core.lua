@@ -8,7 +8,7 @@
 --     errors = { newest first: { message, stack, time, count, character, kind } },
 --     options = each module's and each setting's own (Modules.lua),
 --     claude = the Claude window's place and size (ClaudeWindow.lua),
---     minimap = its button's place (MinimapButton.lua, LibDBIcon),
+--     minimap = its button's place (MinimapButton.lua),
 -- }
 -- An app outside the game reads this file: the game writes it on /reload and
 -- on logout only.

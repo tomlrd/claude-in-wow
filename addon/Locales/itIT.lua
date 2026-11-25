@@ -206,7 +206,7 @@ ns.Locale("itIT", {
     OPTION_OPACITY = "Opacità della finestra",
     OPTION_OPACITY_TIP = "Quanto il gioco si vede attraverso lo sfondo della finestra. Il testo resta com'è.",
     OPTION_MINIMAP = "Pulsante sulla minimappa",
-    OPTION_MINIMAP_TIP = "La scintilla di Claude sulla minimappa: apre la finestra di Claude.",
+    OPTION_MINIMAP_TIP = "Un pulsante sulla minimappa: apre la finestra.",
     OPTION_COMPACT = "Foto compatta",
     OPTION_COMPACT_TIP = "I dati della foto sono compressi e disegnati su una fascia in alto sullo schermo, con il gioco visibile sotto. Disattivata: tutto lo schermo diventa nero durante la foto.",
     ASK_BAGS = "Cosa devo fare con tutti questi oggetti? Quali tenere con me, mettere in banca, vendere o distruggere?",
