@@ -2,6 +2,12 @@
 
 What goes on [authors.curseforge.com](https://authors.curseforge.com) when the project is created, and when its page changes. The pictures are in `docs/images` (and in full size where they were made).
 
+## Before sending it
+
+- The repository is public: the plugin is installed from it, the updates read its releases, and the Source link would be a dead link otherwise (leave Source empty until then).
+- CurseForge's rules (support.curseforge.com, "Moderation Policies"): name and description in English, translations after it; links to socials or donations at the bottom; the avatar a .png of at least 400 x 400, not a game's logo nor another's art; each file with a changelog. Names "should not contain game name", yet many approved addons carry "WoW" in theirs (WIM, WoW-Pro Guides, HandyNotes: WoW Forever...).
+- Never delete the project or a file to send it again while it is under review.
+
 ## The fields
 
 | Field | What to put |
