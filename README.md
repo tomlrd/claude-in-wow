@@ -25,7 +25,7 @@ Each answer uses your own Claude plan. It works on Windows; on macOS it should, 
 
 ## What is read, and where it goes
 
-Read in the game: your character, quests, bags, the places and people around, your addons' list and Lua errors, and what a question needs. **Never**: whispers, Battle.net, officers' chat and notes, your account's settings. Your question goes to the plugin in a screenshot that only holds that data, which the plugin reads on your computer, and deletes once another replaces it; Claude then gets the question and what it needs of it. Besides that, only the web is asked: the searches Claude makes, and the names of items, quests or creatures in an answer, looked up to make them links (never those of players). You may turn both off. Once a day the plugin also reads this project's last release on GitHub, for the updates (a setting turns it off).
+Read in the game: your character, quests, bags, the places and people around, your addons' list and Lua errors, and what a question needs. **Never**: whispers, Battle.net, officers' chat and notes, your account's settings. Your question goes to the plugin in a screenshot that only holds that data, which the plugin reads on your computer, and deletes once another replaces it; Claude then gets the question and what it needs of it. Besides that, only the web is asked: the searches Claude makes, and the names of items, quests or creatures in an answer, looked up to make them links (never those of players). You may turn both off. Once a day the plugin also reads this project's last release on GitHub, for the updates.
 
 How the two parts talk: [docs/protocol.md](docs/protocol.md).
 

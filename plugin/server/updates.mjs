@@ -296,7 +296,7 @@ export function tellGames(release) {
 export function choices(wowDir) {
   let options = {};
   try { options = loadData(wowDir).db?.options || {}; } catch { options = {}; }
-  return { mode: ['notify', 'auto', 'never'].includes(options.updates) ? options.updates : 'notify', from: options.updateFrom === 'github' ? 'github' : 'curseforge' };
+  return { mode: options.updates === 'auto' ? 'auto' : 'notify', from: options.updateFrom === 'github' ? 'github' : 'curseforge' };
 }
 
 // One update: { addon, plugin } say what was done of each (nothing: up to date).
@@ -336,7 +336,7 @@ export async function answerUpdate(question, wowDir) {
 // Once a day: looks, tells the games, and updates by itself where the player chose so.
 export async function daily(log) {
   const games = findGames().filter(hasAddon).map((wowDir) => ({ wowDir, ...choices(wowDir) }));
-  if (!source() || !games.some(({ mode }) => mode !== 'never')) return;
+  if (!source()) return;
   let release = null;
   try { release = await latest(); } catch (error) { return log(`updates: ${error.message}`); }
   if (!release) return;
@@ -345,7 +345,7 @@ export async function daily(log) {
       const states = await update(release, wowDir, from, false);
       if (Object.keys(states).length) log(`updates: ${JSON.stringify(states)}`);
     }
-    try { putNews(wowDir, mode === 'never' ? null : newsText(release, wowDir)); } catch { /* told another time */ }
+    try { putNews(wowDir, newsText(release, wowDir)); } catch { /* told another time */ }
   }
 }
 

@@ -493,10 +493,6 @@ fs.rmSync(nextFile);
   // by itself
   const logged = [];
   install('github');
-  put(path.join(game, 'WTF/Account/A/SavedVariables/claude-in-wow.lua'), 'ClaudeInWoWDB = {\n["options"] = {\n["updates"] = "never",\n},\n}\n');
-  const before = asked.length;
-  await updates.daily((line) => logged.push(line));
-  ok('updates: never looked for, when the player says so', asked.length, before);
   put(path.join(game, 'WTF/Account/A/SavedVariables/claude-in-wow.lua'), 'ClaudeInWoWDB = {\n["options"] = {\n["updates"] = "auto",\n["updateFrom"] = "github",\n},\n}\n');
   fs.utimesSync(path.join(game, 'WTF/Account/A/SavedVariables/claude-in-wow.lua'), new Date(), new Date(Date.now() + 5000));
   plugin = null;

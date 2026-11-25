@@ -2229,9 +2229,7 @@ do -- the updates
     badge.scripts.OnClick(badge)
     local page = findText("Addon : ")
     ok("a click on it opens what is new", db.settingsTab .. " " .. page, "updates Addon : 1.0.0, la 1.1.0 est sortie")
-    ns.SetOption("updates", "never")
-    ok("never: nothing is said", tostring(ns.UpdateDue()) .. " " .. tostring(badge.shown), "nil false")
-    ns.SetOption("updates", "notify")
+    ok("always told: two choices, tell me or by itself", #ns.ChoiceEntries("updates"), 2)
     -- asked
     ok("on the settings' page too", tostring(badge.shown), "true")
     local button

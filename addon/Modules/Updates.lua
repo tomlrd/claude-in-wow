@@ -52,7 +52,7 @@ end
 -- The versions out that are not here: the addon's, the plugin's.
 local function Out()
     local told = ns.db.update
-    if not told or ns.db.options.updates == "never" then return nil, nil end
+    if not told then return nil, nil end
     local addon = Newer(told.addon, Version()) and told.addon or nil
     local plugin = Newer(told.plugin, told.pluginNow) and told.pluginState ~= "done" and told.plugin or nil
     return addon, plugin
@@ -164,7 +164,7 @@ local function Page(parent)
         local y = (self.status:GetStringHeight() or 13) + 12
         local due = ns.UpdateDue() and not (asked == "sending" or asked == "asked")
         self.update:SetShown(due and true or false)
-        self.check:SetShown(not due and ns.db.options.updates ~= "never")
+        self.check:SetShown(not due)
         local chip = due and self.update or self.check
         chip:ClearAllPoints()
         chip:SetPoint("TOPLEFT", 0, -y)
@@ -189,7 +189,7 @@ local function Page(parent)
 end
 
 local function Modes()
-    return { { value = "notify", label = L.UPDATES_NOTIFY }, { value = "auto", label = L.UPDATES_AUTO }, { value = "never", label = L.UPDATES_NEVER } }
+    return { { value = "notify", label = L.UPDATES_NOTIFY }, { value = "auto", label = L.UPDATES_AUTO } }
 end
 
 local function Places()
