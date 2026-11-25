@@ -2002,6 +2002,12 @@ do
         .. " | " .. os.date("Revenu à zéro à %H:%M ; à jour avec la prochaine réponse", now - 60))
     ns.RenderClaude()
     ok("in the bar under the box: the addon's, then the plan's", tostring(bare((function() ns.OpenClaude() return findBar("barSession").right.text end)()):match("^Addon : .+  ·  Forfait : 30 %%$") ~= nil), "true")
+    local said = {}
+    for index, use in ipairs({ "addon", "plan", "both" }) do
+        ns.SetOption("barUse", use)
+        said[index] = bare(findBar("barSession").right.text):gsub("Addon : .-  ·", "Addon  ·"):gsub("^Addon : [^·]+$", "Addon")
+    end
+    ok("the addon's alone, the plan's alone, or both, as the player chose", table.concat(said, " | "), "Addon | Forfait : 30 % | Addon  ·  Forfait : 30 %")
     db.settingsTab = "usage"
     ns.OpenClaude("settings")
     ok("apart in the tab: the plan, then the addon", tostring(findText("Tout ce que vous faites avec Claude.") ~= nil) .. " " .. tostring(findText("L'addon seulement") ~= nil), "true true")

@@ -138,9 +138,10 @@ local function SessionBar(bar)
     if all > 0 then parts[#parts + 1] = (ns.SlotsWarning() and T.Code("clay") or "") .. format(L.BAR_SLOTS, left, all) .. (ns.SlotsWarning() and "|r" or "") end
     bar.left:SetText(table.concat(parts, DOT))
     -- the addon's, then the player's whole plan, each in the colour it has in the settings
-    local plan = ns.PlanLines()[1]
-    bar.right:SetText(T.Code("accent") .. format(L.BAR_TODAY, (ns.ShortNumber((ns.UsageOf(1))))) .. "|r"
-        .. (plan and plan.percent and DOT .. T.Code("clay") .. format(L.BAR_PLAN, plan.percent) .. "|r" or ""))
+    local uses, shown, plan = {}, ns.db.options.barUse, ns.PlanLines()[1]
+    if shown ~= "plan" then uses[1] = T.Code("accent") .. format(L.BAR_TODAY, (ns.ShortNumber((ns.UsageOf(1))))) .. "|r" end
+    if shown ~= "addon" and plan and plan.percent then uses[#uses + 1] = T.Code("clay") .. format(L.BAR_PLAN, plan.percent) .. "|r" end
+    bar.right:SetText(table.concat(uses, DOT))
 end
 
 local function SessionTip()
@@ -265,4 +266,10 @@ function ns.UpdateBars(shown)
 end
 
 ns.Module({ key = "barCharacter", category = "window", order = 12, title = "BAR_CHARACTER", tip = "BAR_CHARACTER_TIP" })
-ns.Module({ key = "barSession", category = "window", order = 14, title = "BAR_SESSION", tip = "BAR_SESSION_TIP" })
+local function Uses()
+    return { { value = "both", label = L.BAR_USE_BOTH }, { value = "addon", label = L.BAR_USE_ADDON }, { value = "plan", label = L.BAR_USE_PLAN } }
+end
+ns.Module({
+    key = "barSession", category = "window", order = 14, title = "BAR_SESSION", tip = "BAR_SESSION_TIP",
+    settings = { { key = "barUse", label = "BAR_USE", default = "both", choices = Uses } },
+})
