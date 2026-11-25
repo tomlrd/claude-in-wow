@@ -1,10 +1,18 @@
-# claude-in-wow
+# Claude in WoW
+
+![Poser une question, lire la réponse, suivre l'itinéraire](docs/images/claude-in-wow.gif)
 
 Posez à [Claude](https://claude.com) vos questions sur votre partie de World of Warcraft, **depuis le jeu** : votre personnage, vos quêtes, vos sacs, où aller et pourquoi. La réponse s'affiche dans une fenêtre du jeu, avec ses liens, ses boutons, ses marques sur vos sacs et ses itinéraires.
 
 **Non officiel.** Fonctionne avec Claude, d'Anthropic. Sans lien avec Anthropic ni Blizzard.
 
 *[In English](README.md)*
+
+| | |
+|---|---|
+| ![Des réponses cliquables](docs/images/02-answers.jpg) | ![Suivre l'itinéraire](docs/images/03-route.jpg) |
+| ![Un clic, une action](docs/images/04-actions.jpg) | ![Maj+clic, et demandez](docs/images/05-link.jpg) |
+| ![Comment il le sait](docs/images/06-why.jpg) | ![Ce que ça consomme](docs/images/07-usage.jpg) |
 
 Il y a deux parties, qui vont ensemble :
 
