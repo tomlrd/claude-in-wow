@@ -880,7 +880,7 @@ do -- the character, the server and the layer
     ns.char.world = nil
     ns.OpenClaude()
 end
-ok("no session yet, no tokens", findBar("barSession").left.text .. " / " .. findBar("barSession").right.text, "Pas encore de session / Aujourd'hui : 0 jetons")
+ok("no session yet, no tokens", findBar("barSession").left.text .. " / " .. bare(findBar("barSession").right.text), "Pas encore de session / Addon : 0")
 
 do -- the box keeps its width and its anchors, whatever the layout goes through
     local area
@@ -941,7 +941,7 @@ ok("what its mark says of Claude's session", db.claudeStatus.session .. " " .. d
 ok("the model that answered and the tokens it took, under the answer", ns.AnswerNote(messages()[2]), "Opus 5.5  ·  107 901 jetons (dont 90 052 en cache)")
 ok("its tokens noted", #db.usage.list .. " " .. db.usage.list[1].tokens .. " " .. db.usage.list[1].cached .. " " .. db.usage.list[1].model .. " " .. tostring(db.usage.list[1].seconds) .. " " .. db.usage.list[1].who,
     "1 107901 90052 opus-5.5 38 Arden Valcourt")
-ok("the session and today's tokens under the box", bare(findBar("barSession").left.text) .. " / " .. findBar("barSession").right.text, "Session : 3 questions  ·  71 k en mémoire / Aujourd'hui : 108 k jetons")
+ok("the session and today's tokens under the box", bare(findBar("barSession").left.text) .. " / " .. bare(findBar("barSession").right.text), "Session : 3 questions  ·  71 k en mémoire / Addon : 108 k")
 ok("the model by the button that sends", ns.ChoiceLabel("model"), "Opus 5.5")
 ok("figures grouped, whatever their length", ns.AnswerNote({ model = "haiku-5.5", tokens = 1234567 }) .. " | " .. ns.AnswerNote({ model = "haiku-5.5", tokens = 950, effort = "xhigh" }),
     "Haiku 5.5  ·  1 234 567 jetons | Haiku 5.5  ·  effort : Très élevé  ·  950 jetons")
@@ -1993,7 +1993,7 @@ do
         local percent, own = ns.PlanPercent(line)
         read[index] = line.name .. " " .. percent .. " " .. tostring(own)
     end
-    ok("the plan's windows, the game's part of them", table.concat(read, " | "), "Sur 5 heures 30 % dont 0,05 % pour le jeu | Sur la semaine 55 % dont 2,5 % pour le jeu | Sur la semaine, Opus  nil")
+    ok("the plan's windows, the game's part of them", table.concat(read, " | "), "Sur 5 heures 30 % dont 0,05 % pour l'addon | Sur la semaine 55 % dont 2,5 % pour l'addon | Sur la semaine, Opus  nil")
     local parts = {}
     for index, own in ipairs({ 0, 100, 210, 999, 1249, 10000 }) do parts[index] = select(2, ns.PlanPercent({ own = own })):match("dont (.-) pour") end
     ok("small parts with their decimals", table.concat(parts, " "), "0 % 1 % 2,1 % 9,99 % 12 % 100 %")
@@ -2001,8 +2001,12 @@ do
         os.date("Revient à zéro à %H:%M, dans 2 h 02", now + 2 * 3600 + 120) .. " | " .. os.date("Revient à zéro le %d/%m à %H:%M", now + 3 * 86400)
         .. " | " .. os.date("Revenu à zéro à %H:%M ; à jour avec la prochaine réponse", now - 60))
     ns.RenderClaude()
-    ok("in the tab on the usage", tostring(findText("Votre forfait")) .. " " .. bare(findText("|cfffaf9f530 %") or "") .. " " .. tostring(findText("Sur la semaine, Opus")) .. " " .. tostring(findText("Le reste du forfait")),
-        "Votre forfait 30 %, dont 0,05 % pour le jeu Sur la semaine, Opus Le reste du forfait")
+    ok("in the bar under the box: the addon's, then the plan's", tostring(bare((function() ns.OpenClaude() return findBar("barSession").right.text end)()):match("^Addon : .+  ·  Forfait : 30 %%$") ~= nil), "true")
+    db.settingsTab = "usage"
+    ns.OpenClaude("settings")
+    ok("apart in the tab: the plan, then the addon", tostring(findText("Tout ce que vous faites avec Claude.") ~= nil) .. " " .. tostring(findText("L'addon seulement") ~= nil), "true true")
+    ok("in the tab on the usage", tostring(findText("Votre forfait")) .. " " .. bare(findText("|cfffaf9f530 %") or "") .. " " .. tostring(findText("Sur la semaine, Opus")) .. " " .. tostring(findText("Le reste de votre forfait")),
+        "Votre forfait 30 %, dont 0,05 % pour l'addon Sur la semaine, Opus Le reste de votre forfait")
     do
         local rows = {}
         for _, f in ipairs(frames) do if f.own and f.rest and f.note then rows[#rows + 1] = f end end

@@ -126,17 +126,14 @@ local function Legend(parent, color, label)
     return square, text
 end
 
--- The plan at the top of the settings' tab on the usage: its Refresh(width) tells
+-- The plan, at the top of the settings' tab on the usage: its Refresh(width) tells
 -- its height.
-function ns.PlanSection(parent)
+local function Section(parent)
     local frame, rows = CreateFrame("Frame", nil, parent), {}
-    local head = T.Text(frame, "sansMedium", 13, "text")
-    head:SetPoint("TOPLEFT")
-    head:SetText(L.PLAN)
     local at = T.Text(frame, "sans", 11, "muted")
-    at:SetPoint("TOPRIGHT", 0, -1)
+    at:SetPoint("TOPLEFT")
     local unknown = T.Text(frame, "sans", 12, "muted")
-    unknown:SetPoint("TOPLEFT", 0, -22)
+    unknown:SetPoint("TOPLEFT")
     unknown:SetPoint("RIGHT")
     unknown:SetJustifyH("LEFT")
     unknown:SetText(L.PLAN_UNKNOWN)
@@ -156,7 +153,8 @@ function ns.PlanSection(parent)
     ours:SetPoint("LEFT")
     rest:SetPoint("LEFT", oursText, "RIGHT", 16, 0)
     function frame:Refresh(width)
-        local lines, plan, y = ns.PlanLines(), ns.db.claudePlan, 24
+        local lines, plan = ns.PlanLines(), ns.db.claudePlan
+        local y = #lines > 0 and 24 or 0
         self:SetWidth(width)
         unknown:SetShown(#lines == 0)
         local parted = false
@@ -180,4 +178,5 @@ function ns.PlanSection(parent)
     return frame
 end
 
+ns.Module({ key = "plan", category = "usage", order = 5, fixed = true, title = "PLAN", tip = "PLAN_TIP", custom = Section })
 ns.Module({ key = "planShare", category = "limits", limit = true, order = 25, title = "PLAN_SHARE", tip = "PLAN_SHARE_TIP" })

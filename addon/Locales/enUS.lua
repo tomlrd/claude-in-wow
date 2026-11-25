@@ -308,6 +308,7 @@ ns.Locale("enUS", {
 
     -- Modules\Plan.lua
     PLAN = "Your plan",
+    PLAN_TIP = "All you do with Claude.",
     PLAN_AT = "at %H:%M", -- a time: %H hours, %M minutes
     PLAN_AT_DAY = "on %m/%d at %H:%M", -- a date and a time
     PLAN_5H = "The last 5 hours",
@@ -318,13 +319,13 @@ ns.Locale("enUS", {
     PLAN_RESETS = "Back to zero at %s, in %s",
     PLAN_RESETS_DAY = "Back to zero on %s",
     PLAN_RESET = "Back to zero since %s; up to date with the next answer",
-    PLAN_OWN = "%s of it for the game",
-    PLAN_LEGEND_OWN = "The game (claude-in-wow)",
-    PLAN_LEGEND_REST = "The rest of the plan",
+    PLAN_OWN = "of which %s for the addon",
+    PLAN_LEGEND_OWN = "The addon",
+    PLAN_LEGEND_REST = "The rest of your plan",
     PLAN_DECIMAL = ".", -- the decimal mark
     PLAN_PERCENT_TEXT = "%s%%",
     PLAN_OWN_TIP = "An estimate, from the tokens of this computer's Claude Code sessions. Claude used elsewhere (claude.ai, another computer) is not known.",
-    PLAN_SHARE = "Do not estimate the game's part of the plan",
+    PLAN_SHARE = "Do not estimate the addon's part of the plan",
     PLAN_SHARE_TIP = "The plugin no longer reads the token counts of your Claude Code sessions on this computer (it never reads their texts): the bars of the plan are in one colour.",
     PLAN_TIME = "%H:%M",
     PLAN_DATE = "%m/%d at %H:%M", -- a date and a time
@@ -333,8 +334,8 @@ ns.Locale("enUS", {
 
     -- Modules\Usage.lua
     TAB_USAGE = "Usage",
-    USAGE_MODULE = "What the answers took",
-    USAGE_MODULE_TIP = "The tokens of every answer that came to this window, all your characters together. Those read again from the cache count for far less.",
+    USAGE_MODULE = "The addon only",
+    USAGE_MODULE_TIP = "The tokens of the answers received here, all your characters together.",
     USAGE_TODAY = "Today",
     USAGE_WEEK = "Last 7 days",
     USAGE_ALL = "Since the start",
@@ -380,7 +381,8 @@ ns.Locale("enUS", {
     BAR_HELD = "%s held",
     BAR_WAITING = "%d answers on their way",
     BAR_WAITING_ONE = "1 answer on its way",
-    BAR_TODAY = "Today: %s tokens",
+    BAR_TODAY = "Addon: %s",
+    BAR_PLAN = "Plan: %d %%",
     BAR_SLOTS = "%d of %d answers left",
     BAR_SLOTS_NAME = "Automatic answers left",
     BAR_SLOTS_VALUE = "%d of %d",

@@ -301,6 +301,7 @@ ns.Locale("itIT", {
 
     -- Modules\Plan.lua
     PLAN = "Il tuo piano",
+    PLAN_TIP = "Tutto ciò che fai con Claude.",
     PLAN_AT = "alle %H:%M",
     PLAN_AT_DAY = "il %d/%m alle %H:%M",
     PLAN_5H = "Le ultime 5 ore",
@@ -310,9 +311,9 @@ ns.Locale("itIT", {
     PLAN_RESETS = "Si azzera alle %s, tra %s",
     PLAN_RESETS_DAY = "Si azzera il %s",
     PLAN_RESET = "Azzerato dalle %s; aggiornato con la prossima risposta",
-    PLAN_OWN = "di cui %s per il gioco",
-    PLAN_LEGEND_OWN = "Il gioco (claude-in-wow)",
-    PLAN_LEGEND_REST = "Il resto del piano",
+    PLAN_OWN = "di cui %s per l'add-on",
+    PLAN_LEGEND_OWN = "L'add-on",
+    PLAN_LEGEND_REST = "Il resto del tuo piano",
     PLAN_DECIMAL = ",",
     PLAN_OWN_TIP = "Una stima, basata sui token delle sessioni di Claude Code di questo computer. L'uso di Claude altrove (claude.ai, un altro computer) non è noto.",
     PLAN_SHARE = "Non stimare la parte del gioco nel piano",
@@ -321,8 +322,8 @@ ns.Locale("itIT", {
 
     -- Modules\Usage.lua
     TAB_USAGE = "Consumo",
-    USAGE_MODULE = "Quanto hanno consumato le risposte",
-    USAGE_MODULE_TIP = "I token di ogni risposta arrivata in questa finestra, tutti i tuoi personaggi insieme. Quelli riletti dalla cache contano molto meno.",
+    USAGE_MODULE = "Solo l'add-on",
+    USAGE_MODULE_TIP = "I token delle risposte ricevute qui, di tutti i tuoi personaggi.",
     USAGE_TODAY = "Oggi",
     USAGE_WEEK = "Ultimi 7 giorni",
     USAGE_ALL = "Dall'inizio",
@@ -360,7 +361,8 @@ ns.Locale("itIT", {
     BAR_HELD = "%s in memoria",
     BAR_WAITING = "%d risposte in arrivo",
     BAR_WAITING_ONE = "1 risposta in arrivo",
-    BAR_TODAY = "Oggi: %s token",
+    BAR_TODAY = "Add-on: %s",
+    BAR_PLAN = "Piano: %d %%",
     BAR_SLOTS = "%d risposte rimaste su %d",
     BAR_SLOTS_NAME = "Risposte automatiche rimaste",
     BAR_SLOTS_VALUE = "%d su %d",

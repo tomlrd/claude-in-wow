@@ -3,7 +3,7 @@
 --   ns.db.usage = { list = { { at, question, model, effort, tokens, cached, detail, seconds, who } },  the last one last
 --     days = { ["2026-11-24"] = { tokens, cached, answers } },     kept for good
 --     models = { haiku-5.5 = { tokens, answers } } }
--- The settings' tab on it: the player's plan (Plan.lua); today, the last days,
+-- The settings' tab on it: after the player's plan (Plan.lua): today, the last days,
 -- everything; by day, by model; and the last answers, with where its tokens went (ns.ShowAnswerDetail).
 
 local addonName, ns = ...
@@ -212,8 +212,6 @@ end
 
 local function Tab(parent)
     local frame = CreateFrame("Frame", nil, parent)
-    local plan = ns.PlanSection(frame)
-    plan:SetPoint("TOPLEFT")
     local cards = { Card(frame, "USAGE_TODAY", 1), Card(frame, "USAGE_WEEK", 7), Card(frame, "USAGE_ALL") }
     local heads, bars, models, lines = {}, {}, {}, {}
     for index, key in ipairs({ "USAGE_DAYS", "USAGE_MODELS", "USAGE_LIST" }) do
@@ -273,7 +271,7 @@ local function Tab(parent)
     end
 
     function frame:Refresh(width)
-        local usage, y = Usage(), plan:Refresh(width) + 12
+        local usage, y = Usage(), 0
         local wide = width >= 330
         local each = wide and floor((width - 16) / 3) or width
         for index, card in ipairs(cards) do

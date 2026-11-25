@@ -137,7 +137,10 @@ local function SessionBar(bar)
     local left, all = Slots()
     if all > 0 then parts[#parts + 1] = (ns.SlotsWarning() and T.Code("clay") or "") .. format(L.BAR_SLOTS, left, all) .. (ns.SlotsWarning() and "|r" or "") end
     bar.left:SetText(table.concat(parts, DOT))
-    bar.right:SetText(format(L.BAR_TODAY, (ns.ShortNumber((ns.UsageOf(1))))))
+    -- the addon's, then the player's whole plan, each in the colour it has in the settings
+    local plan = ns.PlanLines()[1]
+    bar.right:SetText(T.Code("accent") .. format(L.BAR_TODAY, (ns.ShortNumber((ns.UsageOf(1))))) .. "|r"
+        .. (plan and plan.percent and DOT .. T.Code("clay") .. format(L.BAR_PLAN, plan.percent) .. "|r" or ""))
 end
 
 local function SessionTip()
@@ -164,6 +167,7 @@ local function SessionTip()
         end
         GameTooltip:AddLine(" ")
     end
+    GameTooltip:AddLine(L.USAGE_MODULE, 1, 1, 1)
     for _, span in ipairs({ { L.BAR_DAY, 1 }, { L.BAR_WEEK, 7 }, { L.BAR_ALL } }) do
         local tokens, _, answers = ns.UsageOf(span[2])
         Line(span[1], ns.UsageLine(tokens, answers))
