@@ -18,7 +18,7 @@ No key is needed to work on it. A `.env` file, which git never takes, may hold:
 |---|---|
 | `LUA` | the Lua the tests use, when it is not found by itself (a program and its first arguments) |
 
-[`.env.example`](../.env.example) is there to copy. CurseForge's key is never in it: it only goes in the repository's secrets.
+CurseForge's key is never in it: it only goes in the repository's secrets.
 
 ## A new version
 

@@ -1,7 +1,6 @@
 press/
 .env
 .env.*
-!.env.example
 addon/Inbox/
 fakewow/
 dist/
