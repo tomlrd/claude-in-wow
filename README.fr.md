@@ -1,12 +1,19 @@
 # Claude in WoW
 
-![Poser une question, lire la réponse, suivre l'itinéraire](docs/images/claude-in-wow.gif)
+[![tests](https://github.com/tomlrd/claude-in-wow/actions/workflows/test.yml/badge.svg)](https://github.com/tomlrd/claude-in-wow/actions/workflows/test.yml)
+[![release](https://img.shields.io/github/v/release/tomlrd/claude-in-wow)](https://github.com/tomlrd/claude-in-wow/releases)
+[![license](https://img.shields.io/badge/license-GPL%20v3-blue)](LICENSE)
+[![WoW](https://img.shields.io/badge/WoW-Retail%20%C2%B7%20Classic%20%C2%B7%20Forever-148EFF)](#)
+[![langues](https://img.shields.io/badge/langues-EN%20FR%20DE%20ES%20IT-555)](TRANSLATING.md)
+[![Claude Code](https://img.shields.io/badge/works%20with-Claude%20Code-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
+[![Read in English](https://img.shields.io/badge/read%20in-English-B22234)](README.md)
+<!-- once the CurseForge project exists: [![CurseForge](https://img.shields.io/curseforge/dt/PROJECT_ID?logo=curseforge&label=CurseForge)](https://www.curseforge.com/wow/addons/claude-in-wow) -->
+
+![Ce qu'il fait : liens, réponses, itinéraires, chat du groupe, sacs, ForeverAuras](docs/images/claude-in-wow.gif)
 
 Posez à [Claude](https://claude.com) vos questions sur votre partie de World of Warcraft, **depuis le jeu** : votre personnage, vos quêtes, vos sacs, où aller et pourquoi. La réponse s'affiche dans une fenêtre du jeu, avec ses liens, ses boutons, ses marques sur vos sacs et ses itinéraires.
 
 **Non officiel.** Fonctionne avec Claude, d'Anthropic. Sans lien avec Anthropic ni Blizzard.
-
-*[In English](README.md)*
 
 ![Comment ça marche](docs/images/12-how.jpg)
 
