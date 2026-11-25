@@ -2,7 +2,8 @@
 -- assistant from the Claude window (ClaudeWindow.lua). Each carries what it
 -- needs, read from the game when it is asked (no /reload needed), after a
 -- first line the assistant recognises: "[claude-in-wow <version>] <kind>".
---   /claude              a photo of the game (Photo.lua)
+--   /claude              opens or closes the window
+--   /claude photo        a photo of the game (Photo.lua)
 --   /claude <question>   a free question, with the character and the quests (also
 --                    what is written in the Claude window)
 --   /claude bags         the question about the bags
@@ -173,6 +174,8 @@ SLASH_CLAUDEINWOW1, SLASH_CLAUDEINWOW2 = "/claude", "/ciw"
 SlashCmdList.CLAUDEINWOW = function(text)
     text = match(text or "", "^%s*(.-)%s*$")
     if text == "" then
+        ns.ToggleClaude()
+    elseif L.PHOTO_WORDS[lower(text)] then
         ns.TakePhoto()
     elseif L.HELP_WORDS[lower(text)] then
         DEFAULT_CHAT_FRAME:AddMessage("|cff4ec9b0claude-in-wow|r " .. L.USAGE)

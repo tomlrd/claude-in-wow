@@ -78,7 +78,7 @@ function markCounts(marks) {
 const TOOLS = [
   {
     name: 'game_state',
-    description: 'Snapshot of the player\'s World of Warcraft character, noted by the claude-in-wow addon at the last reload or logout, or by a photo the player took in game (/claude in the chat), whichever is newer: who, where (zone, subzone, map and coordinates in %, instance), group, professions, money, XP, equipped items, bag space, counts of quests (and of quests left out under folded headers) and Lua errors. Says how old the snapshot is. Call it first for any question about the player\'s game.',
+    description: 'Snapshot of the player\'s World of Warcraft character, noted by the claude-in-wow addon at the last reload or logout, or by a photo the player took in game (/claude photo in the chat), whichever is newer: who, where (zone, subzone, map and coordinates in %, instance), group, professions, money, XP, equipped items, bag space, counts of quests (and of quests left out under folded headers) and Lua errors. Says how old the snapshot is. Call it first for any question about the player\'s game.',
     inputSchema: { type: 'object', properties: { character: characterArg }, additionalProperties: false },
     run(args) {
       const ctx = context(args);
@@ -243,7 +243,7 @@ const TOOLS = [
           || (x.objectives || []).some((o) => fold(o.text).includes(q)));
       }
       const notListed = ctx.char.questsNotListed
-        ? `${ctx.char.questsNotListed} more quests are in the log under folded headers: the player can unfold them, then take a photo (/claude in the chat) or /reload.`
+        ? `${ctx.char.questsNotListed} more quests are in the log under folded headers: the player can unfold them, then take a photo (/claude photo in the chat) or /reload.`
         : undefined;
       return { character: ctx.key, snapshot: noted(ctx.char), notListed, quests };
     },

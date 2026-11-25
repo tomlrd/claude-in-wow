@@ -29,7 +29,7 @@ Then the player's claude-in-wow folder, so that every conversation opened in it 
    This folder is the player's World of Warcraft corner: every conversation here is about their game, as a player.
 
    - Use the `wow-mcp` tools and the `wow` skill for any question about the character, quests, items, gold, addons or Lua errors.
-   - When the present matters (bags, position, quest progress) and the snapshot is old, ask for a photo: `/claude` in the game's chat (no /reload needed, not in combat).
+   - When the present matters (bags, position, quest progress) and the snapshot is old, ask for a photo: `/claude photo` in the game's chat (no /reload needed, not in combat).
    - A message starting with `[claude-in-wow <version>]` was pasted from the game: follow the skill's "Questions pasted from the game".
    - Answer in the player's language, short, with names as the game writes them.
    - Never change the game's files while the game runs, and never help automate gameplay.
@@ -50,4 +50,4 @@ Then the player's claude-in-wow folder, so that every conversation opened in it 
 
 6. **The game**: if it is running, the player quits it and starts it again, once: it then finds the addons the answers come through. Check with `action: "check"` that `answerAddons` is not 0.
 
-7. **Tell the player**, in their language and in a few lines: in the game, a click on Claude's spark on the minimap opens the window, and the Help tab of its settings says what to do when nothing answers; open this folder as a project (in the desktop app, pick it in the Code tab's folder choice; in a terminal, start in it); from then on every new conversation there is about their game. Before asking about the present, take a photo in game: `/claude`.
+7. **Tell the player**, in their language and in a few lines: in the game, a click on Claude's spark on the minimap opens the window, and the Help tab of its settings says what to do when nothing answers; open this folder as a project (in the desktop app, pick it in the Code tab's folder choice; in a terminal, start in it); from then on every new conversation there is about their game. Before asking about the present, take a photo in game: `/claude photo`.

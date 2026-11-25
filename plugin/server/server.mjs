@@ -11,7 +11,7 @@ const VERSION = JSON.parse(fs.readFileSync(new URL('../.claude-plugin/plugin.jso
 const PROTOCOLS = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 
 const INSTRUCTIONS = 'Reads the player\'s World of Warcraft install (the version played last): the character snapshot the claude-in-wow addon '
-  + 'notes at every reload or logout, or at a photo the player takes in game (/claude in the chat: '
+  + 'notes at every reload or logout, or at a photo the player takes in game (/claude photo in the chat: '
   + 'no reload needed). Check its age; when the present matters, ask for a photo. Also the installed addons '
   + 'and their saved settings and data, and auction house prices from TradeSkillMaster\'s data. '
   + 'Read-only: nothing here acts in the game, and saved files may only be changed with the game closed; '

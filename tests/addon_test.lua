@@ -2283,6 +2283,13 @@ do -- the updates
     PlaySoundFile, C_Sound, ns.TakePhoto = keptPlay, keptSound, keptPhoto
     C_AddOns.IsAddOnLoaded, C_AddOns.IsAddOnLoadable, C_AddOns.DoesAddOnExist, C_AddOns.LoadAddOn = loading, loadable, exists, load
 end
+do -- /claude
+    ns.OpenClaude()
+    SlashCmdList.CLAUDEINWOW("")
+    local closed = window.shown
+    SlashCmdList.CLAUDEINWOW(" ")
+    ok("/claude opens the window, or closes it", tostring(closed) .. " " .. tostring(window.shown), "false true")
+end
 do -- the tab on the conversation, in groups
     db.settingsTab = "conversation"
     ns.OpenClaude("settings")
@@ -2594,11 +2601,11 @@ time = function() return realTime() + 120 end
 GetMoney = function() return 2000000 end
 
 inCombat = true
-SlashCmdList.CLAUDEINWOW("")
+SlashCmdList.CLAUDEINWOW("photo")
 ok("no photo in combat", screenshots .. " " .. tostring(printed[#printed]:find("Pas de photo en combat", 1, true) ~= nil), "0 true")
 inCombat = false
 fontMissing = true
-SlashCmdList.CLAUDEINWOW("")
+SlashCmdList.CLAUDEINWOW("photo")
 ok("no font, no photo", screenshots .. " " .. tostring(printed[#printed]:find("police de la photo manque", 1, true) ~= nil), "0 true")
 fontMissing = false
 
@@ -2639,7 +2646,7 @@ local function writePages(file)
 end
 
 db.options.compactPhoto = false
-SlashCmdList.CLAUDEINWOW("")
+SlashCmdList.CLAUDEINWOW("photo")
 ok("black on the whole screen", tostring(rawget(photoFrame.black.points, "BOTTOM")) .. " " .. tostring(rawget(photoFrame.black, "height")), "true nil")
 ok("the photo covers the screen", photoFrame.shown, true)
 ok("screenshots in PNG for the photo", cvars.screenshotFormat, "png")

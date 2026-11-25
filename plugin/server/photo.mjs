@@ -1,6 +1,6 @@
 // Photos: the claude-in-wow addon cannot write a file while the game runs
 // (saved data reaches the disk only at a reload or logout), but the game saves
-// screenshots at once. So for a photo (/claude) the
+// screenshots at once. So for a photo (/claude photo) the
 // addon covers the screen with its data drawn in its own font, switches
 // screenshots to PNG for one shot, and takes one. This reads those PNGs back.
 // A compact photo (the addon's option, on by default) deflates the data and
