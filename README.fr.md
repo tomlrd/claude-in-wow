@@ -8,7 +8,11 @@ Posez à [Claude](https://claude.com) vos questions sur votre partie de World of
 
 *[In English](README.md)*
 
-![La strat pour votre groupe](docs/images/dungeon.gif)
+![Exemple : la strat pour votre groupe](docs/images/dungeon.gif)
+
+![Exemple : une ForeverAura faite pour vous](docs/images/aura.gif)
+
+![Les trois skins](docs/images/11-skins.jpg)
 
 | | |
 |---|---|

@@ -8,7 +8,11 @@ Ask [Claude](https://claude.com) about your World of Warcraft game, **from the g
 
 *[En français](README.fr.md)*
 
-![The strat for your group](docs/images/dungeon.gif)
+![Example: the strat for your group](docs/images/dungeon.gif)
+
+![Example: a ForeverAuras made for you](docs/images/aura.gif)
+
+![The three skins](docs/images/11-skins.jpg)
 
 | | |
 |---|---|
