@@ -2278,7 +2278,7 @@ end
 do -- how to speak instead of writing
     db.settingsTab = "questions"
     ns.OpenClaude("settings")
-    ok("speaking: explained with the questions", tostring(findText("Parler au lieu d'écrire") ~= nil) .. " " .. tostring(findText("Appuyez sur Windows + H") ~= nil) .. " " .. tostring(findText("Paramètres de Windows > Confidentialité") ~= nil), "true true true")
+    ok("speaking: explained with the questions", tostring(findText("Parler au lieu d'écrire") ~= nil) .. " " .. tostring(findText("Windows + H, puis parlez") ~= nil) .. " " .. tostring(findText("Paramètres de Windows > Confidentialité") ~= nil), "true true true")
 end
 do -- a new session each time one logs in
     db.claudeNewSession = nil

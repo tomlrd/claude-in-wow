@@ -478,12 +478,12 @@ ns.Locale("enUS", {
         "First version.",
     },
     VOICE = "Speak instead of writing",
-    VOICE_TIP = "With the dictation of Windows: it writes in the box, you read it again, you send it. The addon hears nothing itself: the game gives addons no microphone.",
-    VOICE_LIST = { "Click in the box, to see the cursor there.", "Press Windows + H and speak; Windows + H again to stop.", "Read it again, then Enter." },
+    VOICE_TIP = "With the dictation of Windows.",
+    VOICE_LIST = { "Click in the box.", "Windows + H, and speak.", "Windows + H again, then Enter." },
     VOICE_ONE = "In one click",
-    VOICE_ONE_LIST = { "Put Windows + H on a button of your mouse or keyboard, in its own software (Logitech G HUB, Razer Synapse...): the same button starts and stops.", "In the gear of the dictation bar: the voice typing launcher (a microphone that comes by itself in text boxes, perhaps not in the game) and the automatic punctuation." },
+    VOICE_ONE_LIST = { "Put Windows + H on a button of your mouse or keyboard, in its own software." },
     VOICE_WRONG = "When nothing is written",
-    VOICE_WRONG_LIST = { "Windows settings > Privacy & security > Speech: turn online speech recognition on. Your voice then goes to Microsoft as you dictate.", "Windows settings > System > Sound > Input: choose the microphone you speak in. And under Privacy & security > Microphone, desktop apps must be allowed.", "Not the right language: Windows + Space changes the one of the keyboard, so of the dictation.", "The bar does not open, or the cursor is lost: put the game in windowed (fullscreen) mode." },
+    VOICE_WRONG_LIST = { "Windows settings > Privacy & security > Speech: online speech recognition on.", "Windows settings > Sound > Input: the right microphone.", "Wrong language: Windows + Space." },
 
     -- Modules\Players.lua
     PLAYERS = "Players",

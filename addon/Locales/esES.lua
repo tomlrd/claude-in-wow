@@ -459,12 +459,12 @@ ns.Locale("esES", {
         "Primera versión.",
     },
     VOICE = "Hablar en vez de escribir",
-    VOICE_TIP = "Con el dictado de Windows: escribe en el cuadro, lo relees, lo envías. El addon no oye nada por sí mismo: el juego no da el micrófono a los addons.",
-    VOICE_LIST = { "Haz clic en el cuadro, para ver en él el cursor.", "Pulsa Windows + H y habla; otra vez Windows + H para parar.", "Reléelo y pulsa Intro." },
+    VOICE_TIP = "Con el dictado de Windows.",
+    VOICE_LIST = { "Haz clic en el cuadro.", "Windows + H, y habla.", "Otra vez Windows + H, e Intro." },
     VOICE_ONE = "Con un clic",
-    VOICE_ONE_LIST = { "Pon Windows + H en un botón del ratón o del teclado, en su programa (Logitech G HUB, Razer Synapse...): el mismo botón empieza y para.", "En la rueda de la barra de dictado: el iniciador de escritura por voz (un micrófono que aparece solo en los cuadros de texto, quizá no en el juego) y la puntuación automática." },
+    VOICE_ONE_LIST = { "Pon Windows + H en un botón del ratón o del teclado, en su programa." },
     VOICE_WRONG = "Cuando no se escribe nada",
-    VOICE_WRONG_LIST = { "Configuración de Windows > Privacidad y seguridad > Voz: activa el reconocimiento de voz en línea. Tu voz va entonces a Microsoft mientras dictas.", "Configuración de Windows > Sistema > Sonido > Entrada: elige el micrófono en el que hablas. Y en Privacidad y seguridad > Micrófono, las aplicaciones de escritorio deben estar permitidas.", "No es el idioma correcto: Windows + Espacio cambia el del teclado, y con él el del dictado.", "La barra no se abre, o se pierde el cursor: pon el juego en pantalla completa en ventana." },
+    VOICE_WRONG_LIST = { "Configuración de Windows > Privacidad y seguridad > Voz: reconocimiento de voz en línea activado.", "Configuración de Windows > Sonido > Entrada: el micrófono correcto.", "Idioma equivocado: Windows + Espacio." },
 
     -- Modules\Players.lua
     PLAYERS = "Jugadores",

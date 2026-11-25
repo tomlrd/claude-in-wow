@@ -451,12 +451,12 @@ ns.Locale("deDE", {
         "Erste Version.",
     },
     VOICE = "Sprechen statt schreiben",
-    VOICE_TIP = "Mit dem Diktat von Windows: Es schreibt ins Feld, Ihr lest nach, Ihr sendet. Das Addon selbst hört nichts: Das Spiel gibt Addons kein Mikrofon.",
-    VOICE_LIST = { "Klickt ins Feld, bis der Cursor darin steht.", "Drückt Windows + H und sprecht; noch einmal Windows + H zum Beenden.", "Lest nach, dann Eingabe." },
+    VOICE_TIP = "Mit dem Diktat von Windows.",
+    VOICE_LIST = { "Klickt ins Feld.", "Windows + H, dann sprechen.", "Noch einmal Windows + H, dann Eingabe." },
     VOICE_ONE = "Mit einem Klick",
-    VOICE_ONE_LIST = { "Legt Windows + H auf eine Taste Eurer Maus oder Tastatur, in deren Software (Logitech G HUB, Razer Synapse...): Dieselbe Taste startet und beendet.", "Im Zahnrad der Diktatleiste: das Startsymbol für die Spracheingabe (ein Mikrofon, das in Textfeldern von selbst erscheint, im Spiel vielleicht nicht) und die automatische Zeichensetzung." },
+    VOICE_ONE_LIST = { "Legt Windows + H auf eine Taste Eurer Maus oder Tastatur, in deren Software." },
     VOICE_WRONG = "Wenn nichts geschrieben wird",
-    VOICE_WRONG_LIST = { "Windows-Einstellungen > Datenschutz und Sicherheit > Spracherkennung: Schaltet die Online-Spracherkennung ein. Eure Stimme geht dann beim Diktieren an Microsoft.", "Windows-Einstellungen > System > Sound > Eingabe: Wählt das Mikrofon, in das Ihr sprecht. Und unter Datenschutz und Sicherheit > Mikrofon müssen Desktop-Apps erlaubt sein.", "Falsche Sprache: Windows + Leertaste wechselt die der Tastatur, also die des Diktats.", "Die Leiste öffnet sich nicht, oder der Cursor geht verloren: Stellt das Spiel auf Vollbild (Fenster)." },
+    VOICE_WRONG_LIST = { "Windows-Einstellungen > Datenschutz und Sicherheit > Spracherkennung: Online-Spracherkennung an.", "Windows-Einstellungen > Sound > Eingabe: das richtige Mikrofon.", "Falsche Sprache: Windows + Leertaste." },
 
     -- Modules\Players.lua
     PLAYERS = "Spieler",

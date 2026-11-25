@@ -456,12 +456,12 @@ ns.Locale("itIT", {
         "Prima versione.",
     },
     VOICE = "Parlare invece di scrivere",
-    VOICE_TIP = "Con la dettatura di Windows: scrive nel riquadro, rileggi, invii. L'addon non sente nulla da sé: il gioco non dà il microfono agli addon.",
-    VOICE_LIST = { "Fai clic nel riquadro, per vedervi il cursore.", "Premi Windows + H e parla; di nuovo Windows + H per fermare.", "Rileggi, poi Invio." },
+    VOICE_TIP = "Con la dettatura di Windows.",
+    VOICE_LIST = { "Fai clic nel riquadro.", "Windows + H, poi parla.", "Di nuovo Windows + H, poi Invio." },
     VOICE_ONE = "Con un clic",
-    VOICE_ONE_LIST = { "Metti Windows + H su un tasto del mouse o della tastiera, nel suo programma (Logitech G HUB, Razer Synapse...): lo stesso tasto avvia e ferma.", "Nell'ingranaggio della barra di dettatura: l'avvio della digitazione vocale (un microfono che compare da solo nei riquadri di testo, forse non nel gioco) e la punteggiatura automatica." },
+    VOICE_ONE_LIST = { "Metti Windows + H su un tasto del mouse o della tastiera, nel suo programma." },
     VOICE_WRONG = "Quando non si scrive nulla",
-    VOICE_WRONG_LIST = { "Impostazioni di Windows > Privacy e sicurezza > Riconoscimento vocale: attiva il riconoscimento vocale online. La tua voce va allora a Microsoft mentre detti.", "Impostazioni di Windows > Sistema > Audio > Input: scegli il microfono in cui parli. E in Privacy e sicurezza > Microfono le app desktop devono essere consentite.", "Non è la lingua giusta: Windows + Spazio cambia quella della tastiera, quindi della dettatura.", "La barra non si apre, o il cursore si perde: metti il gioco a schermo intero in finestra." },
+    VOICE_WRONG_LIST = { "Impostazioni di Windows > Privacy e sicurezza > Riconoscimento vocale: riconoscimento online attivo.", "Impostazioni di Windows > Audio > Input: il microfono giusto.", "Lingua sbagliata: Windows + Spazio." },
 
     -- Modules\Players.lua
     PLAYERS = "Giocatori",

@@ -191,7 +191,7 @@ events:SetScript("OnEvent", function(_, event, isWaypoint)
 end)
 
 ns.Module({
-    key = "route", category = "answers", order = 40, title = "ROUTE_MODULE", tip = "ROUTE_MODULE_TIP",
+    key = "route", category = "conversation", order = 45, title = "ROUTE_MODULE", tip = "ROUTE_MODULE_TIP",
     changed = function(on) if not on then ns.StopRoute() end end,
     settings = {
         { key = "routeAuto", label = "ROUTE_AUTO", tip = "ROUTE_AUTO_TIP", default = true },

@@ -456,12 +456,12 @@ ns.Locale("frFR", {
         "Première version.",
     },
     VOICE = "Parler au lieu d'écrire",
-    VOICE_TIP = "Avec la dictée de Windows : elle écrit dans la zone de texte, vous relisez, vous envoyez. L'addon n'entend rien lui-même : le jeu ne donne pas le micro aux addons.",
-    VOICE_LIST = { "Cliquez dans la zone de texte, pour y voir le curseur.", "Appuyez sur Windows + H et parlez ; encore Windows + H pour arrêter.", "Relisez, puis Entrée." },
+    VOICE_TIP = "Avec la dictée de Windows.",
+    VOICE_LIST = { "Cliquez dans la zone de texte.", "Windows + H, puis parlez.", "Encore Windows + H, puis Entrée." },
     VOICE_ONE = "En un clic",
-    VOICE_ONE_LIST = { "Mettez Windows + H sur un bouton de votre souris ou de votre clavier, dans son logiciel (Logitech G HUB, Razer Synapse...) : le même bouton démarre et arrête.", "Dans la roue crantée de la barre de dictée : le lanceur de saisie vocale (un micro qui vient tout seul dans les zones de texte, peut-être pas en jeu) et la ponctuation automatique." },
+    VOICE_ONE_LIST = { "Mettez Windows + H sur un bouton de votre souris ou clavier, dans son logiciel." },
     VOICE_WRONG = "Quand rien ne s'écrit",
-    VOICE_WRONG_LIST = { "Paramètres de Windows > Confidentialité et sécurité > Voix : activez la reconnaissance vocale en ligne. Votre voix va alors chez Microsoft pendant que vous dictez.", "Paramètres de Windows > Système > Son > Entrée : choisissez le micro dans lequel vous parlez. Et dans Confidentialité et sécurité > Microphone, les applications de bureau doivent être autorisées.", "Pas la bonne langue : Windows + Espace change celle du clavier, donc de la dictée.", "La barre ne s'ouvre pas, ou le curseur se perd : mettez le jeu en plein écran fenêtré." },
+    VOICE_WRONG_LIST = { "Paramètres de Windows > Confidentialité et sécurité > Voix : reconnaissance vocale en ligne activée.", "Paramètres de Windows > Son > Entrée : le bon micro.", "Mauvaise langue : Windows + Espace." },
 
     -- Modules\Players.lua
     PLAYERS = "Joueurs",
