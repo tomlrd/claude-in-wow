@@ -139,7 +139,7 @@ const TOOLS = [
   },
   {
     name: 'silent_mode',
-    description: 'The silent mode: Claude answers the questions sent from the game\'s Claude window with no conversation open. A hidden program waits for each question, asks Claude Code without a window (claude -p, the player\'s own account or API key, these tools), and puts the answer in the clipboard with a sound, for the player to paste with Ctrl+V. It keeps one Claude conversation per conversation of the game\'s window. Actions: start (when the player asks for the silent mode, "mode silencieux"), stop, status, check (what the answers need: Claude Code, its sign-in or the player\'s API key, with the commands the player types themselves to give or remove one - never ask for it nor run them -, the game, the addon, the answer addons), game (where World of Warcraft is, when it was not found: folder, as the player says it), undo_update (the addon as it was before its last update from GitHub, the game closed: only when the player asks), autostart and no_autostart (starting with Windows: only when the player asks for it; it puts a small script in their Startup folder). It runs until stopped, and starts again by itself when a Claude session opens these tools after the computer restarted; each answer uses the player\'s usage like a message, or is paid by use with an API key.',
+    description: 'The silent mode: Claude answers the questions sent from the game\'s Claude window with no conversation open. A hidden program waits for each question, asks Claude Code without a window (claude -p, the player\'s own account or API key, these tools), and puts the answer in the game\'s window, or in the clipboard with a sound when it cannot show by itself, for the player to paste with Ctrl+V. It keeps one Claude conversation per conversation of the game\'s window. Actions: start (when the player asks for the silent mode, "mode silencieux"), stop, status, check (what the answers need: Claude Code, its sign-in or the player\'s API key, with the commands the player types themselves to give or remove one - never ask for it nor run them -, the game, the addon, the answer addons), game (where World of Warcraft is, when it was not found: folder, as the player says it), undo_update (the addon as it was before its last update from GitHub, the game closed: only when the player asks), autostart and no_autostart (starting with Windows: only when the player asks for it; it puts a small script in their Startup folder). It runs until stopped, and starts again by itself when a Claude session opens these tools after the computer restarted; each answer uses the player\'s usage like a message, or is paid by use with an API key.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -162,7 +162,7 @@ const TOOLS = [
   },
   {
     name: 'answer_to_game',
-    description: 'Answers a question sent from the game: your answer shows in the game\'s Claude window when the question asks for that (the player\'s setting), and goes in the system clipboard in any case, for the player to paste it there with Ctrl+V, with a short sound. Pass the answer exactly as you wrote it, Markdown and marks block included. It replaces what the player had in the clipboard. With asked in place of question: what the player said in this conversation itself, shown in the game with your answer.',
+    description: 'Answers a question sent from the game: your answer shows in the game\'s Claude window when the question asks for that (the player\'s setting); when it cannot show by itself, it goes in the system clipboard instead (replacing what the player had there), for them to paste it with Ctrl+V, with a short sound. Pass the answer exactly as you wrote it, Markdown and marks block included. With asked in place of question: what the player said in this conversation itself, shown in the game with your answer.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -189,13 +189,14 @@ const TOOLS = [
           delivered = deliver(wowDir, asked.question, text, args.sound !== false).delivered;
         }
       }
-      const result = toClipboard(text, args.sound !== false && !delivered);
-      if (result.error && !delivered) return result;
+      // the clipboard only when it could not show by itself: what the player keeps there stays
+      const result = delivered ? { copied: false } : toClipboard(text, args.sound !== false);
+      if (result.error) return result;
       return {
-        delivered, copied: !result.error, characters: text.length,
+        delivered, copied: !delivered, characters: text.length,
         next: fromGame ? `To wait for the next question, run in the background: ${listenCommand(Math.floor(args.question))}` : undefined,
         places: left === null ? undefined : left > 0 ? `${left} more can show by themselves before the player's next question or photo from the game.` : 'No place is left for more: the player\'s next question or photo from the game (with "Who answers" on a session they see) gives some.',
-        tell: delivered ? 'The answer shows in the game\'s Claude window by itself (it is in the clipboard too).'
+        tell: delivered ? 'The answer shows in the game\'s Claude window by itself (the clipboard is left as it was).'
           : 'The answer is in the clipboard: the player presses Ctrl+V in the game\'s Claude window.',
       };
     },

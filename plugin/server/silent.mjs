@@ -8,8 +8,8 @@
 // modules say (modules.mjs) in place of Claude Code's own instructions, which
 // would be read again at every step;
 // puts the answer in the game for the questions that ask for it
-// (deliver.mjs), and in the clipboard in any case, with a sound when the game
-// does not make one itself (clipboard.mjs).
+// (deliver.mjs), or in the clipboard with a sound when it cannot show by itself
+// (clipboard.mjs): what the player keeps in the clipboard is left alone otherwise.
 //
 // All the conversations (tabs) of the game's window share one Claude session,
 // resumed at each question and kept when the silent mode is stopped and
@@ -578,9 +578,9 @@ async function answerIn(question, at, aside, wowDir) {
   const ready = options.soundReady !== false;
   const { delivered, error } = deliver(wowDir, question, text, ready);
   if (error) log(`not put in the game: ${error}`);
-  const copied = copyOutbox(ready && !delivered); // the game sounds by itself
+  const copied = delivered ? { skipped: true } : copyOutbox(ready); // the game sounds by itself
   if (!reply.error) {
-    log(`answered in ${Math.round(seconds)} s${delivered ? ', in the game' : ''}${copied.error ? `, not copied: ${copied.error}` : ', copied'} (${reply.model || 'model unknown'}, question ${state.asked} of the session, ${reply.context} tokens held, ${reply.spent.total} spent, ${state.outbox.length} to paste)`);
+    log(`answered in ${Math.round(seconds)} s${delivered ? ', in the game' : ''}${copied.error ? `, not copied: ${copied.error}` : copied.skipped ? '' : ', copied'} (${reply.model || 'model unknown'}, question ${state.asked} of the session, ${reply.context} tokens held, ${reply.spent.total} spent, ${state.outbox.length} to paste)`);
   }
   writeState(state);
 }

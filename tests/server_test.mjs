@@ -764,7 +764,7 @@ const t18 = ask({ at: askedAt + 180, text: 'Dans le jeu ?', signal: 7, slot: 3, 
 ok('silent mode: the question is acknowledged in the game', await waitFor(() => fs.statSync(signal('a007')).size > 1000), true);
 ok('silent mode: in the game, the signal after the slot', [await waitFor(() => fs.statSync(signal('007')).size > 1000), fs.readFileSync(slot('003'), 'utf8').includes(`ClaudeInWoWInbox = [=[\n[claude-in-wow réponse ${t18.at} `),
   fs.readFileSync(signal('007')).toString('latin1', 0, 4)], [true, true, 'RIFF']);
-ok('silent mode: in the clipboard too', await waitFor(() => clipboardText().includes(`réponse ${t18.at} `)), true);
+ok('silent mode: shown in the game, the clipboard left alone', [await waitFor(() => fs.readFileSync(path.resolve('fakewow/claude-in-wow-silent.log'), 'utf8').includes('Dans le jeu ?')) && await waitFor(() => /answered in \d+ s, in the game \(/.test(fs.readFileSync(path.resolve('fakewow/claude-in-wow-silent.log'), 'utf8'))), clipboardText().includes(`réponse ${t18.at} `)], [true, false]);
 const t19 = ask({ at: askedAt + 190, text: 'Fin ]=] de crochet, sans son ?', signal: 9, slot: 4, options: { soundReady: false } });
 ok('silent mode: the files of an answer that arrived are emptied', [await waitFor(() => fs.statSync(signal('009')).size > 0), fs.statSync(signal('007')).size, fs.readFileSync(slot('003'), 'utf8').includes('Inbox =')], [true, 0, false]);
 ok('silent mode: a text that closes brackets stays a text', fs.readFileSync(slot('004'), 'utf8').includes('ClaudeInWoWInbox = [==[\n'), true);
@@ -775,7 +775,7 @@ ok('silent mode: only the addon\'s own files', [await waitFor(() => clipboardTex
 const t21 = ask({ at: askedAt + 210, text: 'Pas installé ?', signal: 8, slot: 5 });
 ok('silent mode: files that are not there are not made', [await waitFor(() => clipboardText().includes(`réponse ${t21.at} `)), fs.existsSync(signal('008')), fs.existsSync(slot('005'))], [true, false, false]);
 const inGame = await silentServer.call('answer_to_game', { text: 'Par la conversation', question: t18.at });
-ok('answer to the game: shown in it when the question asks for that', [inGame.data.delivered, fs.statSync(signal('007')).size > 1000, fs.readFileSync(slot('003'), 'utf8').includes(`[claude-in-wow réponse ${t18.at}]\n\nPar la conversation\n]=]`)], [true, true, true]);
+ok('answer to the game: shown in it when the question asks for that, the clipboard left alone', [inGame.data.delivered, inGame.data.copied, clipboardText().includes('Par la conversation'), fs.statSync(signal('007')).size > 1000, fs.readFileSync(slot('003'), 'utf8').includes(`[claude-in-wow réponse ${t18.at}]\n\nPar la conversation\n]=]`)], [true, false, false, true, true]);
 const { installedAddons } = await import(pathToFileURL(path.join(pluginDir, 'server/addons.mjs')));
 fs.writeFileSync(path.join(addonsDir, 'claude-in-wow_S003', 'claude-in-wow_S003.toc'), '## Interface: 16001\n## Title: slot\nInbox.lua\n');
 ok('the slots are not listed among the addons', installedAddons(wow).some((a) => a.name.startsWith('claude-in-wow_S')), false);
