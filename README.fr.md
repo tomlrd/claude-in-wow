@@ -6,9 +6,7 @@
 [![langues](https://img.shields.io/badge/langues-EN%20FR%20DE%20ES%20IT-brightgreen)](TRANSLATING.md)
 [![Claude Code](https://img.shields.io/badge/works%20with-Claude%20Code-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
 [![Read in English](https://img.shields.io/badge/-Read%20in%20English-555)](README.md)
-<!-- with the first release:
 [![release](https://img.shields.io/github/v/release/tomlrd/claude-in-wow)](https://github.com/tomlrd/claude-in-wow/releases)
--->
 <!-- once the CurseForge project exists: [![CurseForge](https://img.shields.io/curseforge/dt/PROJECT_ID?logo=curseforge&label=CurseForge)](https://www.curseforge.com/wow/addons/claude-in-wow) -->
 
 ![Ce qu'il fait : liens, réponses, itinéraires, chat du groupe, sacs, ForeverAuras](docs/images/claude-in-wow.gif)

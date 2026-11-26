@@ -13,7 +13,7 @@ const { CF_API_TOKEN: token, CF_PROJECT_ID: project } = process.env;
 const dry = process.argv.includes('--dry');
 const toc = fs.readFileSync(path.join(root, 'addon/claude-in-wow.toc'), 'utf8');
 const version = /^## Version: (.+)$/m.exec(toc)[1].trim();
-const file = path.join(root, 'dist', `claude-in-wow-${version}-curseforge.zip`);
+const file = path.join(root, 'dist', `claude-in-wow-${version}.zip`);
 
 // 120105 is the game's 12.1.5
 const games = /^## Interface: (.+)$/m.exec(toc)[1].split(',').map((one) => Number(one.trim())).map((n) => `${Math.floor(n / 10000)}.${Math.floor(n / 100) % 100}.${n % 100}`);

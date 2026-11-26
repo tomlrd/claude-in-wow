@@ -350,8 +350,8 @@ fs.rmSync(nextFile);
   const { unzip } = await import(pathToFileURL(path.join(pluginDir, 'server/updates.mjs')));
   const inside = (name) => unzip(fs.readFileSync(path.join(copy, 'dist', name)));
   const field = (files) => /^## X-Install: (.+)$/m.exec(files.find(({ name }) => name === 'claude-in-wow.toc').data.toString())?.[1];
-  const [a, b] = [inside('claude-in-wow-99.1.0.zip'), inside('claude-in-wow-99.1.0-curseforge.zip')];
-  ok('release: the two zips, read back by what installs them', [field(a), field(b), a.length === b.length, a.some(({ name }) => name === 'Inbox/250.wav'), a.some(({ name }) => name === 'LICENSE')], ['github', 'curseforge', true, true, true]);
+  const a = inside('claude-in-wow-99.1.0.zip');
+  ok('release: one zip, read back by what installs it', [field(a), fs.readdirSync(path.join(copy, 'dist')).filter((name) => name.endsWith('.zip')).length, a.some(({ name }) => name === 'Inbox/250.wav'), a.some(({ name }) => name === 'LICENSE')], ['release', 1, true, true]);
   ok('release: every file of the .toc is there', fs.readFileSync(path.join(copy, 'addon/claude-in-wow.toc'), 'utf8').split(/\r?\n/).filter((line) => /\.lua$/.test(line) && !line.startsWith('#')).filter((line) => !a.some(({ name }) => name === line.replaceAll('\\', '/'))), []);
   const received = [];
   const web = http.createServer((request, answer) => {
@@ -374,7 +374,7 @@ fs.rmSync(nextFile);
   const sent = await send({ CF_API_TOKEN: 'a-key-of-the-tests', CF_PROJECT_ID: '123' });
   const upload = received.find(({ url }) => url === '/api/projects/123/upload-file');
   const metadata = JSON.parse(/name="metadata"\r\n\r\n(.*?)\r\n/s.exec(upload.body.toString('latin1'))[1]);
-  ok('release: the zip sent to CurseForge, for the versions of the game it knows', [sent.status, sent.out.includes('file 4242'), upload.token, metadata.gameVersions, metadata.releaseType, metadata.changelog, upload.body.includes(fs.readFileSync(path.join(copy, 'dist/claude-in-wow-99.1.0-curseforge.zip')))], [0, true, 'a-key-of-the-tests', [7, 9], 'release', '- Something new.', true]);
+  ok('release: the zip sent to CurseForge, for the versions of the game it knows', [sent.status, sent.out.includes('file 4242'), upload.token, metadata.gameVersions, metadata.releaseType, metadata.changelog, upload.body.includes(fs.readFileSync(path.join(copy, 'dist/claude-in-wow-99.1.0.zip')))], [0, true, 'a-key-of-the-tests', [7, 9], 'release', '- Something new.', true]);
   ok('release: the key is never shown', sent.out.includes('a-key-of-the-tests'), false);
   web.close();
   // a copy put in the games, to try it

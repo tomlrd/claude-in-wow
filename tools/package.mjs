@@ -1,6 +1,6 @@
 // Makes the addon as players install it, in dist: npm run package
-//   claude-in-wow-<version>-curseforge.zip and claude-in-wow-<version>.zip (the one the
-//   plugin installs), which only differ by the .toc's X-Install;
+//   claude-in-wow-<version>.zip, the one for GitHub, CurseForge and the plugin's updates
+//   (its .toc says X-Install: a copy a package made, which the updates may replace);
 //   release.json: what the plugin reads to know what is out (plugin/server/updates.mjs).
 // What is new comes from CHANGES in the languages (addon/Locales): the lines under the
 // version's "= <version>".
@@ -61,9 +61,8 @@ function zip(from) {
   return Buffer.concat([...bodies, head, end]);
 }
 
-const made = (by) => { fs.writeFileSync(tocFile, toc.replace(/^## Version: .*$/m, (line) => `${line}\n## X-Install: ${by}`)); return zip(out); };
-fs.writeFileSync(path.join(dist, `claude-in-wow-${version}-curseforge.zip`), made('curseforge'));
-const ours = made('github'), file = `claude-in-wow-${version}.zip`;
+fs.writeFileSync(tocFile, toc.replace(/^## Version: .*$/m, (line) => `${line}\n## X-Install: release`));
+const ours = zip(out), file = `claude-in-wow-${version}.zip`;
 fs.writeFileSync(path.join(dist, file), ours);
 
 const notes = {};
