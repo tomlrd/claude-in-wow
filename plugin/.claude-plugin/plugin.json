@@ -1,6 +1,6 @@
 {
   "name": "wow-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "https://github.com/tomlrd/claude-in-wow",
   "license": "SEE LICENSE IN LICENSE",
   "description": "World of Warcraft (Retail, Classic, Forever) from your own install: character snapshot (live with an in-game photo, no reload), answers in the game's own window, quests, items, addons, their settings and Lua errors. Unofficial: works with Claude, by Anthropic; not affiliated with Anthropic nor Blizzard.",

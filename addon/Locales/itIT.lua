@@ -461,6 +461,10 @@ ns.Locale("itIT", {
     UPDATE_PLUGIN_FAILED = "Claude Code non ha potuto aggiornare il plugin.",
     UPDATE_PLUGIN_ADDONFIRST = "Il plugin aspetta che l'add-on sia aggiornato prima.",
     CHANGES = {
+        "= 1.0.1",
+        "Il pulsante che apre la finestra può andare ovunque sullo schermo, con l'aspetto della tua skin (impostazioni, Finestra).",
+        "Con una sessione di Claude che vedi, quello che le dici lì ora appare qui da solo, con la sua risposta.",
+        "Una risposta che appare qui da sola non sostituisce più ciò che hai negli appunti.",
         "= 1.0.0",
         "Prima versione.",
     },

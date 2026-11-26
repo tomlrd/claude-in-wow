@@ -456,6 +456,10 @@ ns.Locale("deDE", {
     UPDATE_PLUGIN_FAILED = "Claude Code konnte das Plugin nicht aktualisieren.",
     UPDATE_PLUGIN_ADDONFIRST = "Das Plugin wartet, bis das Addon aktualisiert ist.",
     CHANGES = {
+        "= 1.0.1",
+        "Die Schaltfläche, die das Fenster öffnet, kann überall auf dem Bildschirm liegen, im Aussehen Eures Skins (Einstellungen, Fenster).",
+        "Mit einer Claude-Sitzung, die Ihr seht, erscheint das, was Ihr dort sagt, jetzt von selbst hier, mit der Antwort.",
+        "Eine Antwort, die hier von selbst erscheint, ersetzt nicht mehr den Inhalt Eurer Zwischenablage.",
         "= 1.0.0",
         "Erste Version.",
     },

@@ -380,6 +380,9 @@ C_AddOns = {
     IsAddOnLoaded = function(i) return ADDONS[i] and ADDONS[i][5] or false end,
 }
 
+-- the addon's own version, as its .toc says it (a global: the main chunk has few locals left)
+TestVersion = C_AddOns.GetAddOnMetadata("claude-in-wow", "Version")
+
 -- Load the addon in .toc order
 local function load()
     local ns = {}
@@ -497,7 +500,7 @@ for line in shown:gmatch("[^\n]+") do lines[#lines + 1] = line end
 local function line(start)
     for _, l in ipairs(lines) do if l:sub(1, #start) == start then return l end end
 end
-ok("first line for the assistant", lines[1], "[claude-in-wow 1.0.0] bags")
+ok("first line for the assistant", lines[1], "[claude-in-wow " .. TestVersion .. "] bags")
 ok("its bubble says the question", shownLabel, "Que faire de tous ces objets ? Lesquels garder sur moi, mettre en banque, vendre ou détruire ?")
 ok("the bags question", lines[2], "Question: Que faire de tous ces objets ? Lesquels garder sur moi, mettre en banque, vendre ou détruire ?")
 ok("the character", line("Personnage:"), "Personnage: Arden Valcourt, niveau 44 Mage, Mort-vivant, Horde, 123g 45s 67c, XP 46%")
@@ -1001,11 +1004,11 @@ input.scripts.OnEnterPressed(input)
 local asked = messages()[#messages()]
 ok("no photo: the question to copy", asked.state, "copy")
 ok("its full text selected to copy", stripBox.text:match("^[^\n]+") .. " " .. tostring(stripBox.focused) .. " " .. tostring(stripBox.highlighted),
-    "[claude-in-wow 1.0.0] free true true")
+    "[claude-in-wow " .. TestVersion .. "] free true true")
 ns.TakePhoto = realTakePhoto
 stripBox.text = "abc"
 stripBox.scripts.OnTextChanged(stripBox, true)
-ok("the text to copy cannot be changed", stripBox.text:match("^[^\n]+"), "[claude-in-wow 1.0.0] free")
+ok("the text to copy cannot be changed", stripBox.text:match("^[^\n]+"), "[claude-in-wow " .. TestVersion .. "] free")
 IsControlKeyDown = function() return true end
 stripBox.scripts.OnKeyDown(stripBox, "C")
 IsControlKeyDown = function() return false end
@@ -2276,10 +2279,10 @@ do -- the updates
     ns.OpenClaude()
     local badge
     for _, f in ipairs(frames) do if f.label and f.label.text == "Mise à jour" then badge = f end end
-    ok("a badge on the title's line", tostring(badge.shown) .. " " .. select(2, ns.UpdateBadge()):gsub("\n", " / "), "true Addon : 1.0.0, la 1.1.0 est sortie / Clic : les nouveautés")
+    ok("a badge on the title's line", tostring(badge.shown) .. " " .. select(2, ns.UpdateBadge()):gsub("\n", " / "), "true Addon : " .. TestVersion .. ", la 1.1.0 est sortie / Clic : les nouveautés")
     badge.scripts.OnClick(badge)
     local page = findText("Addon : ")
-    ok("a click on it opens what is new", db.settingsTab .. " " .. page, "updates Addon : 1.0.0, la 1.1.0 est sortie")
+    ok("a click on it opens what is new", db.settingsTab .. " " .. page, "updates Addon : " .. TestVersion .. ", la 1.1.0 est sortie")
     ok("always told: two choices, tell me or by itself", #ns.ChoiceEntries("updates"), 2)
     -- asked
     ok("on the settings' page too", tostring(badge.shown), "true")
@@ -2291,7 +2294,7 @@ do -- the updates
     sent.done(true)
     ns.AskUpdate()
     ok("not twice", tostring(sent == first), "true")
-    ok("said while it is", findText("Demandé au plugin...\n"), "Demandé au plugin...\nAddon : 1.0.0, la 1.1.0 est sortie")
+    ok("said while it is", findText("Demandé au plugin...\n"), "Demandé au plugin...\nAddon : " .. TestVersion .. ", la 1.1.0 est sortie")
     first.sentAt = first.sentAt - 10
     on[("a%03d"):format(first.signal)] = true
     tick()
@@ -2300,7 +2303,7 @@ do -- the updates
     texts[("claude-in-wow_S%03d"):format(first.slot)] = "[claude-in-wow update]\npluginNow=1.0.0\naddon=1.1.0\nplugin=1.1.0\nwaits=1.1.0\naddonState=ready\npluginState=done\nchecked=ok"
     on[("%03d"):format(first.signal)] = true
     tick()
-    ok("the plugin's answer: the addon waits for the game to be closed, the plugin is done", tostring(ns.UpdateDue()) .. " " .. findText("Addon : "):gsub("\n", " / "), "nil Addon : 1.0.0, la 1.1.0 est sortie / L'addon est téléchargé : il s'installe quand vous quittez le jeu. / Le plugin est à jour.")
+    ok("the plugin's answer: the addon waits for the game to be closed, the plugin is done", tostring(ns.UpdateDue()) .. " " .. findText("Addon : "):gsub("\n", " / "), "nil Addon : " .. TestVersion .. ", la 1.1.0 est sortie / L'addon est téléchargé : il s'installe quand vous quittez le jeu. / Le plugin est à jour.")
     on = {}
     for state, said in pairs({ curseforge = "dans l'application CurseForge", dev = "installé à la main", failed = "rien n'a changé" }) do
         ns.TakeUpdate("[claude-in-wow update]\npluginNow=1.0.0\naddon=1.1.0\naddonState=" .. state)
@@ -2309,7 +2312,7 @@ do -- the updates
     end
     ns.TakeUpdate("[claude-in-wow update]\npluginNow=1.0.0\naddon=1.1.0\naddonState=whatever\npluginState=addonFirst")
     ns.OpenClaude("settings")
-    ok("one it does not know is left out", findText("Addon : "):gsub("\n", " / "), "Addon : 1.0.0, la 1.1.0 est sortie / Le plugin attend que l'addon soit mis à jour d'abord.")
+    ok("one it does not know is left out", findText("Addon : "):gsub("\n", " / "), "Addon : " .. TestVersion .. ", la 1.1.0 est sortie / Le plugin attend que l'addon soit mis à jour d'abord.")
     ns.TakeUpdate("[claude-in-wow update]\npluginNow=1.0.0\nchecked=none")
     ns.OpenClaude("settings")
     ok("nothing published: said", findText("Aucune version"), "Aucune version publiée pour l'instant.")
