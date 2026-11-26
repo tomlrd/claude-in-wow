@@ -13,6 +13,8 @@
 
 Posez à [Claude](https://claude.com) vos questions sur votre partie de World of Warcraft, **depuis le jeu** : votre personnage, vos quêtes, vos sacs, où aller et pourquoi. La réponse s'affiche dans une fenêtre du jeu, avec ses liens, ses boutons, ses marques sur vos sacs et ses itinéraires.
 
+**L'addon : [sur CurseForge](https://www.curseforge.com/wow/addons/claude-in-wow)** (ou le zip de chaque [version](https://github.com/tomlrd/claude-in-wow/releases)).
+
 **Non officiel.** Fonctionne avec Claude, d'Anthropic. Sans lien avec Anthropic ni Blizzard.
 
 ![Comment ça marche](docs/images/12-how.jpg)
@@ -27,7 +29,7 @@ Il ne fait que proposer. Il ne joue jamais à votre place : un clic, une action,
 ## L'installer
 
 1. Installez [Claude Code](https://claude.com/claude-code) et connectez-vous avec votre compte Claude (un forfait actif : Pro, Max...). Pas de forfait ? Une clé API à vous marche aussi, payée à l'usage : l'étape 4 dit comment.
-2. Mettez l'addon dans le dossier `Interface\AddOns` du jeu, sous le nom `claude-in-wow`.
+2. Installez l'addon depuis [CurseForge](https://www.curseforge.com/wow/addons/claude-in-wow), ou mettez le zip d'une [version](https://github.com/tomlrd/claude-in-wow/releases) dans le dossier `Interface\AddOns` du jeu.
 3. Dans Claude Code, tapez `/plugin marketplace add tomlrd/claude-in-wow`, puis `/plugin install wow-mcp@claude-in-wow`.
 4. Tapez `/wow-mcp:setup` : tout est vérifié, [Node.js](https://nodejs.org) est proposé s'il manque, et les réponses sont lancées.
 5. Quittez le jeu et relancez-le, une fois. Un clic sur l'étincelle de la mini-carte ouvre la fenêtre.

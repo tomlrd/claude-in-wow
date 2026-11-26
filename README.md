@@ -13,6 +13,8 @@
 
 Ask [Claude](https://claude.com) about your World of Warcraft game, **from the game itself**: your character, your quests, your bags, where to go and why. The answer shows in a window in the game, with its links, its buttons, its marks on your bags and its routes to follow.
 
+**The addon: [on CurseForge](https://www.curseforge.com/wow/addons/claude-in-wow)** (or the zip of each [release](https://github.com/tomlrd/claude-in-wow/releases)).
+
 **Unofficial.** Works with Claude, by Anthropic. Not affiliated with Anthropic nor Blizzard.
 
 ![How it works](docs/images/12-how.jpg)
@@ -27,7 +29,7 @@ It only proposes. It plays nothing in your place: one click is one action, and n
 ## Installing it
 
 1. Install [Claude Code](https://claude.com/claude-code) and sign in with your Claude account (an active plan: Pro, Max...). No plan? An API key of yours works too, paid by use: step 4 tells how.
-2. Put the addon in the game's `Interface\AddOns` folder, as `claude-in-wow`.
+2. Install the addon from [CurseForge](https://www.curseforge.com/wow/addons/claude-in-wow), or put the zip of a [release](https://github.com/tomlrd/claude-in-wow/releases) in the game's `Interface\AddOns` folder.
 3. In Claude Code, type `/plugin marketplace add tomlrd/claude-in-wow`, then `/plugin install wow-mcp@claude-in-wow`.
 4. Type `/wow-mcp:setup`: it checks everything, offers to install [Node.js](https://nodejs.org) when it is missing, and starts the answers.
 5. Quit the game and start it again, once. A click on the spark on the minimap opens the window.
