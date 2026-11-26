@@ -20,19 +20,24 @@ What goes on [authors.curseforge.com](https://authors.curseforge.com) when the p
 | Source | https://github.com/tomlrd/claude-in-wow |
 | Issues | https://github.com/tomlrd/claude-in-wow/issues |
 | Avatar | `avatar.png` (400 x 400) |
-| Images | `claude-in-wow.gif`, then 12-how, 13-silent, 02-answers, 03-route, 05-link, 09-dungeon, 14-bags, 10-aura, 04-actions, 06-why, 07-usage, 11-skins, 08-questions |
+| Gallery | The pictures only, never those the description shows (the GIF, 12-how): 02-answers, 09-dungeon, 14-bags, 10-aura (the first four, featured above the description), then 03-route, 05-link, 04-actions, 06-why, 07-usage, 11-skins, 13-silent, 08-questions |
+| Project ID | 1831581 |
 
 ## The description
 
-Paste below, in the Markdown editor. The pictures are shown from this repository (docs/images); to show the gallery's copies instead, put the address of each one (right-click on it, copy the image's address) in place of the one in parentheses.
+Paste below, in the Markdown editor. Its two pictures (the GIF, how it works) are shown from this repository (docs/images) and are not in the gallery: each picture shows once.
 
 ---
+
+> **This addon needs its plugin.** It works with the free **wow-mcp** plugin for [Claude Code](https://claude.com/claude-code), on your computer, and your own Claude plan or API key. **Install guide, source and help: [github.com/tomlrd/claude-in-wow](https://github.com/tomlrd/claude-in-wow)**
+
+[![GitHub](https://img.shields.io/badge/GitHub-tomlrd%2Fclaude--in--wow-181717?logo=github)](https://github.com/tomlrd/claude-in-wow) [![Plugin](https://img.shields.io/badge/needs-the%20wow--mcp%20plugin-D97757)](https://github.com/tomlrd/claude-in-wow#installing-it)
 
 **Ask Claude about your game, from the game itself.** Your character, your quests, your bags, where to go and why: the answer shows in a window in the game, with links you can click, buttons, routes to follow and marks on your bags.
 
 ![What it does](https://raw.githubusercontent.com/tomlrd/claude-in-wow/main/docs/images/claude-in-wow.gif)
 
-> **Unofficial.** Works with Claude, by Anthropic. Not affiliated with Anthropic nor Blizzard. It needs a program on your computer besides this addon: read *How it works* below before installing.
+> **Unofficial.** Works with Claude, by Anthropic. Not affiliated with Anthropic nor Blizzard.
 
 ### What you can ask
 
@@ -64,8 +69,6 @@ Two parts that go together:
 2. **The wow-mcp plugin for [Claude Code](https://claude.com/claude-code)**, on your computer: it receives your questions, gives Claude the state of your game, and puts the answers back in the game.
 
 Each answer uses **your own Claude plan** (Pro, Max...), or **your own API key**, paid by use. Nothing is included.
-
-![No Claude window needed](https://raw.githubusercontent.com/tomlrd/claude-in-wow/main/docs/images/13-silent.jpg)
 
 No Claude window needs to be open: a hidden program waits for your questions (the silent mode). Or talk to a Claude session you see: you choose, in the addon's settings.
 
