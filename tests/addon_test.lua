@@ -644,6 +644,29 @@ ns.SetOption("minimapButton", false)
 ok("the setting hides it", tostring(db.minimap.hide) .. " " .. tostring(minimapButton.shown), "true false")
 ns.SetOption("minimapButton", true)
 ok("and shows it again", tostring(db.minimap.hide) .. " " .. tostring(minimapButton.shown), "nil true")
+do -- or anywhere on the screen
+    ns.SetOption("openButton", "screen")
+    local screenButton
+    for _, f in ipairs(frames) do if f.name == "ClaudeInWoWScreenButton" then screenButton = f end end
+    ok("or anywhere on the screen, as the player chooses: the minimap's hidden", tostring(screenButton and screenButton.shown) .. " " .. tostring(minimapButton.shown), "true false")
+    screenButton.GetCenter = function() return 700, 500 end
+    local keptCenter = UIParent.GetCenter
+    UIParent.GetCenter = function() return 500, 400 end
+    screenButton.scripts.OnDragStart(screenButton)
+    screenButton.scripts.OnDragStop(screenButton)
+    UIParent.GetCenter = keptCenter
+    ok("dragged on the screen: its place kept, from the middle", db.screenButton.x .. " " .. db.screenButton.y, "200 100")
+    local keptToggle, toggled = ns.ToggleClaude, 0
+    ns.ToggleClaude = function() toggled = toggled + 1 end
+    screenButton.scripts.OnClick(screenButton, "LeftButton")
+    ok("a click opens or closes the window", toggled, 1)
+    ns.ToggleClaude = keptToggle
+    ns.SetOption("minimapButton", false)
+    ok("the switch hides it too", tostring(screenButton.shown), "false")
+    ns.SetOption("minimapButton", true)
+    ns.SetOption("openButton", "minimap")
+    ok("back on the minimap", tostring(screenButton.shown) .. " " .. tostring(minimapButton.shown), "false true")
+end
 do -- dragged round the minimap
     local keptCursor = GetCursorPosition
     Minimap.GetCenter = function() return 100, 100 end
@@ -1949,7 +1972,7 @@ local function openTabs() -- each in turn, as the player would
 end
 openTabs()
 ok("a tab opened is kept", db.settingsTab, "about")
-ok("the first one shows Claude's", tostring(findText("Photo compacte")) .. " " .. tostring(findText("Bouton de la mini-carte")), "Photo compacte Bouton de la mini-carte")
+ok("the first one shows Claude's", tostring(findText("Photo compacte")) .. " " .. tostring(findText("Bouton pour ouvrir la fenêtre")), "Photo compacte Bouton pour ouvrir la fenêtre")
 local minimapSwitch = settingRows.minimapButton.switch
 ok("a switch shows the setting", minimapSwitch.checked, true)
 local settingsOn = {}
