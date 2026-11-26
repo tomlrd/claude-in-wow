@@ -20,8 +20,9 @@
 -- And what the player says to Claude outside the game, in a session they see (the setting
 -- "answerBy"), shows here too, with its answer: a few signals and slots are set apart for
 -- it, told to the plugin in each photo and in the saved data (ns.db.spare), and listened
--- to while that setting is on. A photo tells them as soon as the player picks a session, and
--- again when they run short: without it, what is said there could not come here.
+-- to while that setting is on. A photo tells them as soon as the player picks a session, at
+-- login when there are too few, and again when they run short: without it, what is said
+-- there could not come here.
 
 local addonName, ns = ...
 
@@ -298,8 +299,10 @@ function ns.WatchReply(question, done)
     ns.WatchAnswers()
 end
 
--- After a /reload: the questions that wait still do, and the slots can be read again.
+-- After a /reload: the questions that wait still do, and the slots can be read again; and
+-- with a session, places set apart for it when too few are left (once the world shows).
 function ns.ResumeAnswers()
+    if FromSession() and #(ns.db.spare and ns.db.spare.list or {}) <= SHORT then C_Timer.After(5, ns.TellSpare) end
     local watch = FromSession() and ns.db.spare ~= nil
     for _, question in ipairs(ns.WaitingQuestions()) do
         if question.ready and time() - question.at < KEPT then Ready(question) end

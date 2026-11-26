@@ -2193,6 +2193,10 @@ do -- who answers: the silent mode, or a session the player sees
     tick()
     ok("a sound left by an earlier one: not taken for it", #db.spare.list .. " " .. messages()[#messages()].text, "4 Toujours.")
     on = {}
+    db.spare, TestPhotos.count = nil, 0
+    ns.ResumeAnswers()
+    timers[#timers]() -- once the world shows
+    ok("at login with a session and no place: told in a photo", #db.spare.list .. " " .. TestPhotos.count, "5 1")
     -- a question nobody received
     local lost = { role = "you", text = "Personne ?", at = 5, state = "sent", sentAt = time() - 60, signal = 200 }
     table.insert(messages(), lost)
