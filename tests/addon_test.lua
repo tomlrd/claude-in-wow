@@ -2134,10 +2134,13 @@ do -- who answers: the silent mode, or a session the player sees
     C_AddOns.IsAddOnLoaded = function(name) return loadedSlots[name] or false end
     C_AddOns.IsAddOnLoadable = function() return true end
     C_AddOns.LoadAddOn = function(name) loadedSlots[name] = true ClaudeInWoWInbox = texts[name] return true end
+    TestPhotos = { kept = ns.TakePhoto, count = 0 } -- a global: the main chunk has no locals left
+    ns.TakePhoto = function(question) if question == nil then TestPhotos.count = TestPhotos.count + 1 end return true end
     ok("the silent mode answers at first", db.options.answerBy .. " " .. tostring(ns.BySession()) .. " " .. tostring(select(3, ns.QuestionChoices()).by) .. " " .. tostring(ns.SpareChannels()), "silent false silent nil")
     ns.SetOption("answerBy", "session")
     local spare = ns.SpareChannels()
     ok("a session: said with each question, places set apart for it", select(3, ns.QuestionChoices()).by .. " " .. #spare.list, "session 5")
+    ok("picked: told to the plugin at once, in a photo", TestPhotos.count, 1)
     local first, second = spare.list[1], spare.list[2]
     ok("each its own", (first.signal ~= second.signal and first.slot ~= second.slot), true)
     ns.SpareChannels()
@@ -2174,13 +2177,21 @@ do -- who answers: the silent mode, or a session the player sees
     texts[("claude-in-wow_S%03d"):format(third.slot)] = "[claude-in-wow dit 1795600100]\n\nEt là ?\n\n[claude-in-wow réponse 1795600100]\n\nOui."
     tick()
     ok("one that was not heard does not hold up the next", messages()[#messages()].text .. " " .. #db.spare.list, "Oui. 3")
+    on = { [("%03d"):format(db.spare.list[1].signal)] = true }
+    db.spare.list[1].from = db.spare.list[1].from - 60
+    texts[("claude-in-wow_S%03d"):format(db.spare.list[1].slot)] = "[claude-in-wow dit 1795600200]\n\nEncore ?\n\n[claude-in-wow réponse 1795600200]\n\nToujours."
+    TestPhotos.count = 0
+    tick()
+    timers[#timers]() -- two seconds later
+    ok("running short: more, told in a photo", messages()[#messages()].text .. " " .. #db.spare.list .. " " .. TestPhotos.count, "Toujours. 5 1")
+    db.spare.list = { db.spare.list[1], db.spare.list[2], db.spare.list[3] }
     on = {}
     ns.SpareChannels()
     ok("as many again with the next photo", #db.spare.list, 5)
     on = { [("%03d"):format(db.spare.list[1].signal)] = true }
     db.spare.list[1].from = time()
     tick()
-    ok("a sound left by an earlier one: not taken for it", #db.spare.list .. " " .. messages()[#messages()].text, "4 Oui.")
+    ok("a sound left by an earlier one: not taken for it", #db.spare.list .. " " .. messages()[#messages()].text, "4 Toujours.")
     on = {}
     -- a question nobody received
     local lost = { role = "you", text = "Personne ?", at = 5, state = "sent", sentAt = time() - 60, signal = 200 }
@@ -2204,7 +2215,7 @@ do -- who answers: the silent mode, or a session the player sees
     tick()
     ok("back to the silent mode: nothing is listened to any more", tostring(ns.SpareChannels()), "nil")
     db.spare, db.options.arrive = keptSpare, keptArrive
-    PlaySoundFile, C_Sound = keptPlay, keptSound
+    PlaySoundFile, C_Sound, ns.TakePhoto = keptPlay, keptSound, TestPhotos.kept
     C_AddOns.IsAddOnLoaded, C_AddOns.IsAddOnLoadable, C_AddOns.DoesAddOnExist, C_AddOns.LoadAddOn = loading, loadable, exists, load
 end
 do -- the updates

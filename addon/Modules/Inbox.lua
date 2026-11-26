@@ -20,7 +20,8 @@
 -- And what the player says to Claude outside the game, in a session they see (the setting
 -- "answerBy"), shows here too, with its answer: a few signals and slots are set apart for
 -- it, told to the plugin in each photo and in the saved data (ns.db.spare), and listened
--- to while that setting is on.
+-- to while that setting is on. A photo tells them as soon as the player picks a session, and
+-- again when they run short: without it, what is said there could not come here.
 
 local addonName, ns = ...
 
@@ -38,6 +39,7 @@ local LONG = 180        -- without sounds to tell, an answer this late
 local KEPT = 2 * 3600   -- and the plugin keeps it that long
 local SPARES = 5        -- set apart for what is said outside the game
 local LISTENED = 3      -- of them, the first ones: the plugin takes them in order
+local SHORT = 2         -- so few left: more, told in a photo
 
 local function SlotName(number)
     return format("%s_S%03d", addonName, number)
@@ -142,6 +144,12 @@ function ns.SpareChannels()
     return ns.db.spare
 end
 
+-- The places set apart, made and told to the plugin in a photo (out of combat).
+function ns.TellSpare()
+    local spare = ns.SpareChannels()
+    if spare and #spare.list > 0 and not InCombatLockdown() then ns.TakePhoto(nil) end
+end
+
 -- The text in an addon the plugin writes, read once.
 function ns.ReadAddon(name)
     if not C_AddOns.DoesAddOnExist(name) or C_AddOns.IsAddOnLoaded(name) then return nil end
@@ -191,6 +199,7 @@ local function ListenSpare(spare)
                 tremove(ns.db.spare.list, index)
                 local text = time() - spare.from >= EARLY and SlotText(spare.slot) -- sooner: left by an earlier one
                 if text then ns.TakeInbox(text) end
+                if #ns.db.spare.list <= SHORT then C_Timer.After(2, ns.TellSpare) end -- once the answer shows
                 return
             end
         end
